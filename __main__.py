@@ -14,6 +14,7 @@ __NAME = "Free AssMat"
 logger = logging.getLogger(__name__)
 
 def main():
+    """main"""
     logging.basicConfig(level=logging.DEBUG)
     logger.info(f"Running {__NAME}")
     
@@ -24,7 +25,7 @@ def main():
     
     data_contract = data['ass_mat']['employers'][0]['children'][0]['contract']
     contract = Contract()
-    complete_year = contract.is_complete_year(data_contract['schedule']['year'])
+    complete_year = contract.is_complete_year(data_contract['schedule']['year'], data_contract['schedule']['paid_vacation'])
     logger.info(f"Complete year {complete_year}")
 
 if __name__ == "__main__":
