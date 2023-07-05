@@ -35,12 +35,13 @@ def main():
                 logger.info(f"child surname: {child['surname']}")
                 
                 contract = contract_factory.make_contract(child['contract'])
+                schedule = contract.schedule
     
                 complete_year = contract.is_complete_year()
                 logger.info(f"Complete year {complete_year}")
 
-                # working_hour_per_week = contract.get_working_hour_per_week(schedule_data['weeks'][0], schedule_data['days'])
-                # logger.info(f"working hour per week {working_hour_per_week}")
+                working_hour_per_week = schedule.get_working_hour_per_week()
+                logger.info(f"working hour per week {working_hour_per_week}")
                 
                 # working_hour_per_month = contract.get_working_hour_per_month(schedule_data['weeks'][0], schedule_data['days'])
                 # logger.info(f"working hour per month {working_hour_per_month}")

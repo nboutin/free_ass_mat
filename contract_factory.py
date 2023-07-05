@@ -11,7 +11,7 @@ def make_schedule(schedule_data):
     """
     :brief Construct schedule instance from schedule data read from file
     """
-    return Schedule(schedule_data['year'], schedule_data['paid_vacation'])
+    return Schedule(schedule_data['year'], schedule_data['weeks'], schedule_data['days'], schedule_data['paid_vacation'])
 
 
 def make_contract(contract_data):
