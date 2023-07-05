@@ -5,12 +5,12 @@ contract:
   schedule:
     days:
       # day_id
-      0 :
-        start: '09:00'
-        end: '17:00'
+      0:
+        start: "09:00"
+        end: "17:00"
     weeks:
       # week_id : (week day : day_id)
-      0 :
+      0:
         monday: null
         tuesday: 0
         wednesday: 0
@@ -20,9 +20,27 @@ contract:
         sunday: null
     year:
       # week_id
-      0 :
+      0:
         - start: 1
           end: 47
     paid_vacation:
       - start: 48
         end: 52
+garde:
+  semaines:
+    0: null # semaine normal comme prévu au contrat
+    1:
+      mardi:
+        start: "08:00"
+        end: "20:00"
+      mercredi:
+        start: "08:00"
+        end: "20:00"
+      jeudi:
+        start: "08:00"
+        end: "20:00"
+      vendredi:
+        start: "09:00"
+        end: "18:00"
+    2: null
+    3: null
