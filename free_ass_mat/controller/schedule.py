@@ -10,6 +10,10 @@ from datetime import datetime
 logger = logging.getLogger(__name__)
 
 
+class ScheduleError (ValueError):
+    pass
+
+
 class Schedule:
     """
     Schedule / planning, hour, day, week, month, year
@@ -30,6 +34,8 @@ class Schedule:
         self._weeks = weeks
         self._days = days
         self._paid_vacation = paid_vacation
+
+        self._check_input_data()
 
     def get_working_week_count(self) -> int:
         """brief Count working week for a complete year"""
@@ -96,3 +102,25 @@ class Schedule:
                 week_id) * working_week_count
 
         return hour_per_week_count / 12
+
+    def _check_input_data(self) -> None:
+        """
+        Check that:
+        - total number of week(working and paid vacation) is less or equal to 52
+        - total number of working week is less or equal to 47
+        - total number of paid vacation week is less or equal to 5
+        """
+
+        working_week_count = self.get_working_week_count()
+        paid_vacation_week_count = self.get_paid_vacation_week_count()
+
+        if working_week_count + paid_vacation_week_count > 52:
+            raise ScheduleError(
+                "Total number of week(working and paid vacation) is more than 52")
+
+        if working_week_count > 47:
+            raise ScheduleError("Total number of working week is more than 47")
+
+        if paid_vacation_week_count > 5:
+            raise ScheduleError(
+                "Total number of paid vacation week is more than 5")

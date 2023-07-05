@@ -3,8 +3,8 @@
 :date 2023-07-05
 """
 
-from schedule import Schedule
-from contract import Contract
+from controller.schedule import Schedule
+from controller.contract import Contract
 
 
 def make_schedule(schedule_data):

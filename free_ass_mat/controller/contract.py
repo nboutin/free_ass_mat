@@ -6,7 +6,7 @@
 
 import logging
 
-from schedule import Schedule
+from controller.schedule import Schedule
 
 logger = logging.getLogger(__name__)
 
