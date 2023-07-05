@@ -17,8 +17,9 @@ class Contract:
     _COMPLETE_YEAR_WORKING_WEEK_COUNT = 47
     _COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT = 5
 
-    def __init__(self, schedule: Schedule) -> None:
+    def __init__(self, schedule: Schedule, net_hourly_wage:float) -> None:
         self._schedule = schedule
+        self._net_hourly_wage = net_hourly_wage
         
     @property
     def schedule(self) -> Schedule:
@@ -31,7 +32,9 @@ class Contract:
             (self._schedule.get_paid_vacation_week_count() ==
              Contract._COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT)
 
-    def get_basic_monthly_salary(self, year, paid_vacation, hourly_rate):
-        pass
+    def get_basic_monthly_salary(self):
+        """working_hour_per_month_count * net_hourly_rate"""
+        
+        return self._schedule.get_working_hour_per_month() * self._net_hourly_wage
 
 

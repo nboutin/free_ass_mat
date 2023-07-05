@@ -19,4 +19,5 @@ def make_contract(contract_data):
     :brief Construct contract instance from contract data read from file
     """
     schedule = make_schedule(contract_data['schedule'])
-    return Contract(schedule)
+    net_hourly_wage = contract_data['net_hourly_wage']
+    return Contract(schedule, net_hourly_wage)
