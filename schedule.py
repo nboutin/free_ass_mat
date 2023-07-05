@@ -14,32 +14,39 @@ class Schedule:
     """
     Schedule / planning, hour, day, week, month, year
     """
-    week_range_t = list[dict[str, int]]
-
     day_id_t = int
-    days_t = dict[day_id_t, dict[str, str]]
+    hour_range_t = dict[str, str]
+    days_t = dict[day_id_t, hour_range_t]
 
     week_id_t = int
     week_day_t = str  # monday, tuesday, wednesday, thursday, friday, saturday, sunday
     weeks_t = dict[week_id_t, dict[week_day_t, day_id_t]]
 
-    def __init__(self, year: week_range_t, weeks: weeks_t, days: days_t, paid_vacation: week_range_t):
+    week_range_t = list[dict[str, int]]
+    year_t = dict[week_id_t, week_range_t]
+
+    def __init__(self, year: year_t, weeks: weeks_t, days: days_t, paid_vacation: week_range_t):
         self._year = year
         self._weeks = weeks
         self._days = days
         self._paid_vacation = paid_vacation
 
     def get_working_week_count(self) -> int:
-        """
-        :brief Count week at work
-        """
+        """brief Count working week for a complete year"""
         week_count = 0
-        for week_range in self._year:
+        for week_id in self._year.keys():
+            week_count += self._get_working_week_count(week_id)
+
+        logger.debug(f"working week count = {week_count}")
+        return week_count
+
+    def _get_working_week_count(self, week_id: week_id_t) -> int:
+        """Count working week for a given week_id"""
+        week_count: int = 0
+        for week_range in self._year[week_id]:
             start = week_range['start']
             end = week_range['end']
             week_count += end - start + 1
-
-        logger.debug(f"working week count = {week_count}")
         return week_count
 
     def get_paid_vacation_week_count(self) -> int:
@@ -80,8 +87,12 @@ class Schedule:
         logger.debug(f"working hour per day = {hour_count}")
         return hour_count
 
-    def get_working_hour_per_month(self, week, days):
-        """
-        :brief Calculate working hour per month
-        """
-        return self.get_working_hour_per_week(week, days) * 52 / 12
+    def get_working_hour_per_month(self) -> float:
+        """Calculate working hour per month"""
+        hour_per_week_count: float = 0.0
+        for week_id in self._year.keys():
+            working_week_count = self._get_working_week_count(week_id)
+            hour_per_week_count += self.get_working_hour_per_week(
+                week_id) * working_week_count
+
+        return hour_per_week_count / 12
