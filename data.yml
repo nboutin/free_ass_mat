@@ -9,6 +9,8 @@ ass_mat:
             surname: "child0 surname"
             contract:
               net_hourly_wage: 3.2029
+              net_hourly_complementary_wage: 3.40
+              net_hourly_majored_wage: 3.60
               schedule:
                 days:
                   # day_id

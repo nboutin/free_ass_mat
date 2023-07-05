@@ -1,0 +1,28 @@
+contract:
+  net_hourly_wage: 3
+  net_hourly_complementary_wage: 3.20
+  net_hourly_majored_wage: 3.50
+  schedule:
+    days:
+      # day_id
+      0 :
+        start: '09:00'
+        end: '17:00'
+    weeks:
+      # week_id : (week day : day_id)
+      0 :
+        monday: null
+        tuesday: 0
+        wednesday: 0
+        thursday: 0
+        friday: 0
+        saturday: null
+        sunday: null
+    year:
+      # week_id
+      0 :
+        - start: 1
+          end: 47
+    paid_vacation:
+      - start: 48
+        end: 52

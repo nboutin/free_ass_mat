@@ -5,6 +5,7 @@
 # pylint: disable=logging-fstring-interpolation
 
 import logging
+import math
 from datetime import datetime
 
 logger = logging.getLogger(__name__)
@@ -97,11 +98,31 @@ class Schedule:
         """Calculate working hour per month"""
         hour_per_week_count: float = 0.0
         for week_id in self._year.keys():
-            working_week_count = self._get_working_week_count(week_id)
+            # working_week_count = self._get_working_week_count(week_id)
             hour_per_week_count += self.get_working_hour_per_week(
-                week_id) * working_week_count
+                week_id) * 52
 
         return hour_per_week_count / 12
+
+    def get_working_hour_per_month_normalized(self) -> int:
+        """<0.5, round down, >0.5, round up"""
+        return round(self.get_working_hour_per_month())
+
+    def get_working_day_per_week(self, week_id: int = 0) -> float:
+        """working day count per week"""
+        working_day_count = 0
+        for day_id in self._weeks[week_id].values():
+            if day_id is not None:
+                working_day_count += 1
+        return working_day_count
+
+    def get_working_day_per_month(self) -> float:
+        """day_per_week_count * 52 / 12"""
+        return self.get_working_day_per_week() * 52 / 12
+
+    def get_working_day_per_month_normalized(self) -> int:
+        """always round up"""
+        return math.ceil(self.get_working_day_per_month())
 
     def _check_input_data(self) -> None:
         """
