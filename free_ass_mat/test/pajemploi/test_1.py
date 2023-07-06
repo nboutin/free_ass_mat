@@ -14,9 +14,10 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))  # OK
 
 import unittest  # nopep8
 from pathlib import Path  # nopep8
+from datetime import date  # nopep8
 import yaml  # nopep8
 
-import controller.contract_factory as contract_factory  # nopep8
+import controller.factory as factory  # nopep8
 
 
 class TestPajemploi1(unittest.TestCase):
@@ -25,8 +26,9 @@ class TestPajemploi1(unittest.TestCase):
         data_filepath = Path(__file__).parent / "data_1.yml"
         with open(data_filepath, 'r', encoding='UTF-8') as file:
             data = yaml.safe_load(file)
-        self.contract = contract_factory.make_contract(data['contract'])
+        self.contract = factory.make_contract(data['contract'])
         self.schedule = self.contract.schedule
+        self.garde = self.contract.garde
 
     def test_working_hour_per_week(self):
         self.assertEqual(self.schedule.get_working_hour_per_week(), 32)
@@ -51,6 +53,12 @@ class TestPajemploi1(unittest.TestCase):
     def test_working_day_per_month_normalized(self):
         self.assertEqual(
             self.schedule.get_working_day_per_month_normalized(), 18)
+        
+    def test_heure_complementaire_du_mois(self):
+        self.assertEqual(self.garde.get_heure_complementaire_du_mois(date(2023,1,1)), 13)
+        
+    # def test_heure_majorees_du_mois(self):
+    #     self.assertEqual(self.garde.get_heure_majoree_du_mois(1), 5)
 
 
 if __name__ == '__main__':

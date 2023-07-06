@@ -1,7 +1,19 @@
 contract:
-  net_hourly_wage: 3
-  net_hourly_complementary_wage: 3.20
-  net_hourly_majored_wage: 3.50
+  ass_mat:
+    first_name: "ass_mat first name"
+    surname: "ass_mat surname"
+  employers:
+  - first_name: "employer0 first name"
+    surname: "employer0 surname"
+  - first_name: "employer1 first name"
+    surname: "employer1 surname"
+  child:
+    first_name: "child0 first name"
+    surname: "child0 surname"
+  salaires:
+    horaire_net: 3.00
+    horaire_complementaires: 3.20
+    horaire_majorees: 3.50
   schedule:
     days:
       # day_id
@@ -26,21 +38,16 @@ contract:
     paid_vacation:
       - start: 48
         end: 52
-garde:
-  semaines:
-    0: null # semaine normal comme prévu au contrat
-    1:
-      mardi:
-        start: "08:00"
-        end: "20:00"
-      mercredi:
-        start: "08:00"
-        end: "20:00"
-      jeudi:
-        start: "08:00"
-        end: "20:00"
-      vendredi:
-        start: "09:00"
-        end: "18:00"
-    2: null
-    3: null
+  garde_info:
+    "2023-01-10":
+      start: "08:00"
+      end: "20:00"
+    "2023-01-11":
+      start: "08:00"
+      end: "20:00"
+    "2023-01-12":
+      start: "08:00"
+      end: "20:00"
+    "2023-01-13":
+      start: "09:00"
+      end: "18:00"

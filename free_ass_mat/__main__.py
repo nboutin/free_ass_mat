@@ -7,7 +7,7 @@
 import logging
 import yaml
 
-import controller.contract_factory as contract_factory
+import controller.factory as factory
 
 __NAME = "Free AssMat"
 
@@ -34,7 +34,7 @@ def main():
                 logger.info(f"child first name: {child['first_name']}")
                 logger.info(f"child surname: {child['surname']}")
 
-                contract = contract_factory.make_contract(child['contract'])
+                contract = factory.make_contract(child['contract'])
                 schedule = contract.schedule
 
                 complete_year = contract.is_complete_year()

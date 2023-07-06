@@ -6,7 +6,7 @@
 
 import logging
 import math
-from datetime import datetime
+from datetime import datetime, date
 
 logger = logging.getLogger(__name__)
 
@@ -79,6 +79,11 @@ class Schedule:
         logger.debug(f"working hour per week = {hour_count}")
         return hour_count
 
+    def get_nb_heure_travaillee_par_jour(self, in_date: date) -> float:
+        """Calculate working hour per day"""
+        day_id = self._get_day_id_from_date(in_date)
+        return self.get_working_hour_per_day(day_id)
+
     def get_working_hour_per_day(self, day_id: int) -> float:
         """Calculate working hour per day"""
         hour_count: float = 0.0
@@ -123,6 +128,23 @@ class Schedule:
     def get_working_day_per_month_normalized(self) -> int:
         """always round up"""
         return math.ceil(self.get_working_day_per_month())
+
+    def _get_day_id_from_date(self, date_: date):
+        """Get day id from date"""
+        week_id = self._get_week_id_from_date(date_)
+        weekday_string = date_.strftime('%A').lower()
+        day_id = self._weeks[week_id][weekday_string]
+        return day_id
+
+    def _get_week_id_from_date(self, in_date: date):
+        """Get week id from date"""
+        week_number: int = int(in_date.strftime('%U'))
+        for id_, week_ranges in self._year.items():
+            for week_range in week_ranges:
+                if week_range['start'] <= week_number <= week_range['end']:
+                    return id_
+
+        raise SheduleError(f"week id not found for date {in_date}")
 
     def _check_input_data(self) -> None:
         """
