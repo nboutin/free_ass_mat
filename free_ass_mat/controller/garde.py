@@ -29,17 +29,22 @@ class Garde:
         # Get the number of days in the month
         _, num_days = calendar.monthrange(in_date.year, in_date.month)
         # Create a list of all days in the month
-        dates = [datetime(in_date.year, in_date.month, day)
+        dates = [date(in_date.year, in_date.month, day)
                  for day in range(1, num_days+1)]
 
+        h_comp: float = 0.0
         for date_ in dates:
-            h_trav_prevu = self._schedule.get_nb_heure_travaillee_par_jour(date_)
-            time_range = self._garde_info[date_.strftime('%Y-%m-%d')]
-            start = datetime.strptime(time_range['start'], '%H:%M')
-            end = datetime.strptime(time_range['end'], '%H:%M')
-            h_trav_realisee: float = (end - start).seconds / 3600.0
+            h_trav_prevu = self._schedule.get_nb_heure_travaillee_par_jour(
+                date_)
+            date_str = date_.strftime('%Y-%m-%d')
+            if date_str in self._garde_info:
+                time_range = self._garde_info[date_str]
+                start = datetime.strptime(time_range['start'], '%H:%M')
+                end = datetime.strptime(time_range['end'], '%H:%M')
+                h_trav_realisee: float = (end - start).seconds / 3600.0
+                h_comp += max(h_trav_realisee - h_trav_prevu, 0.0)
 
-        return max(h_trav_realisee - h_trav_prevu, 0.0)
+        return h_comp
 
     def get_heure_majoree_du_mois(self, month: int) -> int:
         """
