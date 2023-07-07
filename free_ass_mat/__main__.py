@@ -46,7 +46,7 @@ def main():
                 working_hour_per_month = schedule.get_working_hour_per_month()
                 logger.info(f"working hour per month {working_hour_per_month}")
                 
-                basic_monthly_salary = contract.get_basic_monthly_salary()
+                basic_monthly_salary = contract.get_salaire_net_mensualise()
                 logger.info(f"basic monthly salary {basic_monthly_salary}")
 
 

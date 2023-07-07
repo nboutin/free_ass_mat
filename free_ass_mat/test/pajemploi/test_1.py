@@ -45,7 +45,7 @@ class TestPajemploi1(unittest.TestCase):
             self.schedule.get_working_hour_per_month(), 138.66, delta=0.01)
 
     def test_monthly_salary(self):
-        self.assertEqual(self.contract.get_basic_monthly_salary(), 416)
+        self.assertEqual(self.contract.get_salaire_net_mensualise(), 416)
 
     def test_working_hour_per_month_normalized(self):
         self.assertEqual(
@@ -70,6 +70,8 @@ class TestPajemploi1(unittest.TestCase):
     def test_heure_majorees_du_mois(self):
         self.assertEqual(self.garde.get_heure_majoree_mois(date(2023,1,1)), 5)
 
+    def test_salaire_net_mois(self):
+        self.assertEqual(self.contract.get_salaire_net_mois(date(2023,1,1)), 475.10)
 
 if __name__ == '__main__':
     unittest.main()

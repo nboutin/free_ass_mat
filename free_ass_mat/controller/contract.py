@@ -5,6 +5,7 @@
 # pylint: disable=logging-fstring-interpolation
 
 import logging
+import datetime
 from typing import NamedTuple
 
 from controller.schedule import Schedule
@@ -46,7 +47,12 @@ class Contract:
             (self._schedule.get_paid_vacation_week_count() ==
              Contract._COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT)
 
-    def get_basic_monthly_salary(self):
+    def get_salaire_net_mensualise(self):
         """working_hour_per_month_count * net_hourly_rate"""
-
         return self._schedule.get_working_hour_per_month() * self._salaires.horaire_net
+
+    def get_salaire_net_mois(self, date: datetime.date)   -> float:
+        """Salaire net mensuel incluant heure complementaire et heure majoree"""
+        return self.get_salaire_net_mensualise() + \
+            self._garde.get_heure_complementaire_mois(date) * self._salaires.horaire_complementaires + \
+            self._garde.get_heure_majoree_mois(date) * self._salaires.horaire_majorees
