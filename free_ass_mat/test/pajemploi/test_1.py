@@ -31,6 +31,9 @@ class TestPajemploi1(unittest.TestCase):
         self.schedule = self.contract.schedule
         self.garde = self.contract.garde
 
+    def test_is_complete_year(self):
+        self.assertTrue(self.contract.is_complete_year())
+
     def test_working_hour_per_week(self):
         self.assertEqual(self.schedule.get_working_hour_per_week(), 32)
 
