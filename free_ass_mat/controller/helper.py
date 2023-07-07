@@ -52,9 +52,36 @@ def get_dates_in_week(year, week_number) -> list[date]:
 
     return week_dates
 
+def get_week_numbers(year, month) -> list[int]:
+    """Return all week numbers in a given month"""
+    # Number of days in the month
+    month_days = calendar.monthrange(year, month)[1]
 
+    # Date for the first day and last day of the month
+    first_date = date(year, month, 1)
+    last_date = date(year, month, month_days)
 
-def get_dates_in_month(in_date:date) -> list[date]: 
+    # Week numbers for the first day and last day of the month
+    first_week_number = first_date.isocalendar()[1]
+    last_week_number = last_date.isocalendar()[1]
+
+    # If the first day of the month is Saturday and it's still
+    # the previous month's week, then increase the first_week_number by 1
+    if first_date.weekday() == 5 and first_week_number < last_week_number:
+        first_week_number += 1
+
+    # Edge case for weeks in early January that count as the last week of the previous year
+    if month == 1 and first_week_number > last_week_number:
+        first_week_number = 1
+
+    # Week numbers for the specified month
+    week_numbers = list(range(first_week_number, last_week_number + 1))
+
+    return week_numbers
+    
+
+def get_dates_in_month(in_date:date) -> list[date]:
+    """Return all dates in a given month"""
     # Get the number of days in the month
     _, num_days = calendar.monthrange(in_date.year, in_date.month)
     # Create a list of all days in the month

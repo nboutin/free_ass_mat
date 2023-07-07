@@ -53,18 +53,14 @@ class Garde:
         
         return min(h_trav_prevu_semaine + h_comp_semaine, Garde._HEURE_COMPLEMENTAIRE_SEUIL) - h_trav_prevu_semaine
 
-    # def get_heure_complementaire_du_mois(self, in_date: date) -> float:
-    #     """Calculate the number of complementary hours for a given month"""
-    #     # h_trav_prevu_semaine = self._schedule.get_working_hour_per_week()
-
-    #     h_comp_mois: float = 0.0
-    #     dates = helper.get_dates_in_month(in_date)
-
-    #     for date_ in dates:
-    #         h_comp_mois += self.get_heure_complementaire_jour(date_)
-
-    #     return min(h_comp_mois, Garde._HEURE_COMPLEMENTAIRE_SEUIL)
-
+    def get_heure_complementaire_mois(self, in_date: date) -> float:
+        """Calculate the number of complementary hours for a given month"""
+        h_comp_mois: float = 0.0
+        week_numbers = helper.get_week_numbers(in_date.year, in_date.month)
+        
+        for week_number in week_numbers:
+            h_comp_mois += self.get_heure_complementaire_semaine(in_date.year, week_number)
+        return h_comp_mois
         
 
     def get_heure_majoree_du_mois(self, in_date: date) -> float:

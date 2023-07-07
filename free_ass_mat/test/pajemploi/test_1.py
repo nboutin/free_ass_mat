@@ -1,6 +1,7 @@
 """
 :author Nicolas Boutin
 :date 2023-07-05
+:details https://www.pajemploi.urssaf.fr/pajewebinfo/files/live/sites/pajewebinfo/files/contributed/pdf/employeur_ama/ExempleRemunerationAccueilRegulierAMA.pdf
 """
 # pylint: disable=logging-fstring-interpolation
 # pylint: disable=wrong-import-position
@@ -13,8 +14,8 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))  # OK
 
 import unittest  # nopep8
-from pathlib import Path  # nopep8
 from datetime import date  # nopep8
+from pathlib import Path  # nopep8
 import yaml  # nopep8
 
 import controller.factory as factory  # nopep8
@@ -56,6 +57,9 @@ class TestPajemploi1(unittest.TestCase):
         
     def test_heure_complementaire_semaine(self):
         self.assertEqual(self.garde.get_heure_complementaire_semaine(2023, 2), 13)
+        
+    def test_heure_complementaire_mois(self):
+        self.assertEqual(self.garde.get_heure_complementaire_mois(date(2023,1,1)), 13) 
         
     # def test_heure_majorees_du_mois(self):
     #     self.assertEqual(self.garde.get_heure_majoree_du_mois(date(2023,1,1)), 5)
