@@ -155,6 +155,17 @@ class Schedule:
                 jour += 1
         return jour
 
+    def get_heure_travaille_prevu_mois_par_date(self, date: datetime.date) -> float:
+        """Get working hour planned for a month by date"""
+        hour_count: float = 0.0
+        dates = helper.get_dates_in_month(date)
+
+        for i_date in dates:
+            day_id = self._get_jour_id_par_date(i_date)
+            if day_id is not None:
+                hour_count += self.get_heure_travaillee_jour_par_id(day_id)
+        return hour_count
+
     def _check_input_data(self) -> None:
         """
         Check that:

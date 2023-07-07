@@ -30,9 +30,12 @@ class Garde:
         if date_str not in self._garde:
             return 0.0
 
-        time_range = self._garde[date_str]['heures']
-        duration = helper.convert_time_range_to_duration(time_range)
-        return duration.seconds / 3600.0
+        try:
+            time_range = self._garde[date_str]['heures']
+            duration = helper.convert_time_range_to_duration(time_range)
+            return duration.seconds / 3600.0
+        except KeyError:
+            return 0.0
 
     def get_heure_complementaire_jour(self, date: datetime.date) -> float:
         """Calculate the number of complementary hours for a given day

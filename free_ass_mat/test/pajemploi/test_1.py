@@ -82,6 +82,12 @@ class TestPajemploi1(unittest.TestCase):
     def test_jour_travaille_prevu_mois(self):
         self.assertEqual(self.schedule.get_jour_travaille_prevu_mois_par_date(date(2023,9,1)), 17)
 
+    def test_heure_travaillee_prevu_mois(self):
+        self.assertEqual(self.schedule.get_heure_travaille_prevu_mois_par_date(date(2023,9,1)), 136)
+
+    def test_salaire_net_mois_2(self):
+        self.assertAlmostEqual(self.contract.get_salaire_net_mois(date(2023,9,1)), 220.24, delta=0.01)
+
 if __name__ == '__main__':
     import locale
     # Set the French locale
