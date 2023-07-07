@@ -144,6 +144,17 @@ class Schedule:
                     return id_
         raise ScheduleError(f"week id not found for date {date}")
 
+    def get_jour_travaille_prevu_mois_par_date(self, date: datetime.date) -> int:
+        """Get working day count for a given month"""
+        jour: int = 0
+        dates = helper.get_dates_in_month(date)
+
+        for i_date in dates:
+            day_id = self._get_jour_id_par_date(i_date)
+            if day_id is not None:
+                jour += 1
+        return jour
+
     def _check_input_data(self) -> None:
         """
         Check that:
