@@ -91,7 +91,6 @@ class Garde:
         
         for i_date in dates:
             i_date_str = i_date.strftime('%Y-%m-%d')
-            
             try:
                 if self._garde[i_date_str]['absence_non_remuneree']:
                     jour_count += 1
@@ -107,7 +106,6 @@ class Garde:
         
         for i_date in dates:
             i_date_str = i_date.strftime('%Y-%m-%d')
-            
             try:
                 if self._garde[i_date_str]['absence_non_remuneree']:
                     heure_count += self._schedule.get_nb_heure_travaillee_par_jour(i_date)
@@ -115,3 +113,8 @@ class Garde:
                 pass
             
         return heure_count
+    
+    def get_jour_travaillee_reel_mois(self, date:datetime.date) -> int:
+        """Calculate the number of real working days for a given month"""
+        pass
+        

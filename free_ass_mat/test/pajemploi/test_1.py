@@ -77,7 +77,14 @@ class TestPajemploi1(unittest.TestCase):
         self.assertEqual(self.garde.get_jour_absence_non_remuneree_mois(date(2023,2,1)), 8)
         
     def test_heure_absence_non_remuneree_mois(self):
-        self.assertEqual(self.garde.get_heure_absence_non_remuneree_mois(date(2023,2,1)), 64) 
+        self.assertEqual(self.garde.get_heure_absence_non_remuneree_mois(date(2023,2,1)), 64)
+        
+    # def test_jour_travaillee_reel_mois(self):
+    #     self.assertEqual(self.garde.get_jour_travaillee_reel_mois(date(2023,2,1)), 17)
 
 if __name__ == '__main__':
+    import locale
+    # Set the French locale
+    locale.setlocale(locale.LC_TIME, 'fr_FR.utf8')
+
     unittest.main()

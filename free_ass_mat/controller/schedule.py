@@ -7,6 +7,7 @@
 import logging
 import math
 import datetime
+import calendar
 
 import controller.helper as helper
 
@@ -26,7 +27,7 @@ class Schedule:
     days_t = dict[day_id_t, hour_range_t]
 
     week_id_t = int
-    week_day_t = str  # monday, tuesday, wednesday, thursday, friday, saturday, sunday
+    week_day_t = str  # lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche
     weeks_t = dict[week_id_t, dict[week_day_t, day_id_t]]
 
     week_range_t = list[dict[str, int]]
@@ -80,7 +81,8 @@ class Schedule:
     def get_working_hour_per_week(self, week_id: int = 0) -> float:
         """Calculate working hour per week"""
         hour_count = 0
-        for day in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']:
+        # for day in ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche']:
+        for day in calendar.day_name:
             day_id = self._weeks[week_id][day]
             hour_count += self.get_working_hour_per_day(day_id)
 

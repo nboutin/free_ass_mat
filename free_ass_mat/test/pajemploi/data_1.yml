@@ -23,13 +23,13 @@ contract:
     weeks:
       # week_id : (week day : day_id)
       0:
-        monday: null
-        tuesday: 0
-        wednesday: 0
-        thursday: 0
-        friday: 0
-        saturday: null
-        sunday: null
+        lundi: null
+        mardi: 0
+        mercredi: 0
+        jeudi: 0
+        vendredi: 0
+        samedi: null
+        dimanche: null
     year:
       # week_id
       0:
