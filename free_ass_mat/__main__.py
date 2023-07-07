@@ -40,10 +40,10 @@ def main():
                 complete_year = contract.is_complete_year()
                 logger.info(f"Complete year {complete_year}")
 
-                working_hour_per_week = schedule.get_working_hour_per_week()
+                working_hour_per_week = schedule.get_heure_travaillee_semaine_par_id()
                 logger.info(f"working hour per week {working_hour_per_week}")
 
-                working_hour_per_month = schedule.get_working_hour_per_month()
+                working_hour_per_month = schedule.get_heure_travaille_mois_mensualisee()
                 logger.info(f"working hour per month {working_hour_per_month}")
                 
                 basic_monthly_salary = contract.get_salaire_net_mensualise()

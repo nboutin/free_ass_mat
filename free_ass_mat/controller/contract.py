@@ -43,13 +43,13 @@ class Contract:
 
     def is_complete_year(self) -> bool:
         """Evaluate if contract is for a complete year (47 week) or an incomplete year"""
-        return (self._schedule.get_working_week_count() == Contract._COMPLETE_YEAR_WORKING_WEEK_COUNT) and \
-            (self._schedule.get_paid_vacation_week_count() ==
+        return (self._schedule.get_semaine_travaillee_annee() == Contract._COMPLETE_YEAR_WORKING_WEEK_COUNT) and \
+            (self._schedule.get_semaine_conges_payes_annee() ==
              Contract._COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT)
 
     def get_salaire_net_mensualise(self):
         """working_hour_per_month_count * net_hourly_rate"""
-        return self._schedule.get_working_hour_per_month() * self._salaires.horaire_net
+        return self._schedule.get_heure_travaille_mois_mensualisee() * self._salaires.horaire_net
 
     def get_salaire_net_mois(self, date: datetime.date)   -> float:
         """Salaire net mensuel incluant heure complementaire et heure majoree"""

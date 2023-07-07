@@ -35,28 +35,28 @@ class TestPajemploi1(unittest.TestCase):
         self.assertTrue(self.contract.is_complete_year())
 
     def test_working_hour_per_week(self):
-        self.assertEqual(self.schedule.get_working_hour_per_week(), 32)
+        self.assertEqual(self.schedule.get_heure_travaillee_semaine_par_id(), 32)
 
     def test_working_week_count(self):
-        self.assertEqual(self.schedule.get_working_week_count(), 47)
+        self.assertEqual(self.schedule.get_semaine_travaillee_annee(), 47)
 
     def test_working_hour_per_month(self):
         self.assertAlmostEqual(
-            self.schedule.get_working_hour_per_month(), 138.66, delta=0.01)
+            self.schedule.get_heure_travaille_mois_mensualisee(), 138.66, delta=0.01)
 
     def test_monthly_salary(self):
         self.assertEqual(self.contract.get_salaire_net_mensualise(), 416)
 
     def test_working_hour_per_month_normalized(self):
         self.assertEqual(
-            self.schedule.get_working_hour_per_month_normalized(), 139)
+            self.schedule.get_heure_travaille_mois_mensualisee_normalisee(), 139)
 
     def test_working_day_per_month(self):
-        self.assertAlmostEqual(self.schedule.get_working_day_per_month(), 17.33, delta=0.01)
+        self.assertAlmostEqual(self.schedule.get_jour_travaille_mois_mensualisee(), 17.33, delta=0.01)
 
     def test_working_day_per_month_normalized(self):
         self.assertEqual(
-            self.schedule.get_working_day_per_month_normalized(), 18)
+            self.schedule.get_jour_travaille_mois_mensualisee_normalise(), 18)
         
     def test_heure_complementaire_semaine(self):
         self.assertEqual(self.garde.get_heure_complementaire_semaine(2023, 2), 13)

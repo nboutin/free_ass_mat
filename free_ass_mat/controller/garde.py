@@ -37,7 +37,7 @@ class Garde:
     def get_heure_complementaire_jour(self, date: datetime.date) -> float:
         """Calculate the number of complementary hours for a given day
         Heure prévu - heure réalisée"""
-        h_trav_prevu_jour = self._schedule.get_nb_heure_travaillee_par_jour(date)
+        h_trav_prevu_jour = self._schedule.get_heure_travaille_jour_par_date(date)
         h_trav_realisee_jour = self.get_heure_travaille_par_jour(date)
         return max(h_trav_realisee_jour - h_trav_prevu_jour, 0) # cannot be negative
         
@@ -49,7 +49,7 @@ class Garde:
         for date_ in dates:
             h_comp_semaine += self.get_heure_complementaire_jour(date_)
             
-        h_trav_prevu_semaine = self._schedule. get_working_hour_per_week_from_week_number(year, numero_semaine)
+        h_trav_prevu_semaine = self._schedule. get_heure_travaille_semaine_par_date(year, numero_semaine)
         
         return min(h_trav_prevu_semaine + h_comp_semaine, Garde._HEURE_COMPLEMENTAIRE_SEUIL) - h_trav_prevu_semaine
 
@@ -108,7 +108,7 @@ class Garde:
             i_date_str = i_date.strftime('%Y-%m-%d')
             try:
                 if self._garde[i_date_str]['absence_non_remuneree']:
-                    heure_count += self._schedule.get_nb_heure_travaillee_par_jour(i_date)
+                    heure_count += self._schedule.get_heure_travaille_jour_par_date(i_date)
             except KeyError:
                 pass
             
