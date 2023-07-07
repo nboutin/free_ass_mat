@@ -61,8 +61,25 @@ class Garde:
         for week_number in week_numbers:
             h_comp_mois += self.get_heure_complementaire_semaine(in_date.year, week_number)
         return h_comp_mois
-        
 
-    def get_heure_majoree_du_mois(self, in_date: date) -> float:
+    def get_heure_majoree_semaine(self, year: int, numero_semaine:int)->float:
+        """Calculate the number of additional hours for a given week"""
+        h_comp_and_maj_semaine: float =  0.0
+        dates = helper.get_dates_in_week(year, numero_semaine)
+        
+        for date_ in dates:
+            h_comp_and_maj_semaine += self.get_heure_complementaire_jour(date_)
+            
+        h_comp_semaine = self.get_heure_complementaire_semaine(year, numero_semaine)    
+            
+        return h_comp_and_maj_semaine - h_comp_semaine
+
+
+    def get_heure_majoree_mois(self, in_date: date) -> float:
         """Calculate the number of additional hours for a given month"""
-        return 0
+        h_maj_mois: float = 0.0
+        week_numbers = helper.get_week_numbers(in_date.year, in_date.month)
+        
+        for week_number in week_numbers:
+            h_maj_mois += self.get_heure_majoree_semaine(in_date.year, week_number)
+        return h_maj_mois

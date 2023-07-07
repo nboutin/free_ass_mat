@@ -59,10 +59,13 @@ class TestPajemploi1(unittest.TestCase):
         self.assertEqual(self.garde.get_heure_complementaire_semaine(2023, 2), 13)
         
     def test_heure_complementaire_mois(self):
-        self.assertEqual(self.garde.get_heure_complementaire_mois(date(2023,1,1)), 13) 
+        self.assertEqual(self.garde.get_heure_complementaire_mois(date(2023,1,1)), 13)
+    
+    def test_heure_majoree_semaine(self):
+        self.assertEqual(self.garde.get_heure_majoree_semaine(2023, 2), 5)
         
-    # def test_heure_majorees_du_mois(self):
-    #     self.assertEqual(self.garde.get_heure_majoree_du_mois(date(2023,1,1)), 5)
+    def test_heure_majorees_du_mois(self):
+        self.assertEqual(self.garde.get_heure_majoree_mois(date(2023,1,1)), 5)
 
 
 if __name__ == '__main__':
