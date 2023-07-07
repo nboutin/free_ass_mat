@@ -99,3 +99,19 @@ class Garde:
                 pass
             
         return jour_count
+    
+    def get_heure_absence_non_remuneree_mois(self, date: datetime.date) -> float:
+        """Calculate the number of unpaid absence hours for a given month"""
+        heure_count: float = 0.0
+        dates = helper.get_dates_in_month(date)
+        
+        for i_date in dates:
+            i_date_str = i_date.strftime('%Y-%m-%d')
+            
+            try:
+                if self._garde[i_date_str]['absence_non_remuneree']:
+                    heure_count += self._schedule.get_nb_heure_travaillee_par_jour(i_date)
+            except KeyError:
+                pass
+            
+        return heure_count
