@@ -6,7 +6,9 @@
 
 import logging
 import math
-from datetime import datetime, date
+from datetime import date
+
+import controller.helper as helper
 
 logger = logging.getLogger(__name__)
 
@@ -69,6 +71,12 @@ class Schedule:
         logger.debug(f"paid vacation week count = {week_count}")
         return week_count
 
+    def get_working_hour_per_week_from_week_number(self, year,  week_number: int) -> float:
+        """Calculate working hour per week"""
+        dates = helper.get_dates_in_week(year, week_number)
+        week_id = self._get_week_id_from_date(dates[0])
+        return self.get_working_hour_per_week(week_id)
+
     def get_working_hour_per_week(self, week_id: int = 0) -> float:
         """Calculate working hour per week"""
         hour_count = 0
@@ -90,29 +98,27 @@ class Schedule:
         if day_id is None:
             return hour_count
 
-        for id_, time_ in self._days.items():
+        for id_, time_range in self._days.items():
             if id_ == day_id:
-                start = datetime.strptime(time_['start'], '%H:%M')
-                end = datetime.strptime(time_['end'], '%H:%M')
-                hour_count: float = (end - start).seconds / 3600.0
+                duration = helper.convert_time_range_to_duration(time_range)
+                hour_count = duration.seconds / 3600.0
 
         logger.debug(f"working hour per day = {hour_count}")
         return hour_count
-
+    
     def get_working_hour_per_month(self) -> float:
         """Calculate working hour per month"""
         hour_per_week_count: float = 0.0
         for week_id in self._year.keys():
             # working_week_count = self._get_working_week_count(week_id)
-            hour_per_week_count += self.get_working_hour_per_week(
-                week_id) * 52
+            hour_per_week_count += self.get_working_hour_per_week(week_id) * 52
 
         return hour_per_week_count / 12
 
     def get_working_hour_per_month_normalized(self) -> int:
         """<0.5, round down, >0.5, round up"""
         return round(self.get_working_hour_per_month())
-
+    
     def get_working_day_per_week(self, week_id: int = 0) -> float:
         """working day count per week"""
         working_day_count = 0
