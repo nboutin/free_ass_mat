@@ -98,7 +98,7 @@ class Schedule:
 
         logger.debug(f"working hour per day = {hour_count}")
         return hour_count
-    
+
     def get_heure_travaille_mois_mensualisee(self) -> float:
         """Calculate working hour per month"""
         hour_per_week_count: float = 0.0
@@ -111,7 +111,7 @@ class Schedule:
     def get_heure_travaille_mois_mensualisee_normalisee(self) -> int:
         """<0.5, round down, >0.5, round up"""
         return round(self.get_heure_travaille_mois_mensualisee())
-    
+
     def get_jour_travaille_semaine_par_id(self, week_id: int = 0) -> float:
         """working day count per week"""
         working_day_count = 0
@@ -142,8 +142,7 @@ class Schedule:
             for week_range in week_ranges:
                 if week_range['start'] <= week_number <= week_range['end']:
                     return id_
-
-        raise SheduleError(f"week id not found for date {date}")
+        raise ScheduleError(f"week id not found for date {date}")
 
     def _check_input_data(self) -> None:
         """

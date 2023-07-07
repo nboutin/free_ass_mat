@@ -57,28 +57,28 @@ class TestPajemploi1(unittest.TestCase):
     def test_working_day_per_month_normalized(self):
         self.assertEqual(
             self.schedule.get_jour_travaille_mois_mensualisee_normalise(), 18)
-        
+
     def test_heure_complementaire_semaine(self):
         self.assertEqual(self.garde.get_heure_complementaire_semaine(2023, 2), 13)
-        
+
     def test_heure_complementaire_mois(self):
         self.assertEqual(self.garde.get_heure_complementaire_mois(date(2023,1,1)), 13)
-    
+
     def test_heure_majoree_semaine(self):
         self.assertEqual(self.garde.get_heure_majoree_semaine(2023, 2), 5)
-        
+
     def test_heure_majorees_du_mois(self):
         self.assertEqual(self.garde.get_heure_majoree_mois(date(2023,1,1)), 5)
 
     def test_salaire_net_mois(self):
         self.assertEqual(self.contract.get_salaire_net_mois(date(2023,1,1)), 475.10)
-        
+
     def test_jour_absence_non_remuneree_mois(self):
         self.assertEqual(self.garde.get_jour_absence_non_remuneree_mois(date(2023,2,1)), 8)
-        
+
     def test_heure_absence_non_remuneree_mois(self):
         self.assertEqual(self.garde.get_heure_absence_non_remuneree_mois(date(2023,2,1)), 64)
-        
+
     # def test_jour_travaillee_reel_mois(self):
     #     self.assertEqual(self.garde.get_jour_travaillee_reel_mois(date(2023,2,1)), 17)
 

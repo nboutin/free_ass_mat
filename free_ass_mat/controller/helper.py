@@ -30,7 +30,7 @@ def get_dates_in_week(year, week_number) -> list[datetime.date]:
     # Check if week number is valid
     if not 1 <= week_number <= 53:
         raise ValueError(f'Invalid ISO week number {week_number}. Week number must be in 1-53.')
-    
+
     # Jan 1 of the given year
     jan1 = datetime.date(year, 1, 1)
 
@@ -78,7 +78,7 @@ def get_week_numbers(year, month) -> list[int]:
     week_numbers = list(range(first_week_number, last_week_number + 1))
 
     return week_numbers
-    
+
 
 def get_dates_in_month(in_date:datetime.date) -> list[datetime.date]:
     """Return all dates in a given month"""

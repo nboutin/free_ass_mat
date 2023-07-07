@@ -35,8 +35,8 @@ class Contract:
     def schedule(self) -> Schedule:
         """Schedule getter"""
         return self._schedule
-    
-    @property 
+
+    @property
     def garde(self) -> Garde:
         """Garde getter"""
         return self._garde
