@@ -1,11 +1,11 @@
 """
 :author Nicolas Boutin
-:date 2023-07-05
+:datetime.date 2023-07-05
 """
 # pylint: disable=logging-fstring-interpolation
 
 import logging
-from datetime import date
+import datetime
 
 import controller.helper as helper
 from controller.schedule import Schedule
@@ -21,24 +21,24 @@ class Garde:
     garde_info_t = dict[str, dict[str, str]]
 
     def __init__(self, garde_info: garde_info_t, schedule: Schedule) -> None:
-        self._garde_info = garde_info
+        self._garde = garde_info
         self._schedule = schedule
     
-    def get_heure_travaille_par_jour(self, in_date) -> float:
+    def get_heure_travaille_par_jour(self, date) -> float:
         """Compute number of hour worked for a day"""
-        date_str = in_date.strftime('%Y-%m-%d')
-        if date_str not in self._garde_info:
+        date_str = date.strftime('%Y-%m-%d')
+        if date_str not in self._garde:
             return 0.0
         
-        time_range = self._garde_info[date_str]
+        time_range = self._garde[date_str]['heures']
         duration = helper.convert_time_range_to_duration(time_range)
         return duration.seconds / 3600.0
         
-    def get_heure_complementaire_jour(self, in_date: date) -> float:
+    def get_heure_complementaire_jour(self, date: datetime.date) -> float:
         """Calculate the number of complementary hours for a given day
         Heure prévu - heure réalisée"""
-        h_trav_prevu_jour = self._schedule.get_nb_heure_travaillee_par_jour(in_date)
-        h_trav_realisee_jour = self.get_heure_travaille_par_jour(in_date)
+        h_trav_prevu_jour = self._schedule.get_nb_heure_travaillee_par_jour(date)
+        h_trav_realisee_jour = self.get_heure_travaille_par_jour(date)
         return max(h_trav_realisee_jour - h_trav_prevu_jour, 0) # cannot be negative
         
     def get_heure_complementaire_semaine(self, year: int, numero_semaine:int)->float:
@@ -53,13 +53,13 @@ class Garde:
         
         return min(h_trav_prevu_semaine + h_comp_semaine, Garde._HEURE_COMPLEMENTAIRE_SEUIL) - h_trav_prevu_semaine
 
-    def get_heure_complementaire_mois(self, in_date: date) -> float:
+    def get_heure_complementaire_mois(self, date: datetime.date) -> float:
         """Calculate the number of complementary hours for a given month"""
         h_comp_mois: float = 0.0
-        week_numbers = helper.get_week_numbers(in_date.year, in_date.month)
+        week_numbers = helper.get_week_numbers(date.year, date.month)
         
         for week_number in week_numbers:
-            h_comp_mois += self.get_heure_complementaire_semaine(in_date.year, week_number)
+            h_comp_mois += self.get_heure_complementaire_semaine(date.year, week_number)
         return h_comp_mois
 
     def get_heure_majoree_semaine(self, year: int, numero_semaine:int)->float:
@@ -75,11 +75,27 @@ class Garde:
         return h_comp_and_maj_semaine - h_comp_semaine
 
 
-    def get_heure_majoree_mois(self, in_date: date) -> float:
+    def get_heure_majoree_mois(self, date: datetime.date) -> float:
         """Calculate the number of additional hours for a given month"""
         h_maj_mois: float = 0.0
-        week_numbers = helper.get_week_numbers(in_date.year, in_date.month)
+        week_numbers = helper.get_week_numbers(date.year, date.month)
         
         for week_number in week_numbers:
-            h_maj_mois += self.get_heure_majoree_semaine(in_date.year, week_number)
+            h_maj_mois += self.get_heure_majoree_semaine(date.year, week_number)
         return h_maj_mois
+
+    def get_jour_absence_non_remuneree_mois(self, date: datetime.date) -> int:
+        """Calculate the number of unpaid absence days for a given month"""
+        jour_count: int = 0
+        dates = helper.get_dates_in_month(date)
+        
+        for i_date in dates:
+            i_date_str = i_date.strftime('%Y-%m-%d')
+            
+            try:
+                if self._garde[i_date_str]['absence_non_remuneree']:
+                    jour_count += 1
+            except KeyError:
+                pass
+            
+        return jour_count

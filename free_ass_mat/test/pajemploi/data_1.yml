@@ -3,10 +3,10 @@ contract:
     first_name: "ass_mat first name"
     surname: "ass_mat surname"
   employers:
-  - first_name: "employer0 first name"
-    surname: "employer0 surname"
-  - first_name: "employer1 first name"
-    surname: "employer1 surname"
+    - first_name: "employer0 first name"
+      surname: "employer0 surname"
+    - first_name: "employer1 first name"
+      surname: "employer1 surname"
   child:
     first_name: "child0 first name"
     surname: "child0 surname"
@@ -40,17 +40,38 @@ contract:
         end: 52
   garde_info:
     "2023-01-09":
-      - "09:00"
-      - "14:00"
+      heures:
+        - "09:00"
+        - "14:00"
     "2023-01-10":
-      - "08:00"
-      - "20:00"
+      heures:
+        - "08:00"
+        - "20:00"
     "2023-01-11":
-      - "08:00"
-      - "20:00"
+      heures:
+        - "08:00"
+        - "20:00"
     "2023-01-12":
-      - "08:00"
-      - "20:00"
+      heures:
+        - "08:00"
+        - "20:00"
     "2023-01-13":
-      - "09:00"
-      - "18:00"
+      heures:
+        - "09:00"
+        - "18:00"
+    "2023-02-07":
+      absence_non_remuneree: true
+    "2023-02-08":
+      absence_non_remuneree: true
+    "2023-02-09":
+      absence_non_remuneree: true
+    "2023-02-10":
+      absence_non_remuneree: true
+    "2023-02-14":
+      absence_non_remuneree: true
+    "2023-02-15":
+      absence_non_remuneree: true
+    "2023-02-16":
+      absence_non_remuneree: true
+    "2023-02-17":
+      absence_non_remuneree: true

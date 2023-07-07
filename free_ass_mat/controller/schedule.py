@@ -6,7 +6,7 @@
 
 import logging
 import math
-from datetime import date
+import datetime
 
 import controller.helper as helper
 
@@ -87,9 +87,9 @@ class Schedule:
         logger.debug(f"working hour per week = {hour_count}")
         return hour_count
 
-    def get_nb_heure_travaillee_par_jour(self, in_date: date) -> float:
+    def get_nb_heure_travaillee_par_jour(self, date: datetime.date) -> float:
         """Calculate working hour per day"""
-        day_id = self._get_day_id_from_date(in_date)
+        day_id = self._get_day_id_from_date(date)
         return self.get_working_hour_per_day(day_id)
 
     def get_working_hour_per_day(self, day_id: int) -> float:
@@ -135,22 +135,22 @@ class Schedule:
         """always round up"""
         return math.ceil(self.get_working_day_per_month())
 
-    def _get_day_id_from_date(self, date_: date):
+    def _get_day_id_from_date(self, date: datetime.date):
         """Get day id from date"""
-        week_id = self._get_week_id_from_date(date_)
-        weekday_string = date_.strftime('%A').lower()
+        week_id = self._get_week_id_from_date(date)
+        weekday_string = date.strftime('%A').lower()
         day_id = self._weeks[week_id][weekday_string]
         return day_id
 
-    def _get_week_id_from_date(self, in_date: date):
+    def _get_week_id_from_date(self, date: datetime.date):
         """Get week id from date"""
-        week_number: int = int(in_date.strftime('%U'))
+        week_number: int = int(date.strftime('%U'))
         for id_, week_ranges in self._year.items():
             for week_range in week_ranges:
                 if week_range['start'] <= week_number <= week_range['end']:
                     return id_
 
-        raise SheduleError(f"week id not found for date {in_date}")
+        raise SheduleError(f"week id not found for date {date}")
 
     def _check_input_data(self) -> None:
         """

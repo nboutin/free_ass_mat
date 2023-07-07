@@ -72,6 +72,12 @@ class TestPajemploi1(unittest.TestCase):
 
     def test_salaire_net_mois(self):
         self.assertEqual(self.contract.get_salaire_net_mois(date(2023,1,1)), 475.10)
+        
+    def test_jour_absence_non_remuneree_mois(self):
+        self.assertEqual(self.garde.get_jour_absence_non_remuneree_mois(date(2023,2,1)), 8)
+        
+    # def test_heure_absence_non_remuneree_mois(self):
+    #     self.assertEqual(self.garde.get_heure_absence_non_remuneree_mois(date(2023,2,1)), 64) 
 
 if __name__ == '__main__':
     unittest.main()
