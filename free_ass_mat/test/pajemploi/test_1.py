@@ -11,7 +11,6 @@
 import unittest
 import sys
 import os
-import locale
 from datetime import date
 from pathlib import Path
 
@@ -28,8 +27,6 @@ class TestPajemploi1(unittest.TestCase):
     """Test Pajemploi"""
 
     def setUp(self):
-        locale.setlocale(locale.LC_TIME, 'fr_FR.utf8')  # Set the French locale
-
         data_filepath = Path(__file__).parent / "data_1.yml"
         with open(data_filepath, 'r', encoding='UTF-8') as file:
             data = yaml.safe_load(file)
