@@ -22,7 +22,12 @@
          
          - name: Run flake8
            run: flake8
+         
+         - name: Run pylint
+           run: pylint
    
          - name: Test with pytest
-           run: pytest
+           run: |
+            python -c "import locale; locale.setlocale(locale.LC_TIME, 'fra')"
+            pytest
          
