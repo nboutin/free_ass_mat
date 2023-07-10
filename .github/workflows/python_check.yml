@@ -6,15 +6,15 @@
    
    jobs:
      check:
-       runs-on: ubuntu-latest
+       runs-on: windows-latest
        steps:
          - name: Checkout code
-           uses: actions/checkout@v2
+           uses: actions/checkout@v3
          
          - name: Set up Python
-           uses: actions/setup-python@v2
+           uses: actions/setup-python@v4
            with:
-             python-version: 3.11
+             python-version: 3.x
          
          - name: Install dependencies
            run: 
@@ -24,7 +24,5 @@
            run: flake8
    
          - name: Test with pytest
-           run: |
-             export LC_ALL=fr_FR.UTF-8
-             pytest
+           run: pytest
          
