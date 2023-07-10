@@ -42,11 +42,11 @@ class Garde:
         Heure prévu - heure réalisée"""
         h_trav_prevu_jour = self._schedule.get_heure_travaille_jour_par_date(date)
         h_trav_realisee_jour = self.get_heure_travaille_par_jour(date)
-        return max(h_trav_realisee_jour - h_trav_prevu_jour, 0) # cannot be negative
+        return max(h_trav_realisee_jour - h_trav_prevu_jour, 0)  # cannot be negative
 
-    def get_heure_complementaire_semaine(self, year: int, numero_semaine:int)->float:
+    def get_heure_complementaire_semaine(self, year: int, numero_semaine: int) -> float:
         """Calculate the number of complementary hours for a given week"""
-        h_comp_semaine: float =  0.0
+        h_comp_semaine: float = 0.0
         dates = helper.get_dates_in_week(year, numero_semaine)
 
         for date_ in dates:
@@ -65,9 +65,9 @@ class Garde:
             h_comp_mois += self.get_heure_complementaire_semaine(date.year, week_number)
         return h_comp_mois
 
-    def get_heure_majoree_semaine(self, year: int, numero_semaine:int)->float:
+    def get_heure_majoree_semaine(self, year: int, numero_semaine: int) -> float:
         """Calculate the number of additional hours for a given week"""
-        h_comp_and_maj_semaine: float =  0.0
+        h_comp_and_maj_semaine: float = 0.0
         dates = helper.get_dates_in_week(year, numero_semaine)
 
         for date_ in dates:
@@ -76,7 +76,6 @@ class Garde:
         h_comp_semaine = self.get_heure_complementaire_semaine(year, numero_semaine)
 
         return h_comp_and_maj_semaine - h_comp_semaine
-
 
     def get_heure_majoree_mois(self, date: datetime.date) -> float:
         """Calculate the number of additional hours for a given month"""
@@ -117,6 +116,6 @@ class Garde:
 
         return heure_count
 
-    def get_jour_travaillee_reel_mois(self, date:datetime.date) -> int:
-        """Calculate the number of real working days for a given month"""
-        pass
+    # def get_jour_travaillee_reel_mois(self, date: datetime.date) -> int:
+    #     """Calculate the number of real working days for a given month"""
+    #     pass

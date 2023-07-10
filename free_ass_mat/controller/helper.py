@@ -6,10 +6,10 @@
 import calendar
 import datetime
 
-time_range_t = list[str]
+TimeRange = list[str]
 
 
-def convert_time_range_to_duration(time_range: time_range_t) -> datetime.timedelta:
+def convert_time_range_to_duration(time_range: TimeRange) -> datetime.timedelta:
     """Convert datetime.time range data structure to datetime.timedelta"""
     if len(time_range) % 2 != 0:
         raise ValueError(
@@ -52,6 +52,7 @@ def get_dates_in_week(year, week_number) -> list[datetime.date]:
 
     return week_dates
 
+
 def get_week_numbers(year, month) -> list[int]:
     """Return all week numbers in a given month"""
     # Number of days in the month
@@ -80,7 +81,7 @@ def get_week_numbers(year, month) -> list[int]:
     return week_numbers
 
 
-def get_dates_in_month(in_date:datetime.date) -> list[datetime.date]:
+def get_dates_in_month(in_date: datetime.date) -> list[datetime.date]:
     """Return all dates in a given month"""
     # Get the number of days in the month
     _, num_days = calendar.monthrange(in_date.year, in_date.month)
