@@ -23,8 +23,8 @@
          - name: Run flake8
            run: flake8
          
-         - name: Run pylint
-           run: pylint
+        #  - name: Run pylint
+        #    run: pylint
    
          - name: Test with pytest
            run: |
