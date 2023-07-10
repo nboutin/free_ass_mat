@@ -27,7 +27,5 @@
         #    run: pylint
    
          - name: Test with pytest
-           run: |
-            python -c "import locale; locale.setlocale(locale.LC_TIME, 'fra')"
-            pytest
+           run: pytest
          
