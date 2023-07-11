@@ -49,7 +49,7 @@ class PajemploiDeclaration:
         """Make PajemploiData"""
         return Declaration(
             travail_effectue=self._get_travail_effectue(mois_courant, today),
-            remuneration=self._get_remuneration(mois_courant)
+            remuneration=self._get_remuneration()
         )
 
     def _get_travail_effectue(self, mois_courant: datetime.date, today: datetime.date) -> TravailEffectue:
@@ -64,7 +64,7 @@ class PajemploiDeclaration:
             avec_heure_specifique=False
         )
 
-    def _get_remuneration(self, mois_courant: datetime.date):
+    def _get_remuneration(self):
         """Make Remuneration"""
         return Remuneration(
             salaire_net=self._contrat.get_salaire_net_mensualise(),
