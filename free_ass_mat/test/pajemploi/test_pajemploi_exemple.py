@@ -21,12 +21,12 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))  # OK
 
 
 import controller.factory as factory  # nopep8 # noqa: E402
+from controller.pajemploi_declaration import PajemploiDeclaration  # nopep8 # noqa: E402
 
 
 class TestPajemploiExemple(unittest.TestCase):
     """Test Pajemploi exemple
-    ExempleRemunerationAccueilRegulierAMA.pdf
-    """
+    ExempleRemunerationAccueilRegulierAMA.pdf"""
 
     def setUp(self):
         data_filepath = Path(__file__).parent / "data_1.yml"
@@ -36,7 +36,9 @@ class TestPajemploiExemple(unittest.TestCase):
         self.schedule = self.contract.schedule
         self.garde = self.contract.garde
 
-    def test_use_case_1(self):
+        self.pajemploi_declaration = PajemploiDeclaration(self.contract)
+
+    def test_use_case_1a(self):
         """52 semaines, année complète
         47 semaines travaillées
         Mardi-Vendredi 9h-17h, 32h/semaine
@@ -54,9 +56,31 @@ class TestPajemploiExemple(unittest.TestCase):
         self.assertAlmostEqual(self.schedule.get_jour_travaille_mois_mensualisee(), 17.33, delta=0.01)
         self.assertEqual(self.schedule.get_jour_travaille_mois_mensualisee_normalise(), 18)
 
-    def test_use_case_2(self):
-        """AssMat garde enfant le mois suivant 50h au lieu de 32h pendant la deuxieme semaine
+    def test_use_case_1b(self):
+        """52 semaines, année complète
+        47 semaines travaillées
+        Mardi-Vendredi 9h-17h, 32h/semaine
+        Salaire net horaire 3.00€
+        Heure complémentaire 3.20€
+        Heure majorée 3.50€
         """
+        mois_courant = date(2023, 1, 1)
+        today = date(2023, 7, 7)
+        declaration = self.pajemploi_declaration.get_declaration(mois_courant, today)
+
+        self.assertEqual(declaration.travail_effectue.nombre_heure_normal, 139)
+        self.assertEqual(declaration.travail_effectue.nombre_jour_activite, 18)
+        self.assertEqual(declaration.travail_effectue.nombre_jour_conges_payes, 0)
+        self.assertEqual(declaration.travail_effectue.avec_heure_complementaire_ou_majoree, False)
+        self.assertEqual(declaration.travail_effectue.avec_heure_specifique, False)
+
+        self.assertEqual(declaration.remuneration.salaire_net, 416)
+        self.assertEqual(declaration.remuneration.indemnite_entretien, 0)
+        self.assertEqual(declaration.remuneration.avec_acompte_verse_au_salarie, False)
+        self.assertEqual(declaration.remuneration.avec_indemnite_repas_ou_kilometrique, False)
+
+    def test_use_case_2(self):
+        """AssMat garde enfant le mois suivant 50h au lieu de 32h pendant la deuxieme semaine"""
         self.assertEqual(self.garde.get_heure_complementaire_semaine(2023, 2), 13)
         self.assertEqual(self.garde.get_heure_complementaire_mois(date(2023, 1, 1)), 13)
         self.assertEqual(self.garde.get_heure_majoree_semaine(2023, 2), 5)
