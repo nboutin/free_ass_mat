@@ -23,8 +23,10 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))  # OK
 import controller.factory as factory  # nopep8 # noqa: E402
 
 
-class TestPajemploi1(unittest.TestCase):
-    """Test Pajemploi"""
+class TestPajemploiExemple(unittest.TestCase):
+    """Test Pajemploi exemple
+    ExempleRemunerationAccueilRegulierAMA.pdf
+    """
 
     def setUp(self):
         data_filepath = Path(__file__).parent / "data_1.yml"
@@ -34,63 +36,48 @@ class TestPajemploi1(unittest.TestCase):
         self.schedule = self.contract.schedule
         self.garde = self.contract.garde
 
-    def test_is_complete_year(self):
+    def test_use_case_1(self):
+        """52 semaines, année complète
+        47 semaines travaillées
+        Mardi-Vendredi 9h-17h, 32h/semaine
+        Salaire net horaire 3.00€
+        Heure complémentaire 3.20€
+        Heure majorée 3.50€
+        """
         self.assertTrue(self.contract.is_complete_year())
-
-    def test_working_hour_per_week(self):
-        self.assertEqual(self.schedule.get_heure_travaillee_semaine_par_id(), 32)
-
-    def test_working_week_count(self):
         self.assertEqual(self.schedule.get_semaine_travaillee_annee(), 47)
-
-    def test_working_hour_per_month(self):
-        self.assertAlmostEqual(
-            self.schedule.get_heure_travaille_mois_mensualisee(), 138.66, delta=0.01)
-
-    def test_monthly_salary(self):
+        self.assertEqual(self.schedule.get_heure_travaillee_semaine_par_id(), 32)
+        self.assertAlmostEqual(self.schedule.get_heure_travaille_mois_mensualisee(), 138.66, delta=0.01)
         self.assertEqual(self.contract.get_salaire_net_mensualise(), 416)
 
-    def test_working_hour_per_month_normalized(self):
-        self.assertEqual(
-            self.schedule.get_heure_travaille_mois_mensualisee_normalisee(), 139)
-
-    def test_working_day_per_month(self):
+        self.assertEqual(self.schedule.get_heure_travaille_mois_mensualisee_normalisee(), 139)
         self.assertAlmostEqual(self.schedule.get_jour_travaille_mois_mensualisee(), 17.33, delta=0.01)
+        self.assertEqual(self.schedule.get_jour_travaille_mois_mensualisee_normalise(), 18)
 
-    def test_working_day_per_month_normalized(self):
-        self.assertEqual(
-            self.schedule.get_jour_travaille_mois_mensualisee_normalise(), 18)
-
-    def test_heure_complementaire_semaine(self):
+    def test_use_case_2(self):
+        """AssMat garde enfant le mois suivant 50h au lieu de 32h pendant la deuxieme semaine
+        """
         self.assertEqual(self.garde.get_heure_complementaire_semaine(2023, 2), 13)
-
-    def test_heure_complementaire_mois(self):
         self.assertEqual(self.garde.get_heure_complementaire_mois(date(2023, 1, 1)), 13)
-
-    def test_heure_majoree_semaine(self):
         self.assertEqual(self.garde.get_heure_majoree_semaine(2023, 2), 5)
-
-    def test_heure_majorees_du_mois(self):
         self.assertEqual(self.garde.get_heure_majoree_mois(date(2023, 1, 1)), 5)
-
-    def test_salaire_net_mois(self):
         self.assertEqual(self.contract.get_salaire_net_mois(date(2023, 1, 1)), 475.10)
 
-    def test_jour_absence_non_remuneree_mois(self):
+    def test_use_case_3(self):
+        """Mois suivant, AssMat absente pendant 2 semaines
+        Pas de garde enfant pendant 8 jours * 8h, soit 64h.
+        Ce mois, AssMat aurait du garder l'enfant 17 jours * 8h, soit 136h.
+        or elle ne le garde que 9 jours
+        """
         self.assertEqual(self.garde.get_jour_absence_non_remuneree_mois(date(2023, 9, 1)), 8)
-
-    def test_heure_absence_non_remuneree_mois(self):
         self.assertEqual(self.garde.get_heure_absence_non_remuneree_mois(date(2023, 9, 1)), 64)
-
-    def test_jour_travaille_prevu_mois(self):
         self.assertEqual(self.schedule.get_jour_travaille_prevu_mois_par_date(date(2023, 9, 1)), 17)
-
-    def test_heure_travaillee_prevu_mois(self):
         self.assertEqual(self.schedule.get_heure_travaille_prevu_mois_par_date(date(2023, 9, 1)), 136)
-
-    def test_salaire_net_mois_2(self):
         self.assertAlmostEqual(self.contract.get_salaire_net_mois(date(2023, 9, 1)), 220.24, delta=0.01)
 
 
 if __name__ == '__main__':
+    import locale
+    locale.setlocale(locale.LC_ALL, '')
+
     unittest.main()
