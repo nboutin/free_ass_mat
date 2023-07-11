@@ -37,7 +37,7 @@ def main():
                 contract = factory.make_contract(child['contract'])
                 schedule = contract.schedule
 
-                complete_year = contract.is_complete_year()
+                complete_year = contract.is_annee_complete()
                 logger.info(f"Complete year {complete_year}")
 
                 working_hour_per_week = schedule.get_heure_travaillee_semaine_par_id()

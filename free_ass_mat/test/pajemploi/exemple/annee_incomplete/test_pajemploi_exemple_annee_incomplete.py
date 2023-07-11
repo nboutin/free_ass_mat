@@ -38,23 +38,34 @@ class TestPajemploiExempleAnneeIncomplete(unittest.TestCase):
 
         self.pajemploi_declaration = PajemploiDeclaration(self.contract)
 
-    def test_calcul_annee_complete(self):
+    def test_calcul_annee_incomplete(self):
         """annee incomplete
         37 semaines travaillées
         Lundi, Mardi, Jeudi, Vendredi 8h30-18h30, 40h/semaine
         Salaire net horaire 3.00€
         Heure complémentaire 3.20€
         Heure majorée 3.50€
+        Nombre heure par mensualise = 123.33
+        Salaire net mensualisé = 370€
+        Nombre de jours activités mensualises = 12.33
+        Declaration Pajemploi:
+        - Nombre d'heures normales = 123
+        - Nombre de jours d'activités = 13
         """
-        self.assertFalse(self.contract.is_complete_year())
-        # self.assertEqual(self.schedule.get_semaine_travaillee_annee(), 47)
-        # self.assertEqual(self.schedule.get_heure_travaillee_semaine_par_id(), 32)
-        # self.assertAlmostEqual(self.schedule.get_heure_travaille_mois_mensualisee(), 138.66, delta=0.01)
-        # self.assertEqual(self.contract.get_salaire_net_mensualise(), 416)
+        self.assertFalse(self.schedule.is_annee_complete())
+        self.assertEqual(self.schedule.get_semaine_travaillee_annee(), 37)
+        self.assertEqual(self.schedule.get_heure_travaillee_semaine_par_id(), 40)
+        self.assertAlmostEqual(self.schedule.get_heure_travaille_mois_mensualisee(), 123.33, delta=0.01)
+        self.assertEqual(self.contract.get_salaire_net_mensualise(), 370)
+        self.assertAlmostEqual(self.schedule.get_jour_travaille_mois_mensualisee(), 12.33, delta=0.01)
 
-        # self.assertEqual(self.schedule.get_heure_travaille_mois_mensualisee_normalisee(), 139)
-        # self.assertAlmostEqual(self.schedule.get_jour_travaille_mois_mensualisee(), 17.33, delta=0.01)
-        # self.assertEqual(self.schedule.get_jour_travaille_mois_mensualisee_normalise(), 18)
+        mois_courant = date(2023, 1, 1)
+        today = date(2023, 1, 7)
+        declaration = self.pajemploi_declaration.get_declaration(mois_courant, today)
+        travail_effectue = declaration.travail_effectue
+
+        self.assertEqual(travail_effectue.nombre_heures_normales, 123)
+        self.assertEqual(travail_effectue.nombre_jours_activite, 13)
 
     # def test_heures_complementaires_majorees(self):
     #     """AssMat garde enfant le mois suivant 50h au lieu de 32h pendant la deuxieme semaine"""

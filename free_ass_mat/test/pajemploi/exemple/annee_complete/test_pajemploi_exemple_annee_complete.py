@@ -45,16 +45,26 @@ class TestPajemploiExempleAnneeComplete(unittest.TestCase):
         Salaire net horaire 3.00€
         Heure complémentaire 3.20€
         Heure majorée 3.50€
+        Nombre heure par mensualise = 138.66
+        Nombre de jours activités mensualises = 17.33
+        Declaratoin Pajemploi:
+        - Nombre d'heures normales = 139
+        - Nombre de jours d'activités = 18
         """
-        self.assertTrue(self.contract.is_complete_year())
+        self.assertTrue(self.schedule.is_annee_complete())
         self.assertEqual(self.schedule.get_semaine_travaillee_annee(), 47)
         self.assertEqual(self.schedule.get_heure_travaillee_semaine_par_id(), 32)
         self.assertAlmostEqual(self.schedule.get_heure_travaille_mois_mensualisee(), 138.66, delta=0.01)
         self.assertEqual(self.contract.get_salaire_net_mensualise(), 416)
-
-        self.assertEqual(self.schedule.get_heure_travaille_mois_mensualisee_normalisee(), 139)
         self.assertAlmostEqual(self.schedule.get_jour_travaille_mois_mensualisee(), 17.33, delta=0.01)
-        self.assertEqual(self.schedule.get_jour_travaille_mois_mensualisee_normalise(), 18)
+
+        mois_courant = date(2023, 2, 1)
+        today = date(2023, 2, 7)
+        declaration = self.pajemploi_declaration.get_declaration(mois_courant, today)
+        travail_effectue = declaration.travail_effectue
+
+        self.assertEqual(travail_effectue.nombre_heures_normales, 139)
+        self.assertEqual(travail_effectue.nombre_jours_activite, 18)
 
     def test_heures_complementaires_majorees(self):
         """AssMat garde enfant le mois suivant 50h au lieu de 32h pendant la deuxieme semaine"""
