@@ -31,6 +31,6 @@ def make_contract(contract_data):
     garde = make_garde_info(contract_data['garde_info'], schedule)
     salaires_data = contract_data['salaires']
     salaires = Contract.SalairesHoraires(horaire_net=salaires_data['horaire_net'],
-                                 horaire_complementaires=salaires_data['horaire_complementaires'],
-                                 horaire_majorees=salaires_data['horaire_majorees'])
+                                         horaire_complementaires=salaires_data['horaire_complementaires'],
+                                         horaire_majorees=salaires_data['horaire_majorees'])
     return Contract(schedule, salaires, garde)
