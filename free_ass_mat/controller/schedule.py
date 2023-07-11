@@ -60,11 +60,14 @@ class Schedule:
     def get_semaine_conges_payes_annee(self) -> int:
         """Count week of paid vacation"""
         week_count = 0
-        for week_range in self._paid_vacation:
-            start = week_range['start']
-            end = week_range['end']
-            week_count += end - start + 1
-        return week_count
+        try:
+            for week_range in self._paid_vacation:
+                start = week_range['start']
+                end = week_range['end']
+                week_count += end - start + 1
+            return week_count
+        except TypeError:
+            return 0
 
     def get_heure_travaille_semaine_par_date(self, year,  week_number: int) -> float:
         """Calculate working hour per week"""

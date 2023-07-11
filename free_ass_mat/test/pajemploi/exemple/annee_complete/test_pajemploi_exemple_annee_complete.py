@@ -17,19 +17,19 @@ from pathlib import Path
 import yaml
 
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))  # OK
+sys.path.append(os.path.join(os.path.dirname(__file__), "../../../.."))  # OK
 
 
 import controller.factory as factory  # nopep8 # noqa: E402
 from controller.pajemploi_declaration import PajemploiDeclaration  # nopep8 # noqa: E402
 
 
-class TestPajemploiExemple(unittest.TestCase):
+class TestPajemploiExempleAnneeComplete(unittest.TestCase):
     """Test Pajemploi exemple
     ExempleRemunerationAccueilRegulierAMA.pdf"""
 
     def setUp(self):
-        data_filepath = Path(__file__).parent / "data_1.yml"
+        data_filepath = Path(__file__).parent / "data_pajemploi_exemple_annee_complete.yml"
         with open(data_filepath, 'r', encoding='UTF-8') as file:
             data = yaml.safe_load(file)
         self.contract = factory.make_contract(data['contract'])
