@@ -20,13 +20,13 @@ class Contract:
     _COMPLETE_YEAR_WORKING_WEEK_COUNT = 47
     _COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT = 5
 
-    class Salaires(NamedTuple):
+    class SalairesHoraires(NamedTuple):
         """Salaires namedtuple"""
         horaire_net: float
         horaire_complementaires: float
         horaire_majorees: float
 
-    def __init__(self, schedule: Schedule, salaires: Salaires, garde: Garde) -> None:
+    def __init__(self, schedule: Schedule, salaires: SalairesHoraires, garde: Garde) -> None:
         self._schedule = schedule
         self._salaires = salaires
         self._garde = garde
@@ -40,6 +40,11 @@ class Contract:
     def garde(self) -> Garde:
         """Garde getter"""
         return self._garde
+
+    @property
+    def salaires_horaires(self) -> SalairesHoraires:
+        """SalairesHoraires getter"""
+        return self._salaires
 
     def is_complete_year(self) -> bool:
         """Evaluate if contract is for a complete year (47 week) or an incomplete year"""
