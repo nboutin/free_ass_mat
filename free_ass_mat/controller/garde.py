@@ -65,6 +65,10 @@ class Garde:
             h_comp_mois += self.get_heure_complementaire_semaine(date.year, week_number)
         return h_comp_mois
 
+    def has_heures_complementaires_mois(self, date: datetime.date) -> bool:
+        """Check if there are complementary hours for a given month"""
+        return self.get_heure_complementaire_mois(date) > 0.0
+
     def get_heure_majoree_semaine(self, year: int, numero_semaine: int) -> float:
         """Calculate the number of additional hours for a given week"""
         h_comp_and_maj_semaine: float = 0.0
@@ -85,6 +89,10 @@ class Garde:
         for week_number in week_numbers:
             h_maj_mois += self.get_heure_majoree_semaine(date.year, week_number)
         return h_maj_mois
+
+    def has_jour_absence_non_remuneree_mois(self, date: datetime.date) -> bool:
+        """Check if there are unpaid absence days for a given day"""
+        return self.get_jour_absence_non_remuneree_mois(date) > 0
 
     def get_jour_absence_non_remuneree_mois(self, date: datetime.date) -> int:
         """Calculate the number of unpaid absence days for a given month"""

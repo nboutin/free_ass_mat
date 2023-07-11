@@ -18,11 +18,11 @@ class TravailEffectue(NamedTuple):
     """Section Travail effectue de la declaration Pajemploi"""
     periode_d_emploi: datetime.date
     date_de_paiement: datetime.date
-    nombre_heure_normal: int
-    nombre_jour_activite: int
-    nombre_jour_conges_payes: float
-    avec_heure_complementaire_ou_majoree: bool
-    avec_heure_specifique: bool
+    nombre_heures_normales: int
+    nombre_jours_activite: int
+    nombre_jours_conges_payes: float
+    avec_heures_complementaires_ou_majorees: bool
+    avec_heures_specifiques: bool
 
 
 class Remuneration(NamedTuple):
@@ -57,11 +57,11 @@ class PajemploiDeclaration:
         return TravailEffectue(
             periode_d_emploi=(mois_courant.year, mois_courant.month, 1),
             date_de_paiement=today,
-            nombre_heure_normal=self._contrat.schedule.get_heure_travaille_mois_mensualisee_normalisee(),
-            nombre_jour_activite=self._contrat.schedule.get_jour_travaille_mois_mensualisee_normalise(),
-            nombre_jour_conges_payes=0,
-            avec_heure_complementaire_ou_majoree=False,
-            avec_heure_specifique=False
+            nombre_heures_normales=self._get_nombre_heures_normales(mois_courant),
+            nombre_jours_activite=self._get_nombre_jours_activite(mois_courant),
+            nombre_jours_conges_payes=0,
+            avec_heures_complementaires_ou_majorees=self._contrat.garde.has_heures_complementaires_mois(mois_courant),
+            avec_heures_specifiques=False
         )
 
     def _get_remuneration(self):
@@ -72,3 +72,22 @@ class PajemploiDeclaration:
             avec_acompte_verse_au_salarie=False,
             avec_indemnite_repas_ou_kilometrique=False
         )
+
+    def _get_nombre_heures_normales(self, mois_courant: datetime.date) -> int:
+        """Compute the number of normal hours worked for a given month
+        « Nombre d heures normales » : Salaire mensuel ÷ Taux horaire net"""
+
+        if not self._contrat.garde.has_jour_absence_non_remuneree_mois(mois_courant):
+            return self._contrat.schedule.get_heure_travaille_mois_mensualisee_normalisee()
+        else:
+            return round(self._contrat.get_salaire_net_mois(mois_courant) / self._contrat.salaires_horaires.horaire_net)
+
+    def _get_nombre_jours_activite(self, mois_courant: datetime.date) -> int:
+        """Compute the number of days worked for a given month
+        « Nombre de jours d activité » : Nombre d heures normales ÷ Nombre d heures par jour"""
+
+        if not self._contrat.garde.has_jour_absence_non_remuneree_mois(mois_courant):
+            return self._contrat.schedule.get_jour_travaille_mois_mensualisee_normalise()
+        else:
+            return (self._contrat.schedule.get_jour_travaille_prevu_mois_par_date(mois_courant)
+                    - self._contrat.garde.get_jour_absence_non_remuneree_mois(mois_courant))
