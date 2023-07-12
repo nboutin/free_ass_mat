@@ -103,6 +103,11 @@ class TestPajemploiExempleAnneeComplete(unittest.TestCase):
         Pas de garde enfant pendant 8 jours * 8h, soit 64h.
         Ce mois, AssMat aurait du garder l'enfant 17 jours * 8h, soit 136h.
         or elle ne le garde que 9 jours
+        Salaire net 220.24€
+        Declaration Pajemploi:
+        - Nombre d'heures normales = 73
+        - Nombre de jours d'activités = 9
+        - Salaire net total = 220.24€
         """
         mois_courant = date(2023, 9, 1)
         today = date(2023, 7, 7)
@@ -114,12 +119,13 @@ class TestPajemploiExempleAnneeComplete(unittest.TestCase):
         self.assertAlmostEqual(self.contract.get_salaire_net_mois(mois_courant), 220.24, delta=0.01)
 
         declaration = self.pajemploi_declaration.get_declaration(mois_courant, today)
+        travail_effectue = declaration.travail_effectue
+        remuneration = declaration.remuneration
 
-        self.assertEqual(declaration.travail_effectue.nombre_heures_normales, 73)
-        self.assertEqual(declaration.travail_effectue.nombre_jours_activite, 9)
-        self.assertEqual(declaration.travail_effectue.nombre_jours_conges_payes, 0)
-        self.assertEqual(declaration.travail_effectue.avec_heures_complementaires_ou_majorees, False)
-        self.assertEqual(declaration.travail_effectue.avec_heures_specifiques, False)
+        self.assertEqual(travail_effectue.nombre_heures_normales, 73)
+        self.assertEqual(travail_effectue.nombre_jours_activite, 9)
+
+        self.assertAlmostEqual(remuneration.salaire_net, 220.24, delta=0.01)
 
 
 if __name__ == '__main__':

@@ -20,7 +20,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../../../.."))  # OK
 
 
 import controller.factory as factory  # nopep8 # noqa: E402
-from controller.pajemploi_declaration import PajemploiDeclaration, Remuneration  # nopep8 # noqa: E402
+from controller.pajemploi_declaration import PajemploiDeclaration  # nopep8 # noqa: E402
 
 
 class TestPajemploiExempleAnneeIncomplete(unittest.TestCase):
@@ -98,28 +98,34 @@ class TestPajemploiExempleAnneeIncomplete(unittest.TestCase):
         self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_majorees, 5)
         self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_complementaires, 5)
 
-    # def test_absence_non_remunerees(self):
-    #     """Mois suivant, AssMat absente pendant 2 semaines
-    #     Pas de garde enfant pendant 8 jours * 8h, soit 64h.
-    #     Ce mois, AssMat aurait du garder l'enfant 17 jours * 8h, soit 136h.
-    #     or elle ne le garde que 9 jours
-    #     """
-    #     mois_courant = date(2023, 9, 1)
-    #     today = date(2023, 7, 7)
+    def test_absence_non_remunerees(self):
+        """Mois suivant, AssMat absente pendant 2 semaines
+        Pas de garde enfant pendant 8 jours * 10h, soit 80h.
+        Ce mois, AssMat aurait du garder l'enfant 16 jours * 8h, soit 160h.
+        or elle ne le garde que 8 jours
+        Salaire net 185€ (370 - (370*8/16))
+        Declaration Pajemploi:
+        - Nombre d'heures normales = 61.66 arrondi 62h
+        - Nombre de jours d'activités = 8
+        - Salaire net total = 185€
+        """
+        mois_courant = date(2023, 4, 1)
+        today = date(2023, 4, 7)
 
-    #     self.assertEqual(self.garde.get_jour_absence_non_remuneree_mois(mois_courant), 8)
-    #     self.assertEqual(self.garde.get_heure_absence_non_remuneree_mois(mois_courant), 64)
-    #     self.assertEqual(self.schedule.get_jour_travaille_prevu_mois_par_date(mois_courant), 17)
-    #     self.assertEqual(self.schedule.get_heure_travaille_prevu_mois_par_date(mois_courant), 136)
-    #     self.assertAlmostEqual(self.contract.get_salaire_net_mois(mois_courant), 220.24, delta=0.01)
+        self.assertEqual(self.garde.get_jour_absence_non_remuneree_mois(mois_courant), 8)
+        self.assertEqual(self.garde.get_heure_absence_non_remuneree_mois(mois_courant), 80)
+        self.assertEqual(self.schedule.get_jour_travaille_prevu_mois_par_date(mois_courant), 16)
+        self.assertEqual(self.schedule.get_heure_travaille_prevu_mois_par_date(mois_courant), 160)
+        self.assertAlmostEqual(self.contract.get_salaire_net_mois(mois_courant), 185, delta=0.01)
 
-    #     declaration = self.pajemploi_declaration.get_declaration(mois_courant, today)
+        declaration = self.pajemploi_declaration.get_declaration(mois_courant, today)
+        travail_effectue = declaration.travail_effectue
+        remuneration = declaration.remuneration
 
-    #     self.assertEqual(declaration.travail_effectue.nombre_heures_normales, 73)
-    #     self.assertEqual(declaration.travail_effectue.nombre_jours_activite, 9)
-    #     self.assertEqual(declaration.travail_effectue.nombre_jours_conges_payes, 0)
-    #     self.assertEqual(declaration.travail_effectue.avec_heures_complementaires_ou_majorees, False)
-    #     self.assertEqual(declaration.travail_effectue.avec_heures_specifiques, False)
+        self.assertEqual(travail_effectue.nombre_heures_normales, 62)
+        self.assertEqual(travail_effectue.nombre_jours_activite, 8)
+
+        self.assertEqual(remuneration.salaire_net, 185)
 
 
 if __name__ == '__main__':

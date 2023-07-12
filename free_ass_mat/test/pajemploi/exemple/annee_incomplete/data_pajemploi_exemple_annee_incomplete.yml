@@ -53,4 +53,20 @@ contract:
       heures:
         - "07:00"
         - "19:30"
+    "2023-04-10":
+      absence_non_remuneree: true
+    "2023-04-11":
+      absence_non_remuneree: true
+    "2023-04-13":
+      absence_non_remuneree: true
+    "2023-04-14":
+      absence_non_remuneree: true
+    "2023-04-17":
+      absence_non_remuneree: true
+    "2023-04-18":
+      absence_non_remuneree: true
+    "2023-04-20":
+      absence_non_remuneree: true
+    "2023-04-21":
+      absence_non_remuneree: true
 
