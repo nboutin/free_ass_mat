@@ -7,7 +7,7 @@ on:
     types: [opened, synchronize, reopened, edited, closed]
 
 jobs:
-  python-code-check:
+  run-tests:
     runs-on: windows-latest
     steps:
       - name: Checkout code
