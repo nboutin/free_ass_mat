@@ -17,9 +17,6 @@ logger = logging.getLogger(__name__)
 class Contract:
     """Assistante maternelle contract"""
 
-    _COMPLETE_YEAR_WORKING_WEEK_COUNT = 47
-    _COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT = 5
-
     class SalairesHoraires(NamedTuple):
         """Salaires namedtuple"""
         horaire_net: float
@@ -45,12 +42,6 @@ class Contract:
     def salaires_horaires(self) -> SalairesHoraires:
         """SalairesHoraires getter"""
         return self._salaires
-
-    def is_complete_year(self) -> bool:
-        """Evaluate if contract is for a complete year (47 week) or an incomplete year"""
-        return (self._schedule.get_semaine_travaillee_annee() == Contract._COMPLETE_YEAR_WORKING_WEEK_COUNT) and \
-            (self._schedule.get_semaine_conges_payes_annee() ==
-             Contract._COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT)
 
     def get_salaire_net_mensualise(self):
         """working_hour_per_month_count * net_hourly_rate"""

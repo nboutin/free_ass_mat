@@ -5,7 +5,6 @@
 # pylint: disable=logging-fstring-interpolation
 
 import logging
-import math
 import datetime
 import calendar
 
@@ -22,6 +21,9 @@ class Schedule:
     """
     Schedule / planning, hour, day, week, month, year
     """
+    _COMPLETE_YEAR_WORKING_WEEK_COUNT = 47
+    _COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT = 5
+
     day_id_t = int
     hour_range_t = dict[str, str]
     days_t = dict[day_id_t, hour_range_t]
@@ -40,6 +42,11 @@ class Schedule:
         self._paid_vacation = paid_vacation
 
         self._check_input_data()
+
+    def is_annee_complete(self) -> bool:
+        """Evaluate if contract is for a complete year (47 week) or an incomplete year"""
+        return (self.get_semaine_travaillee_annee() == Schedule._COMPLETE_YEAR_WORKING_WEEK_COUNT) and \
+            (self.get_semaine_conges_payes_annee() == Schedule._COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT)
 
     def get_semaine_travaillee_annee(self) -> int:
         """Count working week for a complete year"""
@@ -60,11 +67,14 @@ class Schedule:
     def get_semaine_conges_payes_annee(self) -> int:
         """Count week of paid vacation"""
         week_count = 0
-        for week_range in self._paid_vacation:
-            start = week_range['start']
-            end = week_range['end']
-            week_count += end - start + 1
-        return week_count
+        try:
+            for week_range in self._paid_vacation:
+                start = week_range['start']
+                end = week_range['end']
+                week_count += end - start + 1
+            return week_count
+        except TypeError:
+            return 0
 
     def get_heure_travaille_semaine_par_date(self, year,  week_number: int) -> float:
         """Calculate working hour per week"""
@@ -103,14 +113,13 @@ class Schedule:
         """Calculate working hour per month"""
         hour_per_week_count: float = 0.0
         for week_id in self._year.keys():
-            # working_week_count = self._get_working_week_count(week_id)
-            hour_per_week_count += self.get_heure_travaillee_semaine_par_id(week_id) * 52
+            if self.is_annee_complete():
+                hour_per_week_count += self.get_heure_travaillee_semaine_par_id(week_id) * 52
+            else:
+                semaine_travaille_annee = self.get_semaine_travaillee_annee()
+                hour_per_week_count += self.get_heure_travaillee_semaine_par_id(week_id) * semaine_travaille_annee
 
         return hour_per_week_count / 12
-
-    def get_heure_travaille_mois_mensualisee_normalisee(self) -> int:
-        """<0.5, round down, >0.5, round up"""
-        return round(self.get_heure_travaille_mois_mensualisee())
 
     def get_jour_travaille_semaine_par_id(self, week_id: int = 0) -> float:
         """working day count per week"""
@@ -122,11 +131,11 @@ class Schedule:
 
     def get_jour_travaille_mois_mensualisee(self) -> float:
         """day_per_week_count * 52 / 12"""
-        return self.get_jour_travaille_semaine_par_id() * 52 / 12
-
-    def get_jour_travaille_mois_mensualisee_normalise(self) -> int:
-        """always round up"""
-        return math.ceil(self.get_jour_travaille_mois_mensualisee())
+        if self.is_annee_complete():
+            return self.get_jour_travaille_semaine_par_id() * 52 / 12
+        else:
+            semaine_travaille_annee = self.get_semaine_travaillee_annee()
+            return self.get_jour_travaille_semaine_par_id() * semaine_travaille_annee / 12
 
     def _get_jour_id_par_date(self, date: datetime.date):
         """Get day id from date"""

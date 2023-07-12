@@ -27,7 +27,10 @@ class Garde:
     def get_heure_travaille_par_jour(self, date) -> float:
         """Compute number of hour worked for a day"""
         date_str = date.strftime('%Y-%m-%d')
-        if date_str not in self._garde:
+        try:  # garde dict could be empty
+            if date_str not in self._garde:
+                return 0.0
+        except TypeError:
             return 0.0
 
         try:
@@ -104,7 +107,7 @@ class Garde:
             try:
                 if self._garde[i_date_str]['absence_non_remuneree']:
                     jour_count += 1
-            except KeyError:
+            except (KeyError, TypeError):
                 pass
 
         return jour_count
