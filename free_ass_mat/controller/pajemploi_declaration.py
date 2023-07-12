@@ -34,10 +34,18 @@ class Remuneration(NamedTuple):
     avec_indemnite_repas_ou_kilometrique: bool
 
 
+class HeuresMajoreesOuComplementaires(NamedTuple):
+    """Section Heures Majorees Ou Complementaires de la declaration Pajemploi"""
+    salaire_horaire_net: float
+    nombre_heures_majorees: int
+    nombre_heures_complementaires: int
+
+
 class Declaration(NamedTuple):
     """Pajemploi Declaration Rapport"""
     travail_effectue: TravailEffectue
     remuneration: Remuneration
+    heures_majorees_ou_complementaires: HeuresMajoreesOuComplementaires
 
 
 class PajemploiDeclaration:
@@ -50,7 +58,8 @@ class PajemploiDeclaration:
         """Make PajemploiData"""
         return Declaration(
             travail_effectue=self._get_travail_effectue(mois_courant, today),
-            remuneration=self._get_remuneration()
+            remuneration=self._get_remuneration(mois_courant),
+            heures_majorees_ou_complementaires=self._get_heures_majorees_ou_complementaires(mois_courant)
         )
 
     def _get_travail_effectue(self, mois_courant: datetime.date, today: datetime.date) -> TravailEffectue:
@@ -65,13 +74,21 @@ class PajemploiDeclaration:
             avec_heures_specifiques=False
         )
 
-    def _get_remuneration(self):
+    def _get_remuneration(self, mois_courant: datetime.date) -> Remuneration:
         """Make Remuneration"""
         return Remuneration(
-            salaire_net=self._contrat.get_salaire_net_mensualise(),
+            salaire_net=self._contrat.get_salaire_net_mois(mois_courant),
             indemnite_entretien=0.0,
             avec_acompte_verse_au_salarie=False,
             avec_indemnite_repas_ou_kilometrique=False
+        )
+
+    def _get_heures_majorees_ou_complementaires(self, mois_courant: datetime.date) -> HeuresMajoreesOuComplementaires:
+        """Make HeuresMajoreesOuComplementaires"""
+        return HeuresMajoreesOuComplementaires(
+            salaire_horaire_net=self._contrat.salaires_horaires.horaire_net,
+            nombre_heures_majorees=self._contrat.garde.get_heure_majoree_mois(mois_courant),
+            nombre_heures_complementaires=self._contrat.garde.get_heure_complementaire_mois(mois_courant)
         )
 
     def _get_nombre_heures_normales(self, mois_courant: datetime.date) -> int:

@@ -67,36 +67,36 @@ class TestPajemploiExempleAnneeComplete(unittest.TestCase):
         self.assertEqual(travail_effectue.nombre_jours_activite, 18)
 
     def test_heures_complementaires_majorees(self):
-        """AssMat garde enfant le mois suivant 50h au lieu de 32h pendant la deuxieme semaine"""
-        self.assertEqual(self.garde.get_heure_complementaire_semaine(2023, 2), 13)
-        self.assertEqual(self.garde.get_heure_complementaire_mois(date(2023, 1, 1)), 13)
-        self.assertEqual(self.garde.get_heure_majoree_semaine(2023, 2), 5)
-        self.assertEqual(self.garde.get_heure_majoree_mois(date(2023, 1, 1)), 5)
-        self.assertEqual(self.contract.get_salaire_net_mois(date(2023, 1, 1)), 475.10)
-
-    def test_declaration_pajemploi_heures_complementaires_majorees(self):
-        """52 semaines, année complète
-        47 semaines travaillées
-        Mardi-Vendredi 9h-17h, 32h/semaine
-        Salaire net horaire 3.00€
-        Heure complémentaire 3.20€
-        Heure majorée 3.50€
-        AssMat garde enfant le mois suivant 50h au lieu de 32h pendant la deuxieme semaine
+        """AssMat garde enfant le mois suivant 50h au lieu de 32h pendant la deuxieme semaine
+        heures complementaires 13h
+        heures majorees 5h
+        salaire net 475.10€
         """
         mois_courant = date(2023, 1, 1)
-        today = date(2023, 7, 7)
+        week_number = 2
+
+        self.assertEqual(self.garde.get_heure_complementaire_semaine(2023, week_number), 13)
+        self.assertEqual(self.garde.get_heure_complementaire_mois(mois_courant), 13)
+        self.assertEqual(self.garde.get_heure_majoree_semaine(2023, week_number), 5)
+        self.assertEqual(self.garde.get_heure_majoree_mois(mois_courant), 5)
+        self.assertEqual(self.contract.get_salaire_net_mois(mois_courant), 475.10)
+
+        mois_courant = date(2023, 1, 1)
+        today = date(2023, 1, 7)
         declaration = self.pajemploi_declaration.get_declaration(mois_courant, today)
+        travail_effectue = declaration.travail_effectue
+        remuneration = declaration.remuneration
+        heures_majorees_ou_complementaires = declaration.heures_majorees_ou_complementaires
 
-        self.assertEqual(declaration.travail_effectue.nombre_heures_normales, 139)
-        self.assertEqual(declaration.travail_effectue.nombre_jours_activite, 18)
-        self.assertEqual(declaration.travail_effectue.nombre_jours_conges_payes, 0)
-        self.assertEqual(declaration.travail_effectue.avec_heures_complementaires_ou_majorees, True)
-        self.assertEqual(declaration.travail_effectue.avec_heures_specifiques, False)
+        self.assertEqual(travail_effectue.nombre_heures_normales, 139)
+        self.assertEqual(travail_effectue.nombre_jours_activite, 18)
+        self.assertTrue(travail_effectue.avec_heures_complementaires_ou_majorees)
 
-    #     self.assertEqual(declaration.remuneration.salaire_net, 416)
-    #     self.assertEqual(declaration.remuneration.indemnite_entretien, 0)
-    #     self.assertEqual(declaration.remuneration.avec_acompte_verse_au_salarie, False)
-    #     self.assertEqual(declaration.remuneration.avec_indemnite_repas_ou_kilometrique, False)
+        self.assertEqual(remuneration.salaire_net, 475.10)
+
+        self.assertEqual(heures_majorees_ou_complementaires.salaire_horaire_net, 3.00)
+        self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_majorees, 5)
+        self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_complementaires, 13)
 
     def test_absence_non_remunerees(self):
         """Mois suivant, AssMat absente pendant 2 semaines
