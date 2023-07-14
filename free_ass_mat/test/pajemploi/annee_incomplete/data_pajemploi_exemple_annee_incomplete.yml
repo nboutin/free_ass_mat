@@ -17,9 +17,7 @@ contract:
   schedule:
     days:
       # day_id
-      0:
-        - "08:30"
-        - "18:30"
+      0: [["08:30","18:30"]]
     weeks:
       # week_id : (week day : day_id)
       0:
@@ -32,27 +30,17 @@ contract:
         dimanche: null
     year:
       # week_id
-      0:
-        - start: 1
-          end: 37
-    paid_vacation:
+      0: [[1,37]]
+    paid_vacation: []
   garde_info:
     "2023-02-06":
-      heures:
-        - "07:00"
-        - "19:30"
+      heures: [["07:00","19:30"]]
     "2023-02-07":
-      heures:
-        - "07:00"
-        - "19:30"
+      heures: [["07:00","19:30"]]
     "2023-02-09":
-      heures:
-        - "07:00"
-        - "19:30"
+      heures: [["07:00","19:30"]]
     "2023-02-10":
-      heures:
-        - "07:00"
-        - "19:30"
+      heures: [["07:00","19:30"]]
     "2023-04-10":
       absence_non_remuneree: true
     "2023-04-11":

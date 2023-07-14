@@ -9,20 +9,23 @@ import datetime
 TimeRange = list[str]
 
 
-def convert_time_range_to_duration(time_range: TimeRange) -> datetime.timedelta:
+def convert_time_ranges_to_duration(time_ranges: TimeRange) -> datetime.timedelta:
     """Convert datetime.time range data structure to datetime.timedelta"""
-    if len(time_range) % 2 != 0:
-        raise ValueError(
-            f"Time range must be a multiple of 2, got {len(time_range)}")
-
     duration = datetime.timedelta()
-    for index in range(0, len(time_range), 2):
-        start = datetime.time.fromisoformat(time_range[index]+':00')
-        end = datetime.time.fromisoformat(time_range[index+1]+':00')
+    for time_range in time_ranges:
+        start = datetime.time.fromisoformat(time_range[0]+':00')
+        end = datetime.time.fromisoformat(time_range[1]+':00')
         duration += datetime.timedelta(hours=end.hour, minutes=end.minute) - \
             datetime.timedelta(hours=start.hour, minutes=start.minute)
-
     return duration
+    # duration = datetime.timedelta()
+    # for index in range(0, len(time_range), 2):
+    #     start = datetime.time.fromisoformat(time_range[index]+':00')
+    #     end = datetime.time.fromisoformat(time_range[index+1]+':00')
+    #     duration += datetime.timedelta(hours=end.hour, minutes=end.minute) - \
+    #         datetime.timedelta(hours=start.hour, minutes=start.minute)
+    # return duration
+
 
 
 def get_dates_in_week(year, week_number) -> list[datetime.date]:

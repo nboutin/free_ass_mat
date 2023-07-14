@@ -45,7 +45,7 @@ class Contract:
 
     def get_salaire_net_mensualise(self):
         """working_hour_per_month_count * net_hourly_rate"""
-        return self._schedule.get_heure_travaille_mois_mensualisee() * self._salaires.horaire_net
+        return self._schedule.get_heures_travaillees_mois_mensualisees() * self._salaires.horaire_net
 
     def get_salaire_net_mois(self, date: datetime.date) -> float:
         """Salaire net mensuel incluant heure complementaire et heure majoree"""
@@ -55,5 +55,5 @@ class Contract:
 
         return salaire_net_mensualise \
             - (salaire_net_mensualise * heure_absence_non_remuneree / heure_travaille_prevu) \
-            + self._garde.get_heure_complementaire_mois(date) * self._salaires.horaire_complementaires \
-            + self._garde.get_heure_majoree_mois(date) * self._salaires.horaire_majorees
+            + self._garde.get_heures_complementaires_mois(date) * self._salaires.horaire_complementaires \
+            + self._garde.get_heures_majorees_mois(date) * self._salaires.horaire_majorees
