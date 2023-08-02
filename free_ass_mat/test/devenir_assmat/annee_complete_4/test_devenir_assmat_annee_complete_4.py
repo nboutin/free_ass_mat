@@ -57,11 +57,11 @@ class TestDevenirAssmatAnneeComplete(unittest.TestCase):
         mois_courant = date(2020, 2, 1)
         week_number = 6
 
-        self.assertEqual(self.garde.get_heures_complementaires_semaine(mois_courant.year, week_number), 0)
-        self.assertEqual(self.garde.get_heures_complementaires_mois(mois_courant), 0)
-        self.assertEqual(self.garde.get_heures_majorees_semaine(mois_courant.year, week_number), 5)
-        self.assertEqual(self.garde.get_heures_majorees_mois(mois_courant), 20)
-        self.assertEqual(self.contract.get_salaire_net_mois(mois_courant), 475.10)
+        self.assertEqual(self.garde.get_heures_complementaires_semaine_par_date(mois_courant.year, week_number), 0)
+        self.assertEqual(self.garde.get_heures_complementaires_mois_par_date(mois_courant), 0)
+        self.assertEqual(self.garde.get_heures_majorees_semaine_par_date(mois_courant.year, week_number), 5)
+        self.assertEqual(self.garde.get_heures_majorees_mois_par_date(mois_courant), 20)
+        self.assertEqual(self.contract.get_salaire_net_mois_par_date(mois_courant), 475.10)
 
 
 if __name__ == '__main__':
