@@ -31,11 +31,11 @@ class TestTopAssMatMensualisation(unittest.TestCase):
         data_filepath = Path(__file__).parent / "data_pajemploi_exemple_annee_incomplete.yml"
         with open(data_filepath, 'r', encoding='UTF-8') as file:
             data = yaml.safe_load(file)
-        self.contract = factory.make_contract(data['contract'])
-        self.schedule = self.contract.schedule
-        self.garde = self.contract.garde
+        self.contrat = factory.make_contrat(data['contrat'])
+        self.planning = self.contrat.planning
+        self.garde = self.contrat.garde
 
-        self.pajemploi_declaration = PajemploiDeclaration(self.contract)
+        self.pajemploi_declaration = PajemploiDeclaration(self.contrat)
 
 
 if __name__ == '__main__':

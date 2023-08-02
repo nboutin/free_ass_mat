@@ -1,14 +1,5 @@
 {
     "python.analysis.extraPaths": [
         "free_ass_mat"
-    ],
-    "python.testing.unittestArgs": [
-        "-v",
-        "-s",
-        "./free_ass_mat",
-        "-p",
-        "test_*.py"
-    ],
-    "python.testing.pytestEnabled": false,
-    "python.testing.unittestEnabled": true
+    ]
 }

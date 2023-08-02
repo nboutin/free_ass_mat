@@ -31,11 +31,11 @@ class TestDevenirAssmatAnneeIncomplete1(unittest.TestCase):
         data_filepath = Path(__file__).parent / "data_devenir_assmat_annee_incomplete_1.yml"
         with open(data_filepath, 'r', encoding='UTF-8') as file:
             data = yaml.safe_load(file)
-        self.contract = factory.make_contract(data['contract'])
-        self.schedule = self.contract.schedule
-        self.garde = self.contract.garde
+        self.contrat = factory.make_contrat(data['contrat'])
+        self.planning = self.contrat.planning
+        self.garde = self.contrat.garde
 
-        self.pajemploi_declaration = PajemploiDeclaration(self.contract)
+        self.pajemploi_declaration = PajemploiDeclaration(self.contrat)
 
     def test_calcul_annee_complete(self):
         """
@@ -44,15 +44,15 @@ class TestDevenirAssmatAnneeIncomplete1(unittest.TestCase):
         Salaire horaire net 4€
         Salaire net mensualisé 620€
         """
-        self.assertFalse(self.schedule.is_annee_complete())
-        self.assertEqual(self.schedule.get_semaines_travaillees_annee(), 6+36)
-        self.assertEqual(self.schedule.get_jours_travailles_semaine_par_id(0), 4)
-        self.assertEqual(self.schedule.get_jours_travailles_semaine_par_id(1), 5)
-        self.assertEqual(self.schedule.get_heures_travaillees_semaine_par_id(0), 40)
-        self.assertEqual(self.schedule.get_heures_travaillees_semaine_par_id(1), 45)
-        self.assertAlmostEqual(self.schedule.get_heures_travaillees_mois_mensualisees(), 155, delta=0.01)
-        self.assertAlmostEqual(self.contract.get_salaire_net_mensualise(), 620, delta=0.01)
-        self.assertAlmostEqual(self.schedule.get_jours_travailles_mois_mensualise(), 14, delta=0.01)
+        self.assertFalse(self.planning.is_annee_complete())
+        self.assertEqual(self.planning.get_semaines_travaillees_annee(), 6+36)
+        self.assertEqual(self.planning.get_jours_travailles_semaine_par_id(0), 4)
+        self.assertEqual(self.planning.get_jours_travailles_semaine_par_id(1), 5)
+        self.assertEqual(self.planning.get_heures_travaillees_semaine_par_id(0), 40)
+        self.assertEqual(self.planning.get_heures_travaillees_semaine_par_id(1), 45)
+        self.assertAlmostEqual(self.planning.get_heures_travaillees_mois_mensualisees(), 155, delta=0.01)
+        self.assertAlmostEqual(self.contrat.get_salaire_net_mensualise(), 620, delta=0.01)
+        self.assertAlmostEqual(self.planning.get_jours_travailles_mois_mensualise(), 14, delta=0.01)
 
 
 if __name__ == '__main__':

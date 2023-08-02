@@ -3,34 +3,34 @@
 :date 2023-07-05
 """
 
-from controller.schedule import Schedule
-from controller.contract import Contract
+from controller.planning import Planning
+from controller.contrat import Contrat
 from controller.garde import Garde
 
 
-def make_schedule(schedule_data):
+def make_planning(planning_data):
     """
-    :brief Construct schedule instance from schedule data read from file
+    :brief Construct planning instance from planning data read from file
     """
-    return Schedule(schedule_data['year'], schedule_data['weeks'], schedule_data['days'],
-                    schedule_data['paid_vacation'])
+    return Planning(planning_data['annee'], planning_data['semaines'], planning_data['jours'],
+                    planning_data['conges_payes'])
 
 
-def make_garde_info(garde_info_data, schedule):
+def make_garde_info(garde_info_data, planning):
     """
     :brief Construct info_garde instance from info_garde data read from file
     """
-    return Garde(garde_info_data, schedule)
+    return Garde(garde_info_data, planning)
 
 
-def make_contract(contract_data):
+def make_contrat(contrat_data):
     """
-    :brief Construct contract instance from contract data read from file
+    :brief Construct contrat instance from contrat data read from file
     """
-    schedule = make_schedule(contract_data['schedule'])
-    garde = make_garde_info(contract_data['garde_info'], schedule)
-    salaires_data = contract_data['salaires']
-    salaires = Contract.SalairesHoraires(horaire_net=salaires_data['horaire_net'],
-                                         horaire_complementaires=salaires_data['horaire_complementaires'],
-                                         horaire_majorees=salaires_data['horaire_majorees'])
-    return Contract(schedule, salaires, garde)
+    planning = make_planning(contrat_data['planning'])
+    garde = make_garde_info(contrat_data['garde'], planning)
+    salaires_data = contrat_data['salaires']
+    salaires = Contrat.SalairesHoraires(horaire_net=salaires_data['horaire_net'],
+                                        horaire_complementaires_net=salaires_data['horaire_complementaires_net'],
+                                        horaire_majorees_net=salaires_data['horaire_majorees_net'])
+    return Contrat(planning, salaires, garde)

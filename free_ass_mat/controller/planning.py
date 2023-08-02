@@ -13,13 +13,13 @@ import controller.helper as helper
 logger = logging.getLogger(__name__)
 
 
-class ScheduleError (ValueError):
-    """Schedule error"""
+class PlanningError (ValueError):
+    """Planning error"""
 
 
-class Schedule:
+class Planning:
     """
-    Schedule / planning, hour, day, week, month, year
+    Planning / planning, hour, day, week, month, year
     """
     _COMPLETE_YEAR_WORKING_WEEK_COUNT = 47
     _COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT = 5
@@ -35,18 +35,18 @@ class Schedule:
     week_range_t = list[dict[str, int]]
     year_t = dict[week_id_t, week_range_t]
 
-    def __init__(self, year: year_t, weeks: weeks_t, days: days_t, paid_vacation: week_range_t):
-        self._year = year
-        self._weeks = weeks
-        self._days = days
-        self._paid_vacation = paid_vacation
+    def __init__(self, annee: year_t, semaines: weeks_t, jours: days_t, conges_payes: week_range_t):
+        self._year = annee
+        self._weeks = semaines
+        self._days = jours
+        self._paid_vacation = conges_payes
 
         self._check_input_data()
 
     def is_annee_complete(self) -> bool:
-        """Evaluate if contract is for a complete year (47 week) or an incomplete year"""
-        return (self.get_semaines_travaillees_annee() == Schedule._COMPLETE_YEAR_WORKING_WEEK_COUNT) and \
-            (self.get_semaine_conges_payes_annee() == Schedule._COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT)
+        """Evaluate if contrat is for a complete year (47 week) or an incomplete year"""
+        return (self.get_semaines_travaillees_annee() == Planning._COMPLETE_YEAR_WORKING_WEEK_COUNT) and \
+            (self.get_semaine_conges_payes_annee() == Planning._COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT)
 
     def get_semaines_travaillees_annee(self) -> int:
         """Count working week for a complete year"""
@@ -64,7 +64,7 @@ class Schedule:
             elif len(week_ranges) == 2:
                 week_count += week_ranges[1] - week_ranges[0] + 1
             else:
-                raise ScheduleError(f"week_range length is not 1 or 2 for id {week_id}")
+                raise PlanningError(f"week_range length is not 1 or 2 for id {week_id}")
         return week_count
 
     def get_semaine_conges_payes_annee(self) -> int:
@@ -76,7 +76,7 @@ class Schedule:
             elif len(week_ranges) == 2:
                 week_count += week_ranges[1] - week_ranges[0] + 1
             else:
-                raise ScheduleError("week_range length is not 1 or 2 for conges_payes")
+                raise PlanningError("week_range length is not 1 or 2 for conges_payes")
         return week_count
 
     def get_heure_travaille_semaine_par_date(self, year,  week_number: int) -> float:
@@ -161,7 +161,7 @@ class Schedule:
                 elif len(week_range) == 2:
                     if week_range[0] <= week_number <= week_range[1]:
                         return id_
-        raise ScheduleError(f"week id not found for date {date}")
+        raise PlanningError(f"week id not found for date {date}")
 
     def get_jour_travaille_prevu_mois_par_date(self, date: datetime.date) -> int:
         """Get working day count for a given month"""
@@ -197,13 +197,13 @@ class Schedule:
         paid_vacation_week_count = self.get_semaine_conges_payes_annee()
 
         if working_week_count + paid_vacation_week_count > 52:
-            raise ScheduleError(
+            raise PlanningError(
                 "Total number of week(working and paid vacation) is more than 52"
                 f" ({working_week_count + paid_vacation_week_count}))")
 
         if working_week_count > 47:
-            raise ScheduleError(f"Total number of working week is more than 47 ({working_week_count})")
+            raise PlanningError(f"Total number of working week is more than 47 ({working_week_count})")
 
         if paid_vacation_week_count > 5:
-            raise ScheduleError(
+            raise PlanningError(
                 f"Total number of paid vacation week is more than 5 ({paid_vacation_week_count})")

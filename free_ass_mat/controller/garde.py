@@ -8,7 +8,7 @@ import logging
 import datetime
 
 import controller.helper as helper
-from controller.schedule import Schedule
+from controller.planning import Planning
 
 logger = logging.getLogger(__name__)
 
@@ -20,9 +20,9 @@ class Garde:
 
     garde_info_t = dict[str, dict[str, str]]
 
-    def __init__(self, garde_info: garde_info_t, schedule: Schedule) -> None:
-        self._garde = garde_info
-        self._schedule = schedule
+    def __init__(self, garde: garde_info_t, planning: Planning) -> None:
+        self._garde = garde
+        self._planning = planning
 
     def get_heure_travaille_par_jour(self, date) -> float:
         """Compute number of hour worked for a day"""
@@ -43,19 +43,19 @@ class Garde:
     def get_heure_complementaire_jour(self, date: datetime.date) -> float:
         """Calculate the number of complementary hours for a given day
         Heure prévu - heure réalisée"""
-        h_trav_prevu_jour = self._schedule.get_heure_travaille_jour_par_date(date)
+        h_trav_prevu_jour = self._planning.get_heure_travaille_jour_par_date(date)
         h_trav_realisee_jour = self.get_heure_travaille_par_jour(date)
         return max(h_trav_realisee_jour - h_trav_prevu_jour, 0)  # cannot be negative
 
-    def get_heures_complementaires_semaine(self, year: int, numero_semaine: int) -> float:
+    def get_heures_complementaires_semaine(self, annee: int, numero_semaine: int) -> float:
         """Calculate the number of complementary hours for a given week"""
         h_comp_semaine: float = 0.0
-        dates = helper.get_dates_in_week(year, numero_semaine)
+        dates = helper.get_dates_in_week(annee, numero_semaine)
 
         for date_ in dates:
             h_comp_semaine += self.get_heure_complementaire_jour(date_)
 
-        h_trav_prevu_semaine = self._schedule. get_heure_travaille_semaine_par_date(year, numero_semaine)
+        h_trav_prevu_semaine = self._planning. get_heure_travaille_semaine_par_date(annee, numero_semaine)
 
         return max(
             min(h_trav_prevu_semaine + h_comp_semaine, Garde._HEURE_COMPLEMENTAIRE_SEUIL) - h_trav_prevu_semaine,
@@ -74,15 +74,15 @@ class Garde:
         """Check if there are complementary hours for a given month"""
         return self.get_heures_complementaires_mois(date) > 0.0
 
-    def get_heures_majorees_semaine(self, year: int, numero_semaine: int) -> float:
+    def get_heures_majorees_semaine(self, annee: int, numero_semaine: int) -> float:
         """Calculate the number of additional hours for a given week"""
         h_comp_and_maj_semaine: float = 0.0
-        dates = helper.get_dates_in_week(year, numero_semaine)
+        dates = helper.get_dates_in_week(annee, numero_semaine)
 
         for date_ in dates:
             h_comp_and_maj_semaine += self.get_heure_complementaire_jour(date_)
 
-        h_comp_semaine = self.get_heures_complementaires_semaine(year, numero_semaine)
+        h_comp_semaine = self.get_heures_complementaires_semaine(annee, numero_semaine)
 
         return h_comp_and_maj_semaine - h_comp_semaine
 
@@ -123,7 +123,7 @@ class Garde:
             i_date_str = i_date.strftime('%Y-%m-%d')
             try:
                 if self._garde[i_date_str]['absence_non_remuneree']:
-                    heure_count += self._schedule.get_heure_travaille_jour_par_date(i_date)
+                    heure_count += self._planning.get_heure_travaille_jour_par_date(i_date)
             except KeyError:
                 pass
 
