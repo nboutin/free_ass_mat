@@ -17,7 +17,7 @@ from pathlib import Path
 import yaml
 
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "../../../.."))  # OK
+sys.path.append(os.path.join(os.path.dirname(__file__), "../../.."))  # OK
 
 
 import controller.factory as factory  # nopep8 # noqa: E402
@@ -52,11 +52,11 @@ class TestPajemploiExempleAnneeComplete(unittest.TestCase):
         - Nombre de jours d'activités = 18
         """
         self.assertTrue(self.schedule.is_annee_complete())
-        self.assertEqual(self.schedule.get_semaine_travaillee_annee(), 47)
-        self.assertEqual(self.schedule.get_heure_travaillee_semaine_par_id(), 32)
-        self.assertAlmostEqual(self.schedule.get_heure_travaille_mois_mensualisee(), 138.66, delta=0.01)
-        self.assertEqual(self.contract.get_salaire_net_mensualise(), 416)
-        self.assertAlmostEqual(self.schedule.get_jour_travaille_mois_mensualisee(), 17.33, delta=0.01)
+        self.assertEqual(self.schedule.get_semaines_travaillees_annee(), 47)
+        self.assertEqual(self.schedule.get_heures_travaillees_semaine_par_id(), 32)
+        self.assertAlmostEqual(self.schedule.get_heures_travaillees_mois_mensualisees(), 138.66, delta=0.01)
+        self.assertAlmostEqual(self.contract.get_salaire_net_mensualise(), 416.00, delta=0.01)
+        self.assertAlmostEqual(self.schedule.get_jours_travailles_mois_mensualise(), 17.33, delta=0.01)
 
         mois_courant = date(2023, 2, 1)
         today = date(2023, 2, 7)
@@ -75,10 +75,10 @@ class TestPajemploiExempleAnneeComplete(unittest.TestCase):
         mois_courant = date(2023, 1, 1)
         week_number = 2
 
-        self.assertEqual(self.garde.get_heure_complementaire_semaine(2023, week_number), 13)
-        self.assertEqual(self.garde.get_heure_complementaire_mois(mois_courant), 13)
-        self.assertEqual(self.garde.get_heure_majoree_semaine(2023, week_number), 5)
-        self.assertEqual(self.garde.get_heure_majoree_mois(mois_courant), 5)
+        self.assertEqual(self.garde.get_heures_complementaires_semaine(2023, week_number), 13)
+        self.assertEqual(self.garde.get_heures_complementaires_mois(mois_courant), 13)
+        self.assertEqual(self.garde.get_heures_majorees_semaine(2023, week_number), 5)
+        self.assertEqual(self.garde.get_heures_majorees_mois(mois_courant), 5)
         self.assertEqual(self.contract.get_salaire_net_mois(mois_courant), 475.10)
 
         mois_courant = date(2023, 1, 1)

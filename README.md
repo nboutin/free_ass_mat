@@ -9,3 +9,7 @@ Support contrat sur année complète et incomplète
 
 - https://www.pajemploi.urssaf.fr/pajewebinfo/cms/sites/pajewebinfo/accueil/employeur-dassistante-maternelle/je-recrute-et-jemploie/definir-les-heures-de-garde.html
 
+- https://www.legifrance.gouv.fr/conv_coll/id/KALITEXT000043941642 
+
+- https://zen-avec-mon-assmat.com/autres-elements-salaire-nounou/
+
