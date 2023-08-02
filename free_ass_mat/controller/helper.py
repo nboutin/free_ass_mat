@@ -27,7 +27,6 @@ def convert_time_ranges_to_duration(time_ranges: TimeRange) -> datetime.timedelt
     # return duration
 
 
-
 def get_dates_in_week(year, week_number) -> list[datetime.date]:
     """Return all dates in a given week"""
     # Check if week number is valid
