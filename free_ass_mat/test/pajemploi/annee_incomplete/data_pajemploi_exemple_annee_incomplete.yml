@@ -1,25 +1,23 @@
-contract:
+contrat:
   ass_mat:
-    first_name: "ass_mat first name"
-    surname: "ass_mat surname"
+    prenom: "ass_mat first name"
+    nom: "ass_mat nom"
   employers:
-    - first_name: "employer0 first name"
-      surname: "employer0 surname"
-    - first_name: "employer1 first name"
-      surname: "employer1 surname"
-  child:
-    first_name: "child0 first name"
-    surname: "child0 surname"
+    - prenom: "employer0 first name"
+      nom: "employer0 nom"
+    - prenom: "employer1 first name"
+      nom: "employer1 nom"
+  enfants:
+    prenom: "child0 first name"
+    nom: "child0 nom"
   salaires:
     horaire_net: 3.00
-    horaire_complementaires: 3.20
-    horaire_majorees: 3.50
-  schedule:
-    days:
-      # day_id
+    horaire_complementaires_net: 3.20
+    horaire_majorees_net: 3.50
+  planning:
+    jours:
       0: [["08:30","18:30"]]
-    weeks:
-      # week_id : (week day : day_id)
+    semaines:
       0:
         lundi: 0
         mardi: 0
@@ -28,11 +26,10 @@ contract:
         vendredi: 0
         samedi: null
         dimanche: null
-    year:
-      # week_id
+    annee:
       0: [[1,37]]
-    paid_vacation: []
-  garde_info:
+    conges_payes: []
+  garde:
     "2023-02-06":
       heures: [["07:00","19:30"]]
     "2023-02-07":

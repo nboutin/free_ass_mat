@@ -31,11 +31,11 @@ class TestPajemploiExempleAnneeIncomplete(unittest.TestCase):
         data_filepath = Path(__file__).parent / "data_pajemploi_exemple_annee_incomplete.yml"
         with open(data_filepath, 'r', encoding='UTF-8') as file:
             data = yaml.safe_load(file)
-        self.contract = factory.make_contract(data['contract'])
-        self.schedule = self.contract.schedule
-        self.garde = self.contract.garde
+        self.contrat = factory.make_contrat(data['contrat'])
+        self.planning = self.contrat.planning
+        self.garde = self.contrat.garde
 
-        self.pajemploi_declaration = PajemploiDeclaration(self.contract)
+        self.pajemploi_declaration = PajemploiDeclaration(self.contrat)
 
     def test_calcul_annee_incomplete(self):
         """annee incomplete
@@ -51,12 +51,12 @@ class TestPajemploiExempleAnneeIncomplete(unittest.TestCase):
         - Nombre d'heures normales = 123
         - Nombre de jours d'activités = 13
         """
-        self.assertFalse(self.schedule.is_annee_complete())
-        self.assertEqual(self.schedule.get_semaines_travaillees_annee(), 37)
-        self.assertEqual(self.schedule.get_heures_travaillees_semaine_par_id(), 40)
-        self.assertAlmostEqual(self.schedule.get_heures_travaillees_mois_mensualisees(), 123.33, delta=0.01)
-        self.assertEqual(self.contract.get_salaire_net_mensualise(), 370)
-        self.assertAlmostEqual(self.schedule.get_jours_travailles_mois_mensualise(), 12.33, delta=0.01)
+        self.assertFalse(self.planning.is_annee_complete())
+        self.assertEqual(self.planning.get_semaines_travaillees_annee(), 37)
+        self.assertEqual(self.planning.get_heures_travaillees_semaine_par_id(), 40)
+        self.assertAlmostEqual(self.planning.get_heures_travaillees_mois_mensualisees(), 123.33, delta=0.01)
+        self.assertEqual(self.contrat.get_salaire_net_mensualise(), 370)
+        self.assertAlmostEqual(self.planning.get_jours_travailles_mois_mensualise(), 12.33, delta=0.01)
 
         mois_courant = date(2023, 1, 1)
         today = date(2023, 1, 7)
@@ -79,7 +79,7 @@ class TestPajemploiExempleAnneeIncomplete(unittest.TestCase):
         self.assertEqual(self.garde.get_heures_complementaires_mois(mois_courant), 5)
         self.assertEqual(self.garde.get_heures_majorees_semaine(2023, week_number), 5)
         self.assertEqual(self.garde.get_heures_majorees_mois(mois_courant), 5)
-        self.assertEqual(self.contract.get_salaire_net_mois(mois_courant), 403.50)
+        self.assertEqual(self.contrat.get_salaire_net_mois(mois_courant), 403.50)
 
         mois_courant = date(2023, 2, 1)
         today = date(2023, 2, 7)
@@ -114,9 +114,9 @@ class TestPajemploiExempleAnneeIncomplete(unittest.TestCase):
 
         self.assertEqual(self.garde.get_jour_absence_non_remuneree_mois(mois_courant), 8)
         self.assertEqual(self.garde.get_heure_absence_non_remuneree_mois(mois_courant), 80)
-        self.assertEqual(self.schedule.get_jour_travaille_prevu_mois_par_date(mois_courant), 16)
-        self.assertEqual(self.schedule.get_heure_travaille_prevu_mois_par_date(mois_courant), 160)
-        self.assertAlmostEqual(self.contract.get_salaire_net_mois(mois_courant), 185, delta=0.01)
+        self.assertEqual(self.planning.get_jour_travaille_prevu_mois_par_date(mois_courant), 16)
+        self.assertEqual(self.planning.get_heure_travaille_prevu_mois_par_date(mois_courant), 160)
+        self.assertAlmostEqual(self.contrat.get_salaire_net_mois(mois_courant), 185, delta=0.01)
 
         declaration = self.pajemploi_declaration.get_declaration(mois_courant, today)
         travail_effectue = declaration.travail_effectue

@@ -23,30 +23,30 @@ def main():
         data = yaml.safe_load(file)
 
     for ass_mat in data['ass_mat']:
-        logger.info(f"ass_mat first name: {ass_mat['first_name']}")
-        logger.info(f"ass_mat surname: {ass_mat['surname']}")
+        logger.info(f"ass_mat first name: {ass_mat['prenom']}")
+        logger.info(f"ass_mat nom: {ass_mat['nom']}")
 
         for employer in ass_mat['employers']:
-            logger.info(f"employer first name: {employer['first_name']}")
-            logger.info(f"employer surname: {employer['surname']}")
+            logger.info(f"employer first name: {employer['prenom']}")
+            logger.info(f"employer nom: {employer['nom']}")
 
             for child in employer['children']:
-                logger.info(f"child first name: {child['first_name']}")
-                logger.info(f"child surname: {child['surname']}")
+                logger.info(f"child first name: {child['prenom']}")
+                logger.info(f"child nom: {child['nom']}")
 
-                contract = factory.make_contract(child['contract'])
-                schedule = contract.schedule
+                contrat = factory.make_contrat(child['contrat'])
+                planning = contrat.planning
 
-                complete_year = contract.is_annee_complete()
+                complete_year = contrat.is_annee_complete()
                 logger.info(f"Complete year {complete_year}")
 
-                working_hour_per_week = schedule.get_heures_travaillees_semaine_par_id()
+                working_hour_per_week = planning.get_heures_travaillees_semaine_par_id()
                 logger.info(f"working hour per week {working_hour_per_week}")
 
-                working_hour_per_month = schedule.get_heures_travaillees_mois_mensualisees()
+                working_hour_per_month = planning.get_heures_travaillees_mois_mensualisees()
                 logger.info(f"working hour per month {working_hour_per_month}")
 
-                basic_monthly_salary = contract.get_salaire_net_mensualise()
+                basic_monthly_salary = contrat.get_salaire_net_mensualise()
                 logger.info(f"basic monthly salary {basic_monthly_salary}")
 
 
