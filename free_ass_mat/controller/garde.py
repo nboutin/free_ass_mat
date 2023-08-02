@@ -57,7 +57,9 @@ class Garde:
 
         h_trav_prevu_semaine = self._schedule. get_heure_travaille_semaine_par_date(year, numero_semaine)
 
-        return max(min(h_trav_prevu_semaine + h_comp_semaine, Garde._HEURE_COMPLEMENTAIRE_SEUIL) - h_trav_prevu_semaine, 0)
+        return max(
+            min(h_trav_prevu_semaine + h_comp_semaine, Garde._HEURE_COMPLEMENTAIRE_SEUIL) - h_trav_prevu_semaine,
+            0)
 
     def get_heures_complementaires_mois(self, date: datetime.date) -> float:
         """Calculate the number of complementary hours for a given month"""
