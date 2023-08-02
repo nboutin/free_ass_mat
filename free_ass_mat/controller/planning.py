@@ -39,7 +39,7 @@ class Planning:
         self._year = annee
         self._weeks = semaines
         self._days = jours
-        self._paid_vacation = conges_payes
+        self._conges_payes = conges_payes
 
         self._check_input_data()
 
@@ -70,7 +70,7 @@ class Planning:
     def get_semaine_conges_payes_annee(self) -> int:
         """Count week of paid vacation"""
         week_count = 0
-        for week_ranges in self._paid_vacation:
+        for week_ranges in self._conges_payes:
             if len(week_ranges) == 1:
                 week_count += 1
             elif len(week_ranges) == 2:
@@ -204,6 +204,6 @@ class Planning:
         if working_week_count > 47:
             raise PlanningError(f"Total number of working week is more than 47 ({working_week_count})")
 
-        if paid_vacation_week_count > 5:
+        if paid_vacation_week_count < 5:
             raise PlanningError(
-                f"Total number of paid vacation week is more than 5 ({paid_vacation_week_count})")
+                f"Total number of paid vacation week is less than 5 ({paid_vacation_week_count})")

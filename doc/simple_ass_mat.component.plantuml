@@ -1,0 +1,8 @@
+@startuml Simple AssMat
+
+[contrat]
+[garde]
+[schedule]
+[pajemploi]
+
+@enduml

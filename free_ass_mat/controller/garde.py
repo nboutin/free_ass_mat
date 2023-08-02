@@ -6,6 +6,7 @@
 
 import logging
 import datetime
+from types import NoneType
 
 import controller.helper as helper
 from controller.planning import Planning
@@ -124,7 +125,7 @@ class Garde:
             try:
                 if self._garde[i_date_str]['absence_non_remuneree']:
                     heure_count += self._planning.get_heure_travaille_jour_par_date(i_date)
-            except KeyError:
+            except (KeyError, TypeError):
                 pass
 
         return heure_count

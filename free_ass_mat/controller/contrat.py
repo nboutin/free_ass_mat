@@ -57,3 +57,7 @@ class Contrat:
             - (salaire_net_mensualise * heure_absence_non_remuneree / heure_travaille_prevu) \
             + self._garde.get_heures_complementaires_mois(date) * self._salaires.horaire_complementaires_net \
             + self._garde.get_heures_majorees_mois(date) * self._salaires.horaire_majorees_net
+
+    def get_frais_entretien_mois(self, date: datetime.date) -> float:
+        """Frais d'entretien mensuel"""
+        return 

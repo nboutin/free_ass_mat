@@ -47,7 +47,7 @@ class TestPajemploiExempleAnneeComplete(unittest.TestCase):
         Heure majorée 3.50€
         Nombre heure par mensualise = 138.66
         Nombre de jours activités mensualises = 17.33
-        Declaratoin Pajemploi:
+        Declaration Pajemploi:
         - Nombre d'heures normales = 139
         - Nombre de jours d'activités = 18
         """
