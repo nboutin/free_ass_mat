@@ -4,6 +4,8 @@
     ],
     "python.testing.unittestArgs": [
         "-v",
+        "-s",
+        "./free_ass_mat",
         "-p",
         "test_*.py"
     ],

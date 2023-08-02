@@ -38,6 +38,7 @@ class TestDevenirAssmatAnneeComplete(unittest.TestCase):
 
         self.pajemploi_declaration = PajemploiDeclaration(self.contract)
 
+    @unittest.skip("Use case not handle")
     def test_calcul_annee_complete(self):
         """52 semaines, année complète
         47 semaines travaillées

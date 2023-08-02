@@ -16,10 +16,7 @@ contract:
     horaire_majorees: 3.50
   schedule:
     days:
-      # day_id
-      0:
-        - "09:00"
-        - "17:00"
+      0: [["09:00", "17:00"]]
     weeks:
       # week_id : (week day : day_id)
       0:
@@ -32,10 +29,6 @@ contract:
         dimanche: null
     year:
       # week_id
-      0:
-        - start: 1
-          end: 47
-    paid_vacation:
-      - start: 48
-        end: 52
+      0: [[1,47]]
+    paid_vacation: [[48,52]]
   garde_info:
