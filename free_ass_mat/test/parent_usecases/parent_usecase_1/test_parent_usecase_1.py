@@ -11,7 +11,6 @@
 import unittest
 import sys
 import os
-from datetime import date
 from pathlib import Path
 
 import yaml
