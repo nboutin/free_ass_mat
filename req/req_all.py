@@ -8,22 +8,16 @@
 # pylint: disable=missing-class-docstring
 
 import unittest
-# import sys
-# import os
-from pathlib import Path
-
-import yaml
-
 
 # sys.path.append(os.path.join(os.path.dirname(__file__), "../../.."))  # OK
 
 
-import free_ass_mat.controller.factory as factory  # nopep8 # noqa: E402
-from free_ass_mat.controller.pajemploi_declaration import PajemploiDeclaration  # nopep8 # noqa: E402
+# import free_ass_mat.controller.factory as factory  # nopep8 # noqa: E402
+# from free_ass_mat.controller.pajemploi_declaration import PajemploiDeclaration  # nopep8 # noqa: E402
 
 
-class Req_All(unittest.TestCase):
-    """"""
+class ReqAll(unittest.TestCase):
+    """Requierements as Test"""
 
     def setUp(self):
         # data_filepath = Path(__file__).parent / "data_devenir_assmat_annee_complete.yml"
@@ -34,6 +28,7 @@ class Req_All(unittest.TestCase):
         # self.garde = self.contrat.garde
 
         # self.pajemploi_declaration = PajemploiDeclaration(self.contrat)
+        pass
 
     def req_heures_complementaires_001(self):
         """
