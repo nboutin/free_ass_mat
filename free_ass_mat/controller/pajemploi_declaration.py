@@ -41,11 +41,18 @@ class HeuresMajoreesOuComplementaires(NamedTuple):
     nombre_heures_complementaires: int
 
 
+class IndemnitesComplementaires(NamedTuple):
+    """Section Indemnites Complementaires de la declaration Pajemploi"""
+    indemnite_repas: float
+    indemnite_kilometrique: float
+
+
 class Declaration(NamedTuple):
     """Pajemploi Declaration Rapport"""
     travail_effectue: TravailEffectue
     remuneration: Remuneration
     heures_majorees_ou_complementaires: HeuresMajoreesOuComplementaires
+    indemnites_complementaires: IndemnitesComplementaires
 
 
 class PajemploiDeclaration:
@@ -59,7 +66,8 @@ class PajemploiDeclaration:
         return Declaration(
             travail_effectue=self._get_travail_effectue(mois_courant, today),
             remuneration=self._get_remuneration(mois_courant),
-            heures_majorees_ou_complementaires=self._get_heures_majorees_ou_complementaires(mois_courant)
+            heures_majorees_ou_complementaires=self._get_heures_majorees_ou_complementaires(mois_courant),
+            indemnites_complementaires=self._get_indemnites_complementaires()
         )
 
     def _get_travail_effectue(self, mois_courant: datetime.date, today: datetime.date) -> TravailEffectue:
@@ -110,3 +118,10 @@ class PajemploiDeclaration:
         else:
             return (self._contrat.planning.get_jours_travailles_planifies_mois_par_date(mois_courant)
                     - self._contrat.garde.get_jour_absence_non_remuneree_mois(mois_courant))
+
+    def _get_indemnites_complementaires(self):
+        """Make IndemnitesComplementaires"""
+        return IndemnitesComplementaires(
+            indemnite_repas=0,
+            indemnite_kilometrique=0
+        )
