@@ -30,27 +30,30 @@ contrat:
       0: [[1,47]]
     conges_payes: [[48,52]]
   garde:
-    "2023-01-10":
-      heures: [["08:00","20:30"]]
-    "2023-01-11":
-      heures: [["08:00","20:30"]]
-    "2023-01-12":
-      heures: [["08:00","20:30"]]
-    "2023-01-13":
-      heures: [["08:00","20:30"]]
-    "2023-09-05":
-      absence_non_remuneree: true
-    "2023-09-06":
-      absence_non_remuneree: true
-    "2023-09-07":
-      absence_non_remuneree: true
-    "2023-09-08":
-      absence_non_remuneree: true
-    "2023-09-12":
-      absence_non_remuneree: true
-    "2023-09-13":
-      absence_non_remuneree: true
-    "2023-09-14":
-      absence_non_remuneree: true
-    "2023-09-15":
-      absence_non_remuneree: true
+    "2023":
+      "01":
+        "10":
+          heures: [["08:00","20:30"]]
+        "11":
+          heures: [["08:00","20:30"]]
+        "12":
+          heures: [["08:00","20:30"]]
+        "13":
+          heures: [["08:00","20:30"]]
+      "09":
+        "05":
+          absence_non_remuneree: true
+        "06":
+          absence_non_remuneree: true
+        "07":
+          absence_non_remuneree: true
+        "08":
+          absence_non_remuneree: true
+        "12":
+          absence_non_remuneree: true
+        "13":
+          absence_non_remuneree: true
+        "14":
+          absence_non_remuneree: true
+        "15":
+          absence_non_remuneree: true

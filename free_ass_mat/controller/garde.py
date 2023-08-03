@@ -26,15 +26,18 @@ class Garde:
 
     def get_heures_travaillees_jour_par_date(self, date: datetime.date) -> float:
         """Nombre heures travaillees en un jour par date"""
+        year_str = date.strftime('%Y')
+        month_str = date.strftime('%m')
+        day_str = date.strftime('%d')
         try:
-            time_range = self._garde[date.year][date.month][date.day]['heures']
+            time_range = self._garde[year_str][month_str][day_str]['heures']
             duration = helper.convert_time_ranges_to_duration(time_range)
             return duration.seconds / 3600.0
         except (KeyError, TypeError):
             # no information from garde data, use planning value
             return self._planning.get_heures_travaillees_jour_par_date(date)
 
-    def get_heure_complementaire_jour(self, date: datetime.date) -> float:
+    def get_heures_complementaires_jour_par_date(self, date: datetime.date) -> float:
         """Calculate the number of complementary hours for a given day
         Heure prévu - heure réalisée"""
         h_trav_prevu_jour = self._planning.get_heures_travaillees_jour_par_date(date)
@@ -47,7 +50,7 @@ class Garde:
         dates = helper.get_dates_in_week(annee, numero_semaine)
 
         for date_ in dates:
-            h_comp_semaine += self.get_heure_complementaire_jour(date_)
+            h_comp_semaine += self.get_heures_complementaires_jour_par_date(date_)
 
         h_trav_prevu_semaine = self._planning. get_heure_travaillees_semaine_par_date(annee, numero_semaine)
 
@@ -74,7 +77,7 @@ class Garde:
         dates = helper.get_dates_in_week(annee, numero_semaine)
 
         for date_ in dates:
-            h_comp_and_maj_semaine += self.get_heure_complementaire_jour(date_)
+            h_comp_and_maj_semaine += self.get_heures_complementaires_jour_par_date(date_)
 
         h_comp_semaine = self.get_heures_complementaires_semaine_par_date(annee, numero_semaine)
 
@@ -99,9 +102,11 @@ class Garde:
         dates = helper.get_dates_in_month(date)
 
         for i_date in dates:
-            i_date_str = i_date.strftime('%Y-%m-%d')
+            year_str = i_date.strftime('%Y')
+            month_str = i_date.strftime('%m')
+            day_str = i_date.strftime('%d')
             try:
-                if self._garde[i_date_str]['absence_non_remuneree']:
+                if self._garde[year_str][month_str][day_str]['absence_non_remuneree']:
                     jour_count += 1
             except (KeyError, TypeError):
                 pass
@@ -114,9 +119,11 @@ class Garde:
         dates = helper.get_dates_in_month(date)
 
         for i_date in dates:
-            i_date_str = i_date.strftime('%Y-%m-%d')
+            year_str = i_date.strftime('%Y')
+            month_str = i_date.strftime('%m')
+            day_str = i_date.strftime('%d')
             try:
-                if self._garde[i_date_str]['absence_non_remuneree']:
+                if self._garde[year_str][month_str][day_str]['absence_non_remuneree']:
                     heure_count += self._planning.get_heures_travaillees_jour_par_date(i_date)
             except (KeyError, TypeError):
                 pass
