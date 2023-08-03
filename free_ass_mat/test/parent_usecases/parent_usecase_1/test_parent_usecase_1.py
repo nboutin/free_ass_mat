@@ -67,6 +67,6 @@ class TestParentUsecase1(unittest.TestCase):
 
 if __name__ == '__main__':
     import locale
-    locale.setlocale(locale.LC_ALL, '')
+    locale.setlocale(locale.LC_ALL, 'fr-FR')
 
     unittest.main()

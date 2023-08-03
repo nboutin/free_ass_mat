@@ -37,12 +37,12 @@ class Req_All(unittest.TestCase):
 
     def req_heures_complementaires_001(self):
         """
-        Les heures complémentaires correspondent aux heures effectuées entre la durée de 
+        Les heures complémentaires correspondent aux heures effectuées entre la durée de
         travail hebdomadaire fixée au contrat de travail et la durée légale (45 h).
-        Si le nombre d’heures complémentaires effectuées par l’assistant maternel, à votre demande, 
-        excède ⅓ de la durée des heures complémentaires prévues au contrat de travail, pendant 16 semaines consécutives, 
+        Si le nombre d’heures complémentaires effectuées par l’assistant maternel, à votre demande,
+        excède ⅓ de la durée des heures complémentaires prévues au contrat de travail, pendant 16 semaines consécutives,
         alors les parties doivent se rencontrer afin d’échanger sur les modalités d’organisation du travail.
-        Les heures complémentaires, peuvent donner lieu à une majoration de salaire, sur décision écrite des parties 
+        Les heures complémentaires, peuvent donner lieu à une majoration de salaire, sur décision écrite des parties
         prévue dans le contrat de travail.
         """
 
@@ -55,6 +55,6 @@ class Req_All(unittest.TestCase):
 
 if __name__ == '__main__':
     import locale
-    locale.setlocale(locale.LC_ALL, '')
+    locale.setlocale(locale.LC_ALL, 'fr-FR')
 
     unittest.main()
