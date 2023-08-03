@@ -1,6 +1,6 @@
 """
 :author Nicolas Boutin
-:datetime.date 2023-07-05
+:date 2023-07-05
 """
 # pylint: disable=logging-fstring-interpolation
 
@@ -24,27 +24,21 @@ class Garde:
         self._garde = garde
         self._planning = planning
 
-    def get_heure_travaille_par_jour(self, date) -> float:
-        """Compute number of hour worked for a day"""
-        date_str = date.strftime('%Y-%m-%d')
-        try:  # garde dict could be empty
-            if date_str not in self._garde:
-                return 0.0
-        except TypeError:
-            return 0.0
-
+    def get_heures_travaillees_jour_par_date(self, date: datetime.date) -> float:
+        """Nombre heures travaillees en un jour par date"""
         try:
-            time_range = self._garde[date_str]['heures']
+            time_range = self._garde[date.year][date.month][date.day]['heures']
             duration = helper.convert_time_ranges_to_duration(time_range)
             return duration.seconds / 3600.0
-        except KeyError:
-            return 0.0
+        except (KeyError, TypeError):
+            # no information from garde data, use planning value
+            return self._planning.get_heures_travaillees_jour_par_date(date)
 
     def get_heure_complementaire_jour(self, date: datetime.date) -> float:
         """Calculate the number of complementary hours for a given day
         Heure prévu - heure réalisée"""
-        h_trav_prevu_jour = self._planning.get_heure_travaille_jour_par_date(date)
-        h_trav_realisee_jour = self.get_heure_travaille_par_jour(date)
+        h_trav_prevu_jour = self._planning.get_heures_travaillees_jour_par_date(date)
+        h_trav_realisee_jour = self.get_heures_travaillees_jour_par_date(date)
         return max(h_trav_realisee_jour - h_trav_prevu_jour, 0)  # cannot be negative
 
     def get_heures_complementaires_semaine_par_date(self, annee: int, numero_semaine: int) -> float:
@@ -55,7 +49,7 @@ class Garde:
         for date_ in dates:
             h_comp_semaine += self.get_heure_complementaire_jour(date_)
 
-        h_trav_prevu_semaine = self._planning. get_heure_travaille_semaine_par_date(annee, numero_semaine)
+        h_trav_prevu_semaine = self._planning. get_heure_travaillees_semaine_par_date(annee, numero_semaine)
 
         return max(
             min(h_trav_prevu_semaine + h_comp_semaine, Garde._HEURE_COMPLEMENTAIRE_SEUIL) - h_trav_prevu_semaine,
@@ -74,7 +68,7 @@ class Garde:
         """Check if there are complementary hours for a given month"""
         return self.get_heures_complementaires_mois_par_date(date) > 0.0
 
-    def get_heures_majorees_semaine(self, year: int, numero_semaine: int) -> float:
+    def get_heures_majorees_semaine_par_date(self, annee: int, numero_semaine: int) -> float:
         """Calculate the number of additional hours for a given week"""
         h_comp_and_maj_semaine: float = 0.0
         dates = helper.get_dates_in_week(annee, numero_semaine)
@@ -123,7 +117,7 @@ class Garde:
             i_date_str = i_date.strftime('%Y-%m-%d')
             try:
                 if self._garde[i_date_str]['absence_non_remuneree']:
-                    heure_count += self._planning.get_heure_travaille_jour_par_date(i_date)
+                    heure_count += self._planning.get_heures_travaillees_jour_par_date(i_date)
             except (KeyError, TypeError):
                 pass
 

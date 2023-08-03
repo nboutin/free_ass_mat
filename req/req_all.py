@@ -29,11 +29,11 @@ class Req_All(unittest.TestCase):
         # data_filepath = Path(__file__).parent / "data_devenir_assmat_annee_complete.yml"
         # with open(data_filepath, 'r', encoding='UTF-8') as file:
         #     data = yaml.safe_load(file)
-        # self.contract = factory.make_contract(data['contract'])
-        # self.schedule = self.contract.schedule
-        # self.garde = self.contract.garde
+        # self.contrat = factory.make_contrat(data['contrat'])
+        # self.schedule = self.contrat.schedule
+        # self.garde = self.contrat.garde
 
-        # self.pajemploi_declaration = PajemploiDeclaration(self.contract)
+        # self.pajemploi_declaration = PajemploiDeclaration(self.contrat)
 
     def req_heures_complementaires_001(self):
         """

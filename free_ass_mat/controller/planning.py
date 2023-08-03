@@ -46,7 +46,7 @@ class Planning:
     def is_annee_complete(self) -> bool:
         """Evaluate if contrat is for a complete year (47 week) or an incomplete year"""
         return (self.get_semaines_travaillees_annee() == Planning._COMPLETE_YEAR_WORKING_WEEK_COUNT) and \
-            (self.get_semaine_conges_payes_annee() == Planning._COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT)
+            (self.get_semaines_conges_payes_annee() == Planning._COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT)
 
     def get_semaines_travaillees_annee(self) -> int:
         """Count working week for a complete year"""
@@ -67,7 +67,7 @@ class Planning:
                 raise PlanningError(f"week_range length is not 1 or 2 for id {week_id}")
         return week_count
 
-    def get_semaine_conges_payes_annee(self) -> int:
+    def get_semaines_conges_payes_annee(self) -> int:
         """Count week of paid vacation"""
         week_count = 0
         for week_ranges in self._conges_payes:
@@ -79,7 +79,7 @@ class Planning:
                 raise PlanningError("week_range length is not 1 or 2 for conges_payes")
         return week_count
 
-    def get_heure_travaille_semaine_par_date(self, year,  week_number: int) -> float:
+    def get_heure_travaillees_semaine_par_date(self, year,  week_number: int) -> float:
         """Calculate working hour per week"""
         dates = helper.get_dates_in_week(year, week_number)
         week_id = self.get_semaine_id_par_date(dates[0])
@@ -90,15 +90,15 @@ class Planning:
         hour_count = 0
         for day in calendar.day_name:
             day_id = self._weeks[week_id][day]
-            hour_count += self.get_heure_travaillee_jour_par_id(day_id)
+            hour_count += self.get_heures_travaillees_jour_par_id(day_id)
         return hour_count
 
-    def get_heure_travaille_jour_par_date(self, date: datetime.date) -> float:
+    def get_heures_travaillees_jour_par_date(self, date: datetime.date) -> float:
         """Calculate working hour per day"""
         day_id = self._get_jour_id_par_date(date)
-        return self.get_heure_travaillee_jour_par_id(day_id)
+        return self.get_heures_travaillees_jour_par_id(day_id)
 
-    def get_heure_travaillee_jour_par_id(self, day_id: int) -> float:
+    def get_heures_travaillees_jour_par_id(self, day_id: int) -> float:
         """Calculate working hour per day"""
         hour_count: float = 0.0
         if day_id is None:
@@ -109,7 +109,6 @@ class Planning:
                 duration = helper.convert_time_ranges_to_duration(time_ranges)
                 hour_count = duration.seconds / 3600.0
 
-        logger.debug(f"working hour per day = {hour_count}")
         return hour_count
 
     def get_heures_travaillees_mois_mensualisees(self) -> float:
@@ -145,7 +144,7 @@ class Planning:
             return self.get_jours_travailles_semaine_par_id() * semaine_travaille_annee / 12
 
     def _get_jour_id_par_date(self, date: datetime.date):
-        """Get day id from date"""
+        """Get jour_id par date"""
         week_id = self.get_semaine_id_par_date(date)
         weekday_string = date.strftime('%A').lower()
         day_id = self._weeks[week_id][weekday_string]
@@ -163,7 +162,7 @@ class Planning:
                         return id_
         raise PlanningError(f"week id not found for date {date}")
 
-    def get_jour_travaille_prevu_mois_par_date(self, date: datetime.date) -> int:
+    def get_jours_travailles_planifies_mois_par_date(self, date: datetime.date) -> int:
         """Get working day count for a given month"""
         jour: int = 0
         dates = helper.get_dates_in_month(date)
@@ -174,7 +173,7 @@ class Planning:
                 jour += 1
         return jour
 
-    def get_heure_travaille_prevu_mois_par_date(self, date: datetime.date) -> float:
+    def get_heures_travaillees_prevu_mois_par_date(self, date: datetime.date) -> float:
         """Get working hour planned for a month by date"""
         hour_count: float = 0.0
         dates = helper.get_dates_in_month(date)
@@ -182,7 +181,7 @@ class Planning:
         for i_date in dates:
             day_id = self._get_jour_id_par_date(i_date)
             if day_id is not None:
-                hour_count += self.get_heure_travaillee_jour_par_id(day_id)
+                hour_count += self.get_heures_travaillees_jour_par_id(day_id)
         return hour_count
 
     def _check_input_data(self) -> None:
@@ -194,7 +193,7 @@ class Planning:
         """
 
         working_week_count = self.get_semaines_travaillees_annee()
-        paid_vacation_week_count = self.get_semaine_conges_payes_annee()
+        paid_vacation_week_count = self.get_semaines_conges_payes_annee()
 
         if working_week_count + paid_vacation_week_count > 52:
             raise PlanningError(

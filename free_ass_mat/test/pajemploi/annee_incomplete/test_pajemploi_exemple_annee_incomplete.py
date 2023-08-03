@@ -114,8 +114,8 @@ class TestPajemploiExempleAnneeIncomplete(unittest.TestCase):
 
         self.assertEqual(self.garde.get_jour_absence_non_remuneree_mois(mois_courant), 8)
         self.assertEqual(self.garde.get_heure_absence_non_remuneree_mois(mois_courant), 80)
-        self.assertEqual(self.planning.get_jour_travaille_prevu_mois_par_date(mois_courant), 16)
-        self.assertEqual(self.planning.get_heure_travaille_prevu_mois_par_date(mois_courant), 160)
+        self.assertEqual(self.planning.get_jours_travailles_planifies_mois_par_date(mois_courant), 16)
+        self.assertEqual(self.planning.get_heures_travaillees_prevu_mois_par_date(mois_courant), 160)
         self.assertAlmostEqual(self.contrat.get_salaire_net_mois_par_date(mois_courant), 185, delta=0.01)
 
         declaration = self.pajemploi_declaration.get_declaration(mois_courant, today)

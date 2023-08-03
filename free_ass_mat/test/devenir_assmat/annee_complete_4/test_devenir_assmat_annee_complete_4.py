@@ -62,7 +62,7 @@ class TestDevenirAssmatAnneeComplete(unittest.TestCase):
         self.assertEqual(self.garde.get_heures_complementaires_mois_par_date(mois_courant), 0)
         self.assertEqual(self.garde.get_heures_majorees_semaine_par_date(mois_courant.year, week_number), 5)
         self.assertEqual(self.garde.get_heures_majorees_mois_par_date(mois_courant), 20)
-        self.assertEqual(self.contract.get_salaire_net_mois_par_date(mois_courant), 475.10)
+        self.assertEqual(self.contrat.get_salaire_net_mois_par_date(mois_courant), 475.10)
 
 
 if __name__ == '__main__':

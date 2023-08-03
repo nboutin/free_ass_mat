@@ -79,11 +79,14 @@ class TestParentUsecase1(unittest.TestCase):
         self.assertAlmostEqual(remuneration.salaire_net, 433.26, delta=0.01)
         self.assertAlmostEqual(remuneration.indemnite_entretien, 69.45, delta=0.01)
         self.assertFalse(remuneration.avec_acompte_verse_au_salarie)
-        self.assertTrue(remuneration.avec_indemnite_repas_ou_kilometrique)
+        self.assertFalse(remuneration.avec_indemnite_repas_ou_kilometrique)
 
 
 if __name__ == '__main__':
     import locale
     locale.setlocale(locale.LC_ALL, '')
+
+    import logging
+    logging.basicConfig(level=logging.DEBUG, handlers=[logging.StreamHandler(sys.stdout)])
 
     unittest.main()

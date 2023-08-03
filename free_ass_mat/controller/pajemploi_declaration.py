@@ -78,7 +78,7 @@ class PajemploiDeclaration:
         """Make Remuneration"""
         return Remuneration(
             salaire_net=self._contrat.get_salaire_net_mois_par_date(mois_courant),
-            indemnite_entretien=0.0,
+            indemnite_entretien=self._contrat.get_frais_entretien_mois_par_date(mois_courant),
             avec_acompte_verse_au_salarie=False,
             avec_indemnite_repas_ou_kilometrique=False
         )
@@ -98,7 +98,8 @@ class PajemploiDeclaration:
         if not self._contrat.garde.has_jour_absence_non_remuneree_mois(mois_courant):
             return round(self._contrat.planning.get_heures_travaillees_mois_mensualisees())
         else:
-            return round(self._contrat.get_salaire_net_mois_par_date(mois_courant) / self._contrat.salaires_horaires.horaire_net)
+            return round(self._contrat.get_salaire_net_mois_par_date(mois_courant)
+                         / self._contrat.salaires_horaires.horaire_net)
 
     def _get_nombre_jours_activite(self, mois_courant: datetime.date) -> int:
         """Compute the number of days worked for a given month
@@ -107,5 +108,5 @@ class PajemploiDeclaration:
         if not self._contrat.garde.has_jour_absence_non_remuneree_mois(mois_courant):
             return math.ceil(self._contrat.planning.get_jours_travailles_mois_mensualise())
         else:
-            return (self._contrat.planning.get_jour_travaille_prevu_mois_par_date(mois_courant)
+            return (self._contrat.planning.get_jours_travailles_planifies_mois_par_date(mois_courant)
                     - self._contrat.garde.get_jour_absence_non_remuneree_mois(mois_courant))
