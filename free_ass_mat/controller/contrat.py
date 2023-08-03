@@ -62,7 +62,10 @@ class Contrat:
     def get_frais_entretien_mois_par_date(self, date: datetime.date) -> float:
         """Frais d'entretien mensuel
         2.65€ pour 6h28 soit 6,47h (mini)
-        6.15€ pour 15h
+        frais entretien:
+            2022 9h = 3.39€
+            2023 9h = 3.61€
+        minimum 2.65€
         """
         dates = helper.get_dates_in_month(date)
         frais_entretien_mois = 0.0

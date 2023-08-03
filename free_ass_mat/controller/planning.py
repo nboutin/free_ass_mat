@@ -147,8 +147,11 @@ class Planning:
         """Get jour_id par date"""
         week_id = self.get_semaine_id_par_date(date)
         weekday_string = date.strftime('%A').lower()
-        day_id = self._weeks[week_id][weekday_string]
-        return day_id
+        try:
+            day_id = self._weeks[week_id][weekday_string]
+            return day_id
+        except KeyError:
+            return None
 
     def get_semaine_id_par_date(self, date: datetime.date):
         """Get week id from date"""
@@ -160,7 +163,7 @@ class Planning:
                 elif len(week_range) == 2:
                     if week_range[0] <= week_number <= week_range[1]:
                         return id_
-        raise PlanningError(f"week id not found for date {date}")
+        return None
 
     def get_jours_travailles_planifies_mois_par_date(self, date: datetime.date) -> int:
         """Get working day count for a given month"""
