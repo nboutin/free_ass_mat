@@ -79,7 +79,7 @@ class TestParentUsecase1(unittest.TestCase):
         self.assertFalse(travail_effectue.avec_heures_specifiques)
 
         self.assertAlmostEqual(remuneration.salaire_net, 433.26, delta=0.01)
-        self.assertAlmostEqual(remuneration.indemnite_entretien, 69.45, delta=0.01)
+        self.assertAlmostEqual(remuneration.indemnite_entretien, 63.71, delta=0.01)
         self.assertFalse(remuneration.avec_acompte_verse_au_salarie)
         self.assertFalse(remuneration.avec_indemnite_repas_ou_kilometrique)
 
@@ -114,7 +114,7 @@ class TestParentUsecase1(unittest.TestCase):
 
         self.assertEqual(heures_majorees_ou_complementaires.salaire_horaire_net, 3.2029)
         self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_majorees, 0)
-        self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_complementaires, 0)
+        self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_complementaires, 1.5)
 
         self.assertEqual(indemnites_complementaires.indemnite_repas, 0)
         self.assertEqual(indemnites_complementaires.indemnite_kilometrique, 0)
