@@ -88,9 +88,12 @@ class Planning:
     def get_heures_travaillees_semaine_par_id(self, week_id: int = 0) -> float:
         """Calculate working hour per week"""
         hour_count = 0
-        for day in calendar.day_name:
-            day_id = self._weeks[week_id][day]
-            hour_count += self.get_heures_travaillees_jour_par_id(day_id)
+        try:
+            for day in calendar.day_name:
+                day_id = self._weeks[week_id][day]
+                hour_count += self.get_heures_travaillees_jour_par_id(day_id)
+        except KeyError:
+            pass  # week_id not found
         return hour_count
 
     def get_heures_travaillees_jour_par_date(self, date: datetime.date) -> float:

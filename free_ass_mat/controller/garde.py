@@ -29,13 +29,32 @@ class Garde:
         year_str = date.strftime('%Y')
         month_str = date.strftime('%m')
         day_str = date.strftime('%d')
+        garde_day = None
+
         try:
-            time_range = self._garde[year_str][month_str][day_str]['heures']
-            duration = helper.convert_time_ranges_to_duration(time_range)
-            return duration.seconds / 3600.0
+            garde_day = self._garde[year_str][month_str][day_str]
         except (KeyError, TypeError):
             # no information from garde data, use planning value
             return self._planning.get_heures_travaillees_jour_par_date(date)
+        else:
+            try:
+                if garde_day['absence_payee']:
+                    return 0.0
+            except KeyError:
+                pass
+
+            try:
+                if garde_day['absence_non_remuneree']:
+                    return 0.0
+            except KeyError:
+                pass
+
+            try:
+                time_range = garde_day['heures']
+                duration = helper.convert_time_ranges_to_duration(time_range)
+                return duration.seconds / 3600.0
+            except KeyError:
+                pass
 
     def get_heures_complementaires_jour_par_date(self, date: datetime.date) -> float:
         """Calculate the number of complementary hours for a given day

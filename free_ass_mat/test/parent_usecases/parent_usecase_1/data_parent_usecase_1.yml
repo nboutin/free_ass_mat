@@ -42,9 +42,9 @@ contrat:
   garde:
     "2022":
       "12":
-        "08": 
+        "08":
           absence_non_remuneree: true
-        "09": 
+        "09":
           absence_non_remuneree: true
         "13":
           absence_non_remuneree: true
@@ -79,4 +79,9 @@ contrat:
         "10":
           heures: [["08:00","18:15"]]
         "19":
+          heures: [["08:00","18:30"]]
+      "02":
+        "02":
+          absence_payee: true
+        "23":
           heures: [["08:00","18:30"]]
