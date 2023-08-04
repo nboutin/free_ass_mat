@@ -68,19 +68,39 @@ def get_week_numbers(year, month) -> list[int]:
     first_week_number = first_date.isocalendar()[1]
     last_week_number = last_date.isocalendar()[1]
 
-    # If the first day of the month is Saturday and it's still
-    # the previous month's week, then increase the first_week_number by 1
-    if first_date.weekday() == 5 and first_week_number < last_week_number:
-        first_week_number += 1
+    last_date_last_week = get_last_day_of_week(year, last_week_number)
 
+    if last_date_last_week.month != month:
+        last_week_number -= 1
+
+    week_numbers = []
     # Edge case for weeks in early January that count as the last week of the previous year
     if month == 1 and first_week_number > last_week_number:
         first_week_number = 1
+        week_numbers = [52]
 
     # Week numbers for the specified month
-    week_numbers = list(range(first_week_number, last_week_number + 1))
+    week_numbers.extend(list(range(first_week_number, last_week_number + 1)))
 
     return week_numbers
+
+
+def get_last_day_of_week(year: int, week: int) -> datetime.date:
+    """Return the last day of a given week"""
+    first_day = datetime.date(year, 1, 1)
+
+    # Counting the number of days to reach the first Thursday
+    first_thursday_delta = 3 - first_day.weekday() if first_day.weekday() < 4 else 10 - first_day.weekday()
+
+    # Identifying the first Thursday
+    first_thursday = first_day + datetime.timedelta(days=first_thursday_delta)
+
+    # Resolving the first Monday on or before the first Thursday
+    first_monday = first_thursday - datetime.timedelta(days=3)
+
+    # Resolving any given week's Sunday (last day of the week)
+    last_day = first_monday + datetime.timedelta(weeks=(week-1), days=6)
+    return last_day
 
 
 def get_dates_in_month(in_date: datetime.date) -> list[datetime.date]:
