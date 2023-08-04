@@ -113,9 +113,96 @@ class TestParentUsecase1(unittest.TestCase):
         self.assertEqual(indemnites_complementaires.indemnite_repas, 0)
         self.assertEqual(indemnites_complementaires.indemnite_kilometrique, 0)
 
+    def test_2023_03(self):
+        """2023-03"""
+        mois_courant = date(2023, 3, 1)
+        today = date(2023, 4, 7)
+        declaration = self.pajemploi_declaration.get_declaration(mois_courant, today)
+        travail_effectue = declaration.travail_effectue
+        remuneration = declaration.remuneration
+        heures_majorees_ou_complementaires = declaration.heures_majorees_ou_complementaires
+        indemnites_complementaires = declaration.indemnites_complementaires
+
+        self.assertEqual(travail_effectue.nombre_heures_normales, 135)
+        self.assertEqual(travail_effectue.nombre_jours_activite, 15)
+        self.assertEqual(travail_effectue.nombre_jours_conges_payes, 0)
+        self.assertTrue(travail_effectue.avec_heures_complementaires_ou_majorees)
+        self.assertFalse(travail_effectue.avec_heures_specifiques)
+
+        self.assertAlmostEqual(remuneration.salaire_net, 433.26 + 2.40, delta=0.01)
+        self.assertAlmostEqual(remuneration.indemnite_entretien, 72.09, delta=0.01)
+        self.assertFalse(remuneration.avec_acompte_verse_au_salarie)
+        self.assertFalse(remuneration.avec_indemnite_repas_ou_kilometrique)
+
+        self.assertEqual(heures_majorees_ou_complementaires.salaire_horaire_net, 3.2029)
+        self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_majorees, 0)
+        self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_complementaires, 0.75)
+
+        self.assertEqual(indemnites_complementaires.indemnite_repas, 0)
+        self.assertEqual(indemnites_complementaires.indemnite_kilometrique, 0)
+
+    def test_2023_04(self):
+        """2023-04"""
+        mois_courant = date(2023, 4, 1)
+        today = date(2023, 5, 7)
+        declaration = self.pajemploi_declaration.get_declaration(mois_courant, today)
+        travail_effectue = declaration.travail_effectue
+        remuneration = declaration.remuneration
+        heures_majorees_ou_complementaires = declaration.heures_majorees_ou_complementaires
+        indemnites_complementaires = declaration.indemnites_complementaires
+
+        self.assertEqual(travail_effectue.nombre_heures_normales, 135)
+        self.assertEqual(travail_effectue.nombre_jours_activite, 15)
+        self.assertEqual(travail_effectue.nombre_jours_conges_payes, 0)
+        self.assertTrue(travail_effectue.avec_heures_complementaires_ou_majorees)
+        self.assertFalse(travail_effectue.avec_heures_specifiques)
+
+        self.assertAlmostEqual(remuneration.salaire_net, 433.26 + 4, delta=0.01)
+        self.assertAlmostEqual(remuneration.indemnite_entretien, 42.01, delta=0.01)
+        self.assertFalse(remuneration.avec_acompte_verse_au_salarie)
+        self.assertFalse(remuneration.avec_indemnite_repas_ou_kilometrique)
+
+        self.assertEqual(heures_majorees_ou_complementaires.salaire_horaire_net, 3.2029)
+        self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_majorees, 0)
+        self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_complementaires, 1.25)
+
+        self.assertEqual(indemnites_complementaires.indemnite_repas, 0)
+        self.assertEqual(indemnites_complementaires.indemnite_kilometrique, 0)
+
+    def test_2023_05(self):
+        """2023-05"""
+        mois_courant = date(2023, 5, 1)
+        today = date(2023, 6, 7)
+        declaration = self.pajemploi_declaration.get_declaration(mois_courant, today)
+        travail_effectue = declaration.travail_effectue
+        remuneration = declaration.remuneration
+        heures_majorees_ou_complementaires = declaration.heures_majorees_ou_complementaires
+        indemnites_complementaires = declaration.indemnites_complementaires
+
+        self.assertEqual(travail_effectue.nombre_heures_normales, 135)
+        self.assertEqual(travail_effectue.nombre_jours_activite, 15)
+        self.assertEqual(travail_effectue.nombre_jours_conges_payes, 0)
+        self.assertTrue(travail_effectue.avec_heures_complementaires_ou_majorees)
+        self.assertFalse(travail_effectue.avec_heures_specifiques)
+
+        self.assertAlmostEqual(remuneration.salaire_net, 433.26 + 4, delta=0.01)
+        self.assertAlmostEqual(remuneration.indemnite_entretien, 61.91, delta=0.01)
+        self.assertFalse(remuneration.avec_acompte_verse_au_salarie)
+        self.assertFalse(remuneration.avec_indemnite_repas_ou_kilometrique)
+
+        self.assertEqual(heures_majorees_ou_complementaires.salaire_horaire_net, 3.2029)
+        self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_majorees, 0)
+        self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_complementaires, 1.25)
+
+        self.assertEqual(indemnites_complementaires.indemnite_repas, 0)
+        self.assertEqual(indemnites_complementaires.indemnite_kilometrique, 0)
+
 
 if __name__ == '__main__':
     import locale
     locale.setlocale(locale.LC_ALL, 'fr-FR')
+
+    import logging
+    logging.basicConfig(level=logging.DEBUG, handlers=[logging.StreamHandler(sys.stdout)])
 
     unittest.main()

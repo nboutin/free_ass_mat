@@ -6,6 +6,7 @@
 
 import logging
 import datetime
+import math
 from typing import NamedTuple
 
 from . import helper
@@ -13,6 +14,12 @@ from .planning import Planning
 from .garde import Garde
 
 logger = logging.getLogger(__name__)
+
+
+class FraisEntretien(NamedTuple):
+    """FraisEntretien namedtuple"""
+    minimum: float
+    taux_9h: float
 
 
 class Contrat:
@@ -76,13 +83,7 @@ class Contrat:
 
     def get_frais_entretien_jour(self, duree: float, date: datetime.date) -> float:
         """Frais d'entretien journalier"""
-        class FraisEntretien(NamedTuple):
-            """FraisEntretien namedtuple"""
-            minimum: float
-            taux_9h: float
-
-        frais_entretien_annuel = {2022: FraisEntretien(2.65, 3.39/9), 2023: FraisEntretien(2.65, 3.61/9)}
-        frais_entretien = frais_entretien_annuel[date.year]
+        frais_entretien = self.get_frais_entretien_taux_horaire(date)
         value = 0.0
 
         if duree == 0:
@@ -93,3 +94,15 @@ class Contrat:
         else:
             value = 9 * frais_entretien.taux_9h + (duree - 9) * frais_entretien.taux_9h
         return round(value, 2)
+
+    def get_frais_entretien_taux_horaire(self, date: datetime.date) -> FraisEntretien:
+        """"Get frais entretien taux horaire"""
+        frais_entretien_annuel = {datetime.date(2022, 1, 1): FraisEntretien(2.65, 3.39/9),
+                                  datetime.date(2023, 1, 1): FraisEntretien(2.65, 3.61/9),
+                                  datetime.date(2023, 5, 1): FraisEntretien(2.65, 3.69/9)}
+
+        frais_entretien = None
+        for key, value in frais_entretien_annuel.items():
+            if date >= key:
+                frais_entretien = value
+        return frais_entretien
