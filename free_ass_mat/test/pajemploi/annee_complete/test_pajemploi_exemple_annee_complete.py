@@ -47,7 +47,7 @@ class TestPajemploiExempleAnneeComplete(unittest.TestCase):
         Heure majorée 3.50€
         Nombre heure par mensualise = 138.66
         Nombre de jours activités mensualises = 17.33
-        Declaratoin Pajemploi:
+        Declaration Pajemploi:
         - Nombre d'heures normales = 139
         - Nombre de jours d'activités = 18
         """
@@ -75,11 +75,11 @@ class TestPajemploiExempleAnneeComplete(unittest.TestCase):
         mois_courant = date(2023, 1, 1)
         week_number = 2
 
-        self.assertEqual(self.garde.get_heures_complementaires_semaine(2023, week_number), 13)
-        self.assertEqual(self.garde.get_heures_complementaires_mois(mois_courant), 13)
-        self.assertEqual(self.garde.get_heures_majorees_semaine(2023, week_number), 5)
-        self.assertEqual(self.garde.get_heures_majorees_mois(mois_courant), 5)
-        self.assertEqual(self.contrat.get_salaire_net_mois(mois_courant), 475.10)
+        self.assertEqual(self.garde.get_heures_complementaires_semaine_par_date(2023, week_number), 13)
+        self.assertEqual(self.garde.get_heures_complementaires_mois_par_date(mois_courant), 13)
+        self.assertEqual(self.garde.get_heures_majorees_semaine_par_date(2023, week_number), 5)
+        self.assertEqual(self.garde.get_heures_majorees_mois_par_date(mois_courant), 5)
+        self.assertEqual(self.contrat.get_salaire_net_mois_par_date(mois_courant), 475.10)
 
         mois_courant = date(2023, 1, 1)
         today = date(2023, 1, 7)
@@ -114,9 +114,9 @@ class TestPajemploiExempleAnneeComplete(unittest.TestCase):
 
         self.assertEqual(self.garde.get_jour_absence_non_remuneree_mois(mois_courant), 8)
         self.assertEqual(self.garde.get_heure_absence_non_remuneree_mois(mois_courant), 64)
-        self.assertEqual(self.planning.get_jour_travaille_prevu_mois_par_date(mois_courant), 17)
-        self.assertEqual(self.planning.get_heure_travaille_prevu_mois_par_date(mois_courant), 136)
-        self.assertAlmostEqual(self.contrat.get_salaire_net_mois(mois_courant), 220.24, delta=0.01)
+        self.assertEqual(self.planning.get_jours_travailles_planifies_mois_par_date(mois_courant), 17)
+        self.assertEqual(self.planning.get_heures_travaillees_prevu_mois_par_date(mois_courant), 136)
+        self.assertAlmostEqual(self.contrat.get_salaire_net_mois_par_date(mois_courant), 220.24, delta=0.01)
 
         declaration = self.pajemploi_declaration.get_declaration(mois_courant, today)
         travail_effectue = declaration.travail_effectue
@@ -130,6 +130,6 @@ class TestPajemploiExempleAnneeComplete(unittest.TestCase):
 
 if __name__ == '__main__':
     import locale
-    locale.setlocale(locale.LC_ALL, '')
+    locale.setlocale(locale.LC_ALL, 'fr-FR')
 
     unittest.main()

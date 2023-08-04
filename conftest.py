@@ -8,4 +8,4 @@ import locale
 
 def pytest_configure():
     """Set the French locale"""
-    locale.setlocale(locale.LC_ALL, 'fr_FR')
+    locale.setlocale(locale.LC_ALL, 'fr-FR')

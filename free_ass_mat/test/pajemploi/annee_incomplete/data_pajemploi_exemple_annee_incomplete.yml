@@ -28,30 +28,33 @@ contrat:
         dimanche: null
     annee:
       0: [[1,37]]
-    conges_payes: []
+    conges_payes: [[38,52]]
   garde:
-    "2023-02-06":
-      heures: [["07:00","19:30"]]
-    "2023-02-07":
-      heures: [["07:00","19:30"]]
-    "2023-02-09":
-      heures: [["07:00","19:30"]]
-    "2023-02-10":
-      heures: [["07:00","19:30"]]
-    "2023-04-10":
-      absence_non_remuneree: true
-    "2023-04-11":
-      absence_non_remuneree: true
-    "2023-04-13":
-      absence_non_remuneree: true
-    "2023-04-14":
-      absence_non_remuneree: true
-    "2023-04-17":
-      absence_non_remuneree: true
-    "2023-04-18":
-      absence_non_remuneree: true
-    "2023-04-20":
-      absence_non_remuneree: true
-    "2023-04-21":
-      absence_non_remuneree: true
+    "2023":
+      "02":
+        "06":
+          heures: [["07:00","19:30"]]
+        "07":
+          heures: [["07:00","19:30"]]
+        "09":
+          heures: [["07:00","19:30"]]
+        "10":
+          heures: [["07:00","19:30"]]
+      "04":
+        "10":
+          absence_non_remuneree: true
+        "11":
+          absence_non_remuneree: true
+        "13":
+          absence_non_remuneree: true
+        "14":
+          absence_non_remuneree: true
+        "17":
+          absence_non_remuneree: true
+        "18":
+          absence_non_remuneree: true
+        "20":
+          absence_non_remuneree: true
+        "21":
+          absence_non_remuneree: true
 
