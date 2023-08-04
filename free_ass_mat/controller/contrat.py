@@ -8,7 +8,7 @@ import logging
 import datetime
 from typing import NamedTuple
 
-import controller.helper as helper
+from controller import helper
 from controller.planning import Planning
 from controller.garde import Garde
 
@@ -87,7 +87,8 @@ class Contrat:
 
         if duree == 0:
             return value
-        elif duree <= 9.0:
+
+        if duree <= 9.0:
             value = max(duree * frais_entretien.taux_9h, frais_entretien.minimum)
         else:
             value = 9 * frais_entretien.taux_9h + (duree - 9) * frais_entretien.taux_9h

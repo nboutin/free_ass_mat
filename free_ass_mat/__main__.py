@@ -7,7 +7,7 @@
 import logging
 import yaml
 
-import controller.factory as factory
+from controller import factory
 
 __NAME = "Free AssMat"
 

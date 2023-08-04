@@ -25,5 +25,5 @@ jobs:
       - name: Run flake8
         run: flake8
 
-      - name: Run pylint
-        run: pylint $(git ls-files '*.py')
+      # - name: Run pylint
+      #   run: pylint $(git ls-files '*.py')

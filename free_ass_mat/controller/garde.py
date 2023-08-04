@@ -7,7 +7,7 @@
 import logging
 import datetime
 
-import controller.helper as helper
+from controller import helper
 from controller.planning import Planning
 
 logger = logging.getLogger(__name__)
