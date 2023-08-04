@@ -6,7 +6,6 @@
 
 import logging
 import datetime
-import math
 from typing import NamedTuple
 
 from . import helper
