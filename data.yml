@@ -1,52 +1,87 @@
-ass_mat:
-  - prenom: "ass_mat first name"
+# Absence enfant non-remuneree
+# regles: 1er semaine vacances scolaires enfant chez parent
+# S06 06-10/02
+# S15 10-14/04
+# S29 17-21/07 -> S33 14-18/08
+# S43 23-27/10
+# S52 25-29/10
+
+contrat:
+  date_embauche: "2022-12-08"
+  ass_mat:
+    prenom: "ass_mat prenom"
     nom: "ass_mat nom"
-    employers:
-      - prenom: "employer0 first name"
-        nom: "employer0 nom"
-        children:
-          - prenom: "child0 first name"
-            nom: "child0 nom"
-            contrat
-              net_hourly_wage: 3.2029
-              net_hourly_complementary_wage: 3.40
-              net_hourly_majored_wage: 3.60
-              planning:
-                jours
-                  # day_id
-                  0 :
-                    start: '08:00'
-                    end: '17:45'
-                  1 :
-                    start: '08:00'
-                    end: '16:30'
-                semaines:
-                  # week_id : (week day : day_id)
-                  0 :
-                    monday: null
-                    tuesday: 0
-                    wednesday: 1
-                    thursday: 0
-                    friday: 0
-                    saturday: null
-                    sunday: null
-                annee:
-                  # week_id
-                  0 :
-                    - start: 1
-                      end: 14
-                    - start: 16
-                      end: 26
-                    - start: 29
-                      end: 42
-                    - start: 44
-                      end: 51
-                conges_payes:
-                  - start: 15
-                    end: 15
-                  - start: 27
-                    end: 28
-                  - start: 43
-                    end: 43
-                  - start: 52
-                    end: 52
+  employeurs:
+    - prenom: "employeur0 prenom"
+      nom: "employeur0 nom"
+    - prenom: "employeur1 prenom"
+      nom: "employeur1 nom"
+  enfant: # one child per contract
+    prenom: "enfant0 prenom"
+    nom: "enfant0 nom"
+  salaires:
+    horaire_net: 3.2029
+    horaire_complementaires_net: 3.2029
+    horaire_majorees_net: 3.52
+  planning:
+    jours:
+      0: [["08:00", "17:45"]]
+      1: [["08:00", "16:30"]]
+    semaines:
+      0:
+        lundi: null
+        mardi: 0
+        mercredi: 1
+        jeudi: 0
+        vendredi: 0
+        samedi: null
+        dimanche: null
+    annee:
+      0: [[1,5],[7,14],[16,28],[34,42],[44,51]]
+    conges_payes: [[6],[15],[29,33],[43],[52]]
+  garde:
+    "2022":
+      "12":
+        "08":
+          absence_non_remuneree: true
+        "09":
+          absence_non_remuneree: true
+        "13":
+          absence_non_remuneree: true
+        "14":
+          heures: [["08:30","11:30"]]
+        "15":
+          absence_non_remuneree: true
+        "16":
+          absence_non_remuneree: true
+        "19":
+          heures: [["08:30","13:00"]]
+        "20":
+          heures: [["08:30","13:00"]]
+        "21":
+          absence_non_remuneree: true
+        "22":
+          absence_non_remuneree: true
+        "23":
+          absence_non_remuneree: true
+        "27":
+          absence_non_remuneree: true
+        "28":
+          absence_non_remuneree: true
+        "29":
+          absence_non_remuneree: true
+        "30":
+          absence_non_remuneree: true
+    "2023":
+      "01":
+        "05":
+          heures: [["08:00","18:00"]]
+        "10":
+          heures: [["08:00","18:15"]]
+        "19":
+          heures: [["08:00","18:30"]]
+      "02":
+        "02":
+          absence_payee: true
+        "23":
+          heures: [["08:00","18:30"]]
