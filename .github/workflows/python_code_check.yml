@@ -13,17 +13,25 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Set up Python
         uses: actions/setup-python@v4
-        with: 
+        with:
           python-version: 3.x
-      
+
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
-      
+
       - name: Run flake8
         run: flake8
-      
-    #  - name: Run pylint
-    #    run: pylint
+
+      - name: Run pylint
+        # run: pylint $(git ls-files '*.py')
+        run:
+          pylint simple_ass_mat/__main__.py
+          pylint simple_ass_mat/controller/contrat.py
+          pylint simple_ass_mat/controller/factory.py
+          pylint simple_ass_mat/controller/garde.py
+          pylint simple_ass_mat/controller/helper.py
+          pylint simple_ass_mat/controller/pajemploi_declaration.py
+          pylint simple_ass_mat/controller/planning.py
