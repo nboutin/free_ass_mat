@@ -36,25 +36,25 @@ class Garde:
         except (KeyError, TypeError):
             # no information from garde data, use planning value
             return self._planning.get_heures_travaillees_jour_par_date(date)
-        else:
-            try:
-                if garde_day['absence_payee']:
-                    return 0.0
-            except KeyError:
-                pass
 
-            try:
-                if garde_day['absence_non_remuneree']:
-                    return 0.0
-            except KeyError:
-                pass
+        try:
+            if garde_day['absence_payee']:
+                return 0.0
+        except KeyError:
+            pass
 
-            try:
-                time_range = garde_day['heures']
-                duration = helper.convert_time_ranges_to_duration(time_range)
-                return duration.seconds / 3600.0
-            except KeyError:
-                pass
+        try:
+            if garde_day['absence_non_remuneree']:
+                return 0.0
+        except KeyError:
+            pass
+
+        try:
+            time_range = garde_day['heures']
+            duration = helper.convert_time_ranges_to_duration(time_range)
+            return duration.seconds / 3600.0
+        except KeyError:
+            pass
 
         return 0.0
 
