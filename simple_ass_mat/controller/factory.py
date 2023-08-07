@@ -4,7 +4,7 @@
 """
 
 from .planning import Planning
-from .contrat import Contrat
+from .contrat import Contrat, IndemniteRepas
 from .garde import Garde
 
 
@@ -33,4 +33,7 @@ def make_contrat(contrat_data):
     salaires = Contrat.SalairesHoraires(horaire_net=salaires_data['horaire_net'],
                                         horaire_complementaires_net=salaires_data['horaire_complementaires_net'],
                                         horaire_majorees_net=salaires_data['horaire_majorees_net'])
-    return Contrat(planning, salaires, garde)
+    indemnite_repas = IndemniteRepas(
+        dejeuner=contrat_data['indemnites_repas']['dejeuner'],
+        gouter=contrat_data['indemnites_repas']['gouter'])
+    return Contrat(planning, salaires, indemnite_repas, garde)

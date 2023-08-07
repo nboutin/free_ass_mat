@@ -23,6 +23,9 @@ contrat:
     horaire_net: 3.2029
     horaire_complementaires_net: 3.2029
     horaire_majorees_net: 3.52
+  indemnites_repas:
+    dejeuner: 2.50
+    gouter: 0.50
   planning:
     jours:
       0:

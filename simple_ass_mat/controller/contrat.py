@@ -21,6 +21,12 @@ class FraisEntretien(NamedTuple):
     taux_9h: float
 
 
+class IndemniteRepas(NamedTuple):
+    """IndemniteRepas namedtuple"""
+    dejeuner: float
+    gouter: float
+
+
 class Contrat:
     """Assistante maternelle contrat"""
 
@@ -30,9 +36,11 @@ class Contrat:
         horaire_complementaires_net: float
         horaire_majorees_net: float
 
-    def __init__(self, planning: Planning, salaires: SalairesHoraires, garde: Garde) -> None:
+    def __init__(self, planning: Planning, salaires: SalairesHoraires, indemnite_repas: IndemniteRepas,
+                 garde: Garde) -> None:
         self._planning = planning
         self._salaires = salaires
+        self._indemnite_repas = indemnite_repas
         self._garde = garde
 
     @property
@@ -103,3 +111,17 @@ class Contrat:
             if date >= key:
                 frais_entretien = value
         return frais_entretien
+
+    def get_indemnite_repas_mois_par_date(self, date: datetime.date) -> float:
+        """Get frais de repas mensuel"""
+        dates = helper.get_dates_in_month(date)
+        indemnite_repas_mois = 0.0
+
+        for i_date in dates:
+            if self._garde.avec_frais_repas_dejeuner_jour_par_date(i_date):
+                indemnite_repas_mois += self._indemnite_repas.dejeuner
+
+            if self._garde.avec_frais_repas_gouter_jour_par_date(i_date):
+                indemnite_repas_mois += self._indemnite_repas.gouter
+
+        return indemnite_repas_mois

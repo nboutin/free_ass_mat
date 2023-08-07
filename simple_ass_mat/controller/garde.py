@@ -155,6 +155,44 @@ class Garde:
 
         return heure_count
 
-    # def get_jour_travaillee_reel_mois(self, date: datetime.date) -> int:
-    #     """Calculate the number of real working days for a given month"""
-    #     pass
+    def avec_frais_repas_dejeuner_jour_par_date(self, date: datetime.date) -> bool:
+        """Check if there are lunch costs for a given day"""
+        year_str = date.strftime('%Y')
+        month_str = date.strftime('%m')
+        day_str = date.strftime('%d')
+
+        jour_garde = None
+
+        try:
+            jour_garde = self._garde[year_str][month_str][day_str]
+        except (KeyError, TypeError):
+            return self._planning.avec_frais_repas_dejeuner_jour_par_date(date)
+
+        if 'absence_payee' in jour_garde:
+            return False
+        if 'absence_non_remuneree' in jour_garde:
+            return False
+        if 'dejeuner' in jour_garde:
+            return jour_garde['dejeuner']
+        return self._planning.avec_frais_repas_dejeuner_jour_par_date(date)
+
+    def avec_frais_repas_gouter_jour_par_date(self, date: datetime.date) -> bool:
+        """Check if there are snack costs for a given day"""
+        year_str = date.strftime('%Y')
+        month_str = date.strftime('%m')
+        day_str = date.strftime('%d')
+
+        jour_garde = None
+
+        try:
+            jour_garde = self._garde[year_str][month_str][day_str]
+        except (KeyError, TypeError):
+            return self._planning.avec_frais_repas_gouter_jour_par_date(date)
+
+        if 'absence_payee' in jour_garde:
+            return False
+        if 'absence_non_remuneree' in jour_garde:
+            return False
+        if 'gouter' in jour_garde:
+            return jour_garde['gouter']
+        return self._planning.avec_frais_repas_dejeuner_jour_par_date(date)

@@ -23,7 +23,7 @@ contrat:
     horaire_net: 3.2029
     horaire_complementaires_net: 3.2029
     horaire_majorees_net: 3.52
-  indeminite_repas:
+  indemnites_repas:
     dejeuner: 2.50
     gouter: 0.50
   planning:
@@ -102,3 +102,7 @@ contrat:
       "04":
         "05":
           heures: [["08:00","17:00"]]
+        "20":
+          absence_payee: true
+        "21":
+          absence_payee: true
