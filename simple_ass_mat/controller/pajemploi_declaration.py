@@ -10,7 +10,7 @@ import math
 from typing import NamedTuple
 
 # import controller.helper as helper
-from controller.contrat import Contrat
+from .contrat import Contrat
 
 logger = logging.getLogger(__name__)
 

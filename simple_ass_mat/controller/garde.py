@@ -7,8 +7,8 @@
 import logging
 import datetime
 
-from controller import helper
-from controller.planning import Planning
+from . import helper
+from .planning import Planning
 
 logger = logging.getLogger(__name__)
 
@@ -55,6 +55,8 @@ class Garde:
                 return duration.seconds / 3600.0
             except KeyError:
                 pass
+
+        return 0.0
 
     def get_heures_complementaires_jour_par_date(self, date: datetime.date) -> float:
         """Calculate the number of complementary hours for a given day

@@ -1,6 +1,6 @@
 """
 :author Nicolas Boutin
-:datetime.date 2023-07-07
+:date 2023-07-07
 """
 
 import calendar

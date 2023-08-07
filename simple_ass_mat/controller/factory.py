@@ -3,9 +3,9 @@
 :date 2023-07-05
 """
 
-from controller.planning import Planning
-from controller.contrat import Contrat
-from controller.garde import Garde
+from .planning import Planning
+from .contrat import Contrat
+from .garde import Garde
 
 
 def make_planning(planning_data):

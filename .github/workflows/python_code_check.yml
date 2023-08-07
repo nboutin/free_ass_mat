@@ -25,5 +25,13 @@ jobs:
       - name: Run flake8
         run: flake8
 
-      # - name: Run pylint
-      #   run: pylint $(git ls-files '*.py')
+      - name: Run pylint
+        # run: pylint $(git ls-files '*.py')
+        run:
+          pylint simple_ass_mat/__main__.py
+          pylint simple_ass_mat/controller/contrat.py
+          pylint simple_ass_mat/controller/factory.py
+          pylint simple_ass_mat/controller/garde.py
+          pylint simple_ass_mat/controller/helper.py
+          pylint simple_ass_mat/controller/pajemploi_declaration.py
+          pylint simple_ass_mat/controller/planning.py
