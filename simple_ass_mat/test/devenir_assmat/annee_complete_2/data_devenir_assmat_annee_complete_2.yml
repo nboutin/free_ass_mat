@@ -16,10 +16,11 @@ contrat:
     horaire_majorees_net: 3.50
   planning:
     jours:
-      0: [["09:00", "17:00"]]
+      0:
+        "horaires": [["09:00", "17:00"]]
     semaines:
       # week_id : (week day : day_id)
-      0: 
+      0:
         lundi: 0
         mardi: 0
         mercredi: 0

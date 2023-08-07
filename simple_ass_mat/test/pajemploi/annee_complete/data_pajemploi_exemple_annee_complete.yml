@@ -16,7 +16,8 @@ contrat:
     horaire_majorees_net: 3.50
   planning:
     jours:
-      0: [["09:00","17:00"]]
+      0:
+        horaires: [["09:00","17:00"]]
     semaines:
       0:
         lundi: null

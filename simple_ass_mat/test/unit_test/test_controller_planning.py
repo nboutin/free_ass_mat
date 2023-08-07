@@ -64,20 +64,20 @@ class TestGetJourIdParDate(unittest.TestCase):
 class TestHeuresTravailleesJourParId(unittest.TestCase):
 
     def test_nominal(self):
-        jours = {0: [["08:00", "18:00"]], 1: [["08:15", "18:30"]]}
+        jours = {0: {"horaires": [["08:00", "18:00"]]}, 1: {"horaires": [["08:15", "18:30"]]}}
         planning = Planning({}, {}, jours, [[1, 5]])
 
         self.assertEqual(planning.get_heures_travaillees_jour_par_id(0), 10)
         self.assertEqual(planning.get_heures_travaillees_jour_par_id(1), 10.25)
 
     def test_two_hours_range_in_one_day(self):
-        jours = {0: [["08:00", "12:00"], ["14:00", "18:00"]]}
+        jours = {0: {"horaires": [["08:00", "12:00"], ["14:00", "18:00"]]}}
         planning = Planning({}, {}, jours, [[1, 5]])
 
         self.assertEqual(planning.get_heures_travaillees_jour_par_id(0), 8)
 
     def test_invalid_day_id(self):
-        jours = {0: [["08:00", "18:00"]]}
+        jours = {0: {"horaires": [["08:00", "18:00"]]}}
         planning = Planning({}, {}, jours, [[1, 5]])
 
         with self.assertRaises(ValueError):

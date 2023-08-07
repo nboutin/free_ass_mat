@@ -126,7 +126,7 @@ class Planning:
     def get_heures_travaillees_jour_par_id(self, day_id: int) -> float:
         """Calculate working hour per day"""
         try:
-            time_ranges = self._days[day_id]
+            time_ranges = self._days[day_id]['horaires']
         except KeyError as key_error:
             raise DayIdError(f"day_id {day_id} not found") from key_error
 
