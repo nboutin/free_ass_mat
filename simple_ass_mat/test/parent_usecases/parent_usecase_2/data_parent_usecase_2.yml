@@ -30,6 +30,14 @@ contrat:
     semaines:
       0:
         lundi: null
+        mardi: null
+        mercredi: 1
+        jeudi: null
+        vendredi: null
+        samedi: null
+        dimanche: null
+      1:
+        lundi: null
         mardi: 0
         mercredi: 1
         jeudi: 0
@@ -37,7 +45,8 @@ contrat:
         samedi: null
         dimanche: null
     annee:
-      0: [[1,5],[7,14],[16,28],[34,42],[44,51]]
+      0: [[1,5],[8,14],[17,27],[36,42],[45,51]]
+      1: [[7],[16],[28],[34,35],[44]]
     conges_payes: [[6],[15],[29,33],[43],[52]]
   garde:
     "2022":
@@ -74,31 +83,13 @@ contrat:
           absence_non_remuneree: true
     "2023":
       "01":
-        "05":
-          heures: [["08:00","18:00"]]
-        "10":
-          heures: [["08:00","18:15"]]
         "19":
           heures: [["08:00","18:30"]]
       "02":
-        "02":
+        "16":
           absence_payee: true
-        "23":
-          heures: [["08:00","18:30"]]
-      "03":
-        "02":
-          heures: [["08:00","18:30"]]
+        "17":
+          absence_payee: true
       "04":
         "05":
           heures: [["08:00","17:00"]]
-        "21":
-          absence_payee: true
-        "27":
-          heures: [["08:00","18:30"]]
-      "05":
-        "11":
-          heures: [["08:00","19:00"]]
-        "18":
-          absence_payee: true
-        "19":
-          absence_payee: true

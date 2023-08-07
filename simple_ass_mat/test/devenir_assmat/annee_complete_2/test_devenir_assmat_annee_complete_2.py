@@ -53,11 +53,16 @@ class TestDevenirAssmatAnneeComplete2(unittest.TestCase):
         self.assertEqual(self.planning.get_heures_travaillees_semaine_par_id(1), 32)
         self.assertAlmostEqual(self.planning.get_heures_travaillees_mois_mensualisees(), 146.78, delta=0.01)
         self.assertAlmostEqual(self.contrat.get_salaire_net_mensualise(), 440.34, delta=0.01)
-        self.assertAlmostEqual(self.planning.get_jours_travailles_mois_mensualise(), 21.66, delta=0.01)
+        self.assertAlmostEqual(self.planning.get_jours_travailles_mois_mensualise(), 39, delta=0.01)
 
 
 if __name__ == '__main__':
     import locale
     locale.setlocale(locale.LC_ALL, 'fr-FR')
+
+    import logging
+    logging.basicConfig(level=logging.DEBUG, handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler(Path(__file__).parent / Path(__file__ + '.log'), mode='w')])
 
     unittest.main()

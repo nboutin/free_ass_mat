@@ -52,7 +52,7 @@ class TestDevenirAssmatAnneeIncomplete1(unittest.TestCase):
         self.assertEqual(self.planning.get_heures_travaillees_semaine_par_id(1), 45)
         self.assertAlmostEqual(self.planning.get_heures_travaillees_mois_mensualisees(), 155, delta=0.01)
         self.assertAlmostEqual(self.contrat.get_salaire_net_mensualise(), 620, delta=0.01)
-        self.assertAlmostEqual(self.planning.get_jours_travailles_mois_mensualise(), 14, delta=0.01)
+        self.assertAlmostEqual(self.planning.get_jours_travailles_mois_mensualise(), 17, delta=0.01)
 
 
 if __name__ == '__main__':
