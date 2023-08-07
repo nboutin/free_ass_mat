@@ -60,4 +60,9 @@ if __name__ == '__main__':
     import locale
     locale.setlocale(locale.LC_ALL, 'fr-FR')
 
+    import logging
+    logging.basicConfig(level=logging.DEBUG, handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler(Path(__file__).parent / Path(__file__ + '.log'), mode='w')])
+
     unittest.main()

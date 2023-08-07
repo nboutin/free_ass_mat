@@ -69,12 +69,10 @@ class Contrat:
         """Frais d'entretien mensuel"""
         dates = helper.get_dates_in_month(date)
         frais_entretien_mois = 0.0
-        # acceuil_duree_seuil = 6.46  # round(6 + 28/60, 2)
 
         for i_date in dates:
             h_trav = self._garde.get_heures_travaillees_jour_par_date(i_date)
             if h_trav > 0:
-                # frais_entretien_jour = max(2.65, round(h_trav * 2.65 / acceuil_duree_seuil, 2))
                 frais_entretien_jour = self.get_frais_entretien_jour(h_trav, i_date)
                 logger.debug(f"get_frais_entretien_mois_par_date: {i_date} {h_trav} {frais_entretien_jour}")
                 frais_entretien_mois += frais_entretien_jour

@@ -30,33 +30,37 @@ class Garde:
         month_str = date.strftime('%m')
         day_str = date.strftime('%d')
         garde_day = None
+        heures_travaillees_jour = 0.0
 
         try:
             garde_day = self._garde[year_str][month_str][day_str]
         except (KeyError, TypeError):
             # no information from garde data, use planning value
-            return self._planning.get_heures_travaillees_jour_par_date(date)
+            heures_travaillees_jour = self._planning.get_heures_travaillees_jour_par_date(date)
+        else:
+            try:
+                if garde_day['absence_payee']:
+                    logger.debug(f"heures_travaillees_jour: {date} = {heures_travaillees_jour}")
+                    return 0.0
+            except KeyError:
+                pass
 
-        try:
-            if garde_day['absence_payee']:
-                return 0.0
-        except KeyError:
-            pass
+            try:
+                if garde_day['absence_non_remuneree']:
+                    logger.debug(f"heures_travaillees_jour: {date} = {heures_travaillees_jour}")
+                    return 0.0
+            except KeyError:
+                pass
 
-        try:
-            if garde_day['absence_non_remuneree']:
-                return 0.0
-        except KeyError:
-            pass
+            try:
+                time_range = garde_day['heures']
+                duration = helper.convert_time_ranges_to_duration(time_range)
+                heures_travaillees_jour = duration.seconds / 3600.0
+            except KeyError:
+                pass
 
-        try:
-            time_range = garde_day['heures']
-            duration = helper.convert_time_ranges_to_duration(time_range)
-            return duration.seconds / 3600.0
-        except KeyError:
-            pass
-
-        return 0.0
+        logger.debug(f"heures_travaillees_jour: {date} = {heures_travaillees_jour}")
+        return heures_travaillees_jour
 
     def get_heures_complementaires_jour_par_date(self, date: datetime.date) -> float:
         """Calculate the number of complementary hours for a given day
