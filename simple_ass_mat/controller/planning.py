@@ -142,10 +142,17 @@ class Planning:
     def get_jours_travailles_mois_mensualise(self) -> float:
         """day_per_week_count * 52 / 12"""
         if self.is_annee_complete():
-            return self.get_jours_travailles_semaine_par_id() * 52 / 12
+            jours_travailles_annee = 0.0
+            for semaine_id in self._weeks.keys():
+                jours_travailles_annee += self.get_jours_travailles_semaine_par_id(semaine_id)
+            return jours_travailles_annee * 52 / 12
         else:
-            semaine_travaille_annee = self.get_semaines_travaillees_annee()
-            return self.get_jours_travailles_semaine_par_id() * semaine_travaille_annee / 12
+            jours_travailles_annee = 0.0
+            for semaine_id in self._weeks.keys():
+                semaines_travaillees = self._get_semaines_travaillees_par_id(semaine_id)
+                jours_travailles_semaine = self.get_jours_travailles_semaine_par_id(semaine_id)
+                jours_travailles_annee += jours_travailles_semaine * semaines_travaillees
+            return jours_travailles_annee / 12
 
     def _get_jour_id_par_date(self, date: datetime.date):
         """Get jour_id par date"""

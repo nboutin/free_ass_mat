@@ -45,8 +45,7 @@ class TestParentUsecase1(unittest.TestCase):
         self.assertEqual(self.planning.get_heures_travaillees_semaine_par_id(1), 37.75)
         self.assertAlmostEqual(self.planning.get_heures_travaillees_mois_mensualisees(), 45.08, delta=0.01)
         self.assertAlmostEqual(self.contrat.get_salaire_net_mensualise(), 144.40, delta=0.01)
-        # fixme
-        self.assertAlmostEqual(self.planning.get_jours_travailles_mois_mensualise(), 5.33, delta=0.01)
+        self.assertAlmostEqual(self.planning.get_jours_travailles_mois_mensualise(), 5.08, delta=0.01)
 
     @unittest.skip("TODO")
     def test_2023_01(self):
