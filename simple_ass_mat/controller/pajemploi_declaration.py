@@ -3,6 +3,8 @@
 :datetime.date 2023-07-07
 """
 # pylint: disable=logging-fstring-interpolation
+# R0903: Too few public methods (1/2) (too-few-public-methods)
+# pylint: disable=too-few-public-methods
 
 import logging
 import datetime

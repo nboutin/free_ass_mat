@@ -3,6 +3,7 @@
 :date 2023-07-05
 """
 # pylint: disable=logging-fstring-interpolation
+# pylint: disable=no-else-return
 
 import logging
 import datetime
