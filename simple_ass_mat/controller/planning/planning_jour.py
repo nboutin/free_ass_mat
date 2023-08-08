@@ -6,7 +6,7 @@
 
 import datetime
 
-from . import helper
+from .. import helper
 from .planning_error import JourIdError, HorairesError
 
 

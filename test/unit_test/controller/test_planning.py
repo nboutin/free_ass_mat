@@ -17,10 +17,10 @@ from datetime import date
 sys.path.append(os.path.join(os.path.dirname(__file__), "../../.."))  # OK
 
 
-from simple_ass_mat.controller.planning import Planning  # nopep8 # noqa: E402
-from simple_ass_mat.controller.planning_jour import PlanningJour  # nopep8 # noqa: E402
-from simple_ass_mat.controller.planning_semaine import PlanningSemaine  # nopep8 # noqa: E402
-from simple_ass_mat.controller.planning_annee import PlanningAnnee  # nopep8 # noqa: E402
+from simple_ass_mat.controller.planning.planning import Planning  # nopep8 # noqa: E402
+from simple_ass_mat.controller.planning.planning_jour import PlanningJour  # nopep8 # noqa: E402
+from simple_ass_mat.controller.planning.planning_semaine import PlanningSemaine  # nopep8 # noqa: E402
+from simple_ass_mat.controller.planning.planning_annee import PlanningAnnee  # nopep8 # noqa: E402
 
 
 class TestGetJourIdParDate(unittest.TestCase):

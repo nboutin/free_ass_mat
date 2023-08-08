@@ -15,7 +15,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "../../.."))  # OK
 
 
-from simple_ass_mat.controller.planning_jour import PlanningJour, JourIdError  # nopep8 # noqa: E402
+from simple_ass_mat.controller.planning import PlanningJour, JourIdError  # nopep8 # noqa: E402
 
 
 class TestHeuresTravailleesJourParId(unittest.TestCase):
