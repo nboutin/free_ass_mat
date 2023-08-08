@@ -3,7 +3,7 @@
         "simple_ass_mat"
     ],
     "python.testing.pytestArgs": [
-        "simple_ass_mat"
+        "."
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true

@@ -16,7 +16,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))  # OK
 
 
-import controller.helper as helper  # nopep8 # noqa: E402
+from simple_ass_mat.controller import helper  # nopep8 # noqa: E402
 
 
 class TestGetLastDayOfWeek(unittest.TestCase):

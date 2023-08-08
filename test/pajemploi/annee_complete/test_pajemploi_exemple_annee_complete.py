@@ -20,8 +20,8 @@ import yaml
 sys.path.append(os.path.join(os.path.dirname(__file__), "../../.."))  # OK
 
 
-from controller import factory  # nopep8 # noqa: E402
-from controller.pajemploi_declaration import PajemploiDeclaration  # nopep8 # noqa: E402
+from simple_ass_mat.controller import factory  # nopep8 # noqa: E402
+from simple_ass_mat.controller.pajemploi_declaration import PajemploiDeclaration  # nopep8 # noqa: E402
 
 
 class TestPajemploiExempleAnneeComplete(unittest.TestCase):

@@ -16,7 +16,7 @@ from datetime import date
 sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))  # OK
 
 
-from controller.planning import Planning  # nopep8 # noqa: E402
+from simple_ass_mat.controller.planning import Planning  # nopep8 # noqa: E402
 
 
 class TestGetJourIdParDate(unittest.TestCase):
