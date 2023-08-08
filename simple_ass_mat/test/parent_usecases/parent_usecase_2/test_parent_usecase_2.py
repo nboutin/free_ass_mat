@@ -66,13 +66,13 @@ class TestParentUsecase2(unittest.TestCase):
         self.assertAlmostEqual(remuneration.salaire_net, 144.40 + 10.5*3.2029, delta=0.01)
         self.assertAlmostEqual(remuneration.indemnite_entretien, 17.85, delta=0.01)
         self.assertFalse(remuneration.avec_acompte_verse_au_salarie)
-        self.assertFalse(remuneration.avec_indemnite_repas_ou_kilometrique)
+        self.assertTrue(remuneration.avec_indemnite_repas_ou_kilometrique)
 
         self.assertEqual(heures_majorees_ou_complementaires.salaire_horaire_net, 3.2029)
         self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_majorees, 0)
         self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_complementaires, 10.5)
 
-        self.assertEqual(indemnites_complementaires.indemnite_repas, 0)
+        self.assertEqual(indemnites_complementaires.indemnite_repas, 12)
         self.assertEqual(indemnites_complementaires.indemnite_kilometrique, 0)
 
     def test_2023_02(self):
@@ -94,13 +94,13 @@ class TestParentUsecase2(unittest.TestCase):
         self.assertAlmostEqual(remuneration.salaire_net, 144.40, delta=0.01)
         self.assertAlmostEqual(remuneration.indemnite_entretien, 14.14, delta=0.01)
         self.assertFalse(remuneration.avec_acompte_verse_au_salarie)
-        self.assertFalse(remuneration.avec_indemnite_repas_ou_kilometrique)
+        self.assertTrue(remuneration.avec_indemnite_repas_ou_kilometrique)
 
         self.assertEqual(heures_majorees_ou_complementaires.salaire_horaire_net, 3.2029)
         self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_majorees, 0)
         self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_complementaires, 0)
 
-        self.assertEqual(indemnites_complementaires.indemnite_repas, 0)
+        self.assertEqual(indemnites_complementaires.indemnite_repas, 12)
         self.assertEqual(indemnites_complementaires.indemnite_kilometrique, 0)
 
     def test_2023_03(self):
@@ -122,16 +122,15 @@ class TestParentUsecase2(unittest.TestCase):
         self.assertAlmostEqual(remuneration.salaire_net, 144.40, delta=0.01)
         self.assertAlmostEqual(remuneration.indemnite_entretien, 17.05, delta=0.01)
         self.assertFalse(remuneration.avec_acompte_verse_au_salarie)
-        self.assertFalse(remuneration.avec_indemnite_repas_ou_kilometrique)
+        self.assertTrue(remuneration.avec_indemnite_repas_ou_kilometrique)
 
         self.assertEqual(heures_majorees_ou_complementaires.salaire_horaire_net, 3.2029)
         self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_majorees, 0)
         self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_complementaires, 0)
 
-        self.assertEqual(indemnites_complementaires.indemnite_repas, 0)
+        self.assertEqual(indemnites_complementaires.indemnite_repas, 15)
         self.assertEqual(indemnites_complementaires.indemnite_kilometrique, 0)
 
-    @unittest.skip("TODO")
     def test_2023_04(self):
         """2023-04"""
         mois_courant = date(2023, 4, 1)
@@ -149,15 +148,15 @@ class TestParentUsecase2(unittest.TestCase):
         self.assertFalse(travail_effectue.avec_heures_specifiques)
 
         self.assertAlmostEqual(remuneration.salaire_net, 144.40 + .5*3.2029, delta=0.01)
-        self.assertAlmostEqual(remuneration.indemnite_entretien, 18.25, delta=0.01)
+        self.assertAlmostEqual(remuneration.indemnite_entretien, 14.34, delta=0.01)
         self.assertFalse(remuneration.avec_acompte_verse_au_salarie)
-        self.assertFalse(remuneration.avec_indemnite_repas_ou_kilometrique)
+        self.assertTrue(remuneration.avec_indemnite_repas_ou_kilometrique)
 
         self.assertEqual(heures_majorees_ou_complementaires.salaire_horaire_net, 3.2029)
         self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_majorees, 0)
         self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_complementaires, 0.5)
 
-        self.assertEqual(indemnites_complementaires.indemnite_repas, 0)
+        self.assertEqual(indemnites_complementaires.indemnite_repas, 12)
         self.assertEqual(indemnites_complementaires.indemnite_kilometrique, 0)
 
     def test_2023_05(self):
@@ -179,13 +178,13 @@ class TestParentUsecase2(unittest.TestCase):
         self.assertAlmostEqual(remuneration.salaire_net, 144.40, delta=0.01)
         self.assertAlmostEqual(remuneration.indemnite_entretien, 17.40, delta=0.01)
         self.assertFalse(remuneration.avec_acompte_verse_au_salarie)
-        self.assertFalse(remuneration.avec_indemnite_repas_ou_kilometrique)
+        self.assertTrue(remuneration.avec_indemnite_repas_ou_kilometrique)
 
         self.assertEqual(heures_majorees_ou_complementaires.salaire_horaire_net, 3.2029)
         self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_majorees, 0)
         self.assertEqual(heures_majorees_ou_complementaires.nombre_heures_complementaires, 0)
 
-        self.assertEqual(indemnites_complementaires.indemnite_repas, 0)
+        self.assertEqual(indemnites_complementaires.indemnite_repas, 15)
         self.assertEqual(indemnites_complementaires.indemnite_kilometrique, 0)
 
 
@@ -194,7 +193,7 @@ if __name__ == '__main__':
     locale.setlocale(locale.LC_ALL, 'fr-FR')
 
     import logging
-    logging.basicConfig(level=logging.DEBUG, handlers=[
+    logging.basicConfig(level=logging.INFO, handlers=[
         logging.StreamHandler(sys.stdout),
         logging.FileHandler(Path(__file__).parent / Path(__file__ + '.log'), mode='w')])
 

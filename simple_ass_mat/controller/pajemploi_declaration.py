@@ -63,11 +63,15 @@ class PajemploiDeclaration:
 
     def get_declaration(self, mois_courant: datetime.date, today: datetime.date) -> Declaration:
         """Make PajemploiData"""
+
+        indemnites_complementaires = self._get_indemnites_complementaires(mois_courant)
+        avec_indemnite_repas_ou_kilometrique = indemnites_complementaires.indemnite_repas > 0
+
         return Declaration(
             travail_effectue=self._get_travail_effectue(mois_courant, today),
-            remuneration=self._get_remuneration(mois_courant),
+            remuneration=self._get_remuneration(mois_courant, avec_indemnite_repas_ou_kilometrique),
             heures_majorees_ou_complementaires=self._get_heures_majorees_ou_complementaires(mois_courant),
-            indemnites_complementaires=self._get_indemnites_complementaires()
+            indemnites_complementaires=indemnites_complementaires
         )
 
     def _get_travail_effectue(self, mois_courant: datetime.date, today: datetime.date) -> TravailEffectue:
@@ -82,13 +86,13 @@ class PajemploiDeclaration:
             avec_heures_specifiques=False
         )
 
-    def _get_remuneration(self, mois_courant: datetime.date) -> Remuneration:
+    def _get_remuneration(self, mois_courant: datetime.date, avec_indemnite_repas_ou_kilometrique) -> Remuneration:
         """Make Remuneration"""
         return Remuneration(
             salaire_net=self._contrat.get_salaire_net_mois_par_date(mois_courant),
             indemnite_entretien=self._contrat.get_frais_entretien_mois_par_date(mois_courant),
             avec_acompte_verse_au_salarie=False,
-            avec_indemnite_repas_ou_kilometrique=False
+            avec_indemnite_repas_ou_kilometrique=avec_indemnite_repas_ou_kilometrique
         )
 
     def _get_heures_majorees_ou_complementaires(self, mois_courant: datetime.date) -> HeuresMajoreesOuComplementaires:
@@ -119,9 +123,9 @@ class PajemploiDeclaration:
         return (self._contrat.planning.get_jours_travailles_planifies_mois_par_date(mois_courant)
                 - self._contrat.garde.get_jour_absence_non_remuneree_mois(mois_courant))
 
-    def _get_indemnites_complementaires(self):
+    def _get_indemnites_complementaires(self, mois_courant: datetime.date) -> IndemnitesComplementaires:
         """Make IndemnitesComplementaires"""
         return IndemnitesComplementaires(
-            indemnite_repas=0,
+            indemnite_repas=self._contrat.get_indemnite_repas_mois_par_date(mois_courant),
             indemnite_kilometrique=0
         )

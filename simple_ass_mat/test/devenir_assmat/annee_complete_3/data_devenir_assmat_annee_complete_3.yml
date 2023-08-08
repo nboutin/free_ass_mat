@@ -14,12 +14,17 @@ contrat:
     horaire_net: 4.00
     horaire_complementaires_net: 3.20
     horaire_majorees_net: 3.50
+  indemnites_repas:
+    dejeuner: 2.50
+    gouter: 0.50
   planning:
     jours:
-      0: [["09:00", "19:00"]]
-      1: [["09:00", "18:00"]]
+      0:
+        "horaires": [["09:00", "19:00"]]
+      1:
+        "horaires": [["09:00", "18:00"]]
     semaines:
-      0: 
+      0:
         lundi: 0
         mardi: 0
         mercredi: 0

@@ -126,7 +126,7 @@ class Planning:
     def get_heures_travaillees_jour_par_id(self, day_id: int) -> float:
         """Calculate working hour per day"""
         try:
-            time_ranges = self._days[day_id]
+            time_ranges = self._days[day_id]['horaires']
         except KeyError as key_error:
             raise DayIdError(f"day_id {day_id} not found") from key_error
 
@@ -217,6 +217,22 @@ class Planning:
             if day_id is not None:
                 hour_count += self.get_heures_travaillees_jour_par_id(day_id)
         return hour_count
+
+    def avec_frais_repas_dejeuner_jour_par_date(self, date: datetime.date) -> bool:
+        """Check lunch cost for a given day"""
+        day_id = self.get_jour_id_par_date(date)
+        try:
+            return self._days[day_id]['dejeuner']
+        except KeyError:
+            return False
+
+    def avec_frais_repas_gouter_jour_par_date(self, date: datetime.date) -> bool:
+        """Check snack cost for a given day"""
+        day_id = self.get_jour_id_par_date(date)
+        try:
+            return self._days[day_id]['gouter']
+        except KeyError:
+            return False
 
     def _check_input_data(self) -> None:
         """
