@@ -7,6 +7,7 @@
 # pylint: disable=wrong-import-position
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-class-docstring
+# pylint: disable=protected-access
 
 import unittest
 import sys
@@ -19,6 +20,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../../.."))  # OK
 from simple_ass_mat.controller.planning import Planning  # nopep8 # noqa: E402
 from simple_ass_mat.controller.planning_jour import PlanningJour  # nopep8 # noqa: E402
 from simple_ass_mat.controller.planning_semaine import PlanningSemaine  # nopep8 # noqa: E402
+from simple_ass_mat.controller.planning_annee import PlanningAnnee  # nopep8 # noqa: E402
 
 
 class TestGetJourIdParDate(unittest.TestCase):
@@ -44,25 +46,26 @@ class TestGetJourIdParDate(unittest.TestCase):
                         "dimanche": None}}
         planning_jour = PlanningJour({})
         planning_semaine = PlanningSemaine(semaines, planning_jour)
-        planning = Planning(planning_jour, planning_semaine, annee, [[1, 5]])
+        planning_annee = PlanningAnnee(annee)
+        planning = Planning(planning_jour, planning_semaine, planning_annee, [[1, 5]])
 
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 1, 30)), None)
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 1, 31)), None)
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 2, 1)), 1)
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 2, 2)), None)
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 2, 3)), None)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 1, 30)), None)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 1, 31)), None)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 2, 1)), 1)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 2, 2)), None)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 2, 3)), None)
 
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 2, 6)), None)
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 2, 7)), None)
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 2, 8)), None)
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 2, 9)), None)
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 2, 10)), None)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 2, 6)), None)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 2, 7)), None)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 2, 8)), None)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 2, 9)), None)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 2, 10)), None)
 
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 2, 13)), None)
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 2, 14)), 0)
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 2, 15)), 1)
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 2, 16)), 0)
-        self.assertEqual(planning.get_jour_id_par_date(date(2023, 2, 17)), 0)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 2, 13)), None)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 2, 14)), 0)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 2, 15)), 1)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 2, 16)), 0)
+        self.assertEqual(planning._get_jour_id_par_date(date(2023, 2, 17)), 0)
 
 
 if __name__ == '__main__':

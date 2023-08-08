@@ -40,7 +40,7 @@ contrat:
         vendredi: 1
         samedi: null
         dimanche: null
-    annee:
+    annees:
       # week_id
       # 0: [[6,7],[15,16],[28,35],[43,44],[51,52]] # 16 semaines vacances scolaires
       0: [[7],[16],[29],[35],[44],[52]] # 6 semaines vacances scolaires

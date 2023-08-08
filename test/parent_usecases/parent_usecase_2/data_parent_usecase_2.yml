@@ -53,7 +53,7 @@ contrat:
         vendredi: 0
         samedi: null
         dimanche: null
-    annee:
+    annees:
       0: [[1,5],[8,14],[17,27],[36,42],[45,51]]
       1: [[7],[16],[28],[34,35],[44]]
     conges_payes: [[6],[15],[29,33],[43],[52]]

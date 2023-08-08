@@ -6,11 +6,8 @@
 
 import calendar
 
-from .planning_jour import PlanningJour, JourIdError
-
-
-class SemaineIdError(KeyError):
-    """Week id error"""
+from .planning_jour import PlanningJour
+from .planning_error import JourIdError, SemaineIdError
 
 
 class PlanningSemaine:
@@ -28,10 +25,6 @@ class PlanningSemaine:
     def semaine_ids(self) -> set[semaine_id_t]:
         """Return semaine ids"""
         return self._semaines.keys()
-
-    def get_jour_id(self, semaine_id: semaine_id_t, jour_nom: jour_nom_t) -> PlanningJour.jour_id_t:
-        """Return jour id"""
-        return self._get_semaine(semaine_id)[jour_nom]
 
     def get_heures_travaillees(self, semaine_id: semaine_id_t) -> float:
         """Calculate working hour per week"""
@@ -54,6 +47,10 @@ class PlanningSemaine:
             if jour_id is not None:
                 jours_travailles += 1
         return jours_travailles
+
+    def get_jour_id(self, semaine_id: semaine_id_t, jour_nom: jour_nom_t) -> PlanningJour.jour_id_t:
+        """Return jour id"""
+        return self._get_semaine(semaine_id)[jour_nom]
 
     def _get_semaine(self, semaine_id: semaine_id_t):
         """Return semaine"""

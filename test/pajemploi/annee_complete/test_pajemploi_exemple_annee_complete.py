@@ -52,7 +52,7 @@ class TestPajemploiExempleAnneeComplete(unittest.TestCase):
         - Nombre de jours d'activités = 18
         """
         self.assertTrue(self.planning.is_annee_complete())
-        self.assertEqual(self.planning.get_semaines_travaillees_annee(), 47)
+        self.assertEqual(self.planning.annees.get_semaines_travaillees_count(), 47)
         self.assertEqual(self.planning.semaines.get_heures_travaillees(0), 32)
         self.assertAlmostEqual(self.planning.get_heures_travaillees_mois_mensualisees(), 138.66, delta=0.01)
         self.assertAlmostEqual(self.contrat.get_salaire_net_mensualise(), 416.00, delta=0.01)

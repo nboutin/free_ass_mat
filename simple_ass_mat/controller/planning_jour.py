@@ -7,14 +7,7 @@
 import datetime
 
 from . import helper
-
-
-class JourIdError(ValueError):
-    """Jour Id error"""
-
-
-class HorairesError(ValueError):
-    """Horaires error"""
+from .planning_error import JourIdError, HorairesError
 
 
 class PlanningJour:

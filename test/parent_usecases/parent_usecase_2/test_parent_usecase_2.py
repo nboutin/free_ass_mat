@@ -40,7 +40,7 @@ class TestParentUsecase2(unittest.TestCase):
     def test_contrat_parametres(self):
         """Contrat parametres"""
         self.assertFalse(self.planning.is_annee_complete())
-        self.assertEqual(self.planning.get_semaines_travaillees_annee(), 43)
+        self.assertEqual(self.planning.annees.get_semaines_travaillees_count(), 43)
         self.assertEqual(self.planning.semaines.get_heures_travaillees(0), 8.5)
         self.assertEqual(self.planning.semaines.get_heures_travaillees(1), 37.75)
         self.assertAlmostEqual(self.planning.get_heures_travaillees_mois_mensualisees(), 45.08, delta=0.01)

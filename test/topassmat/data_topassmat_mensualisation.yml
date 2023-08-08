@@ -30,7 +30,7 @@ contrat:
         vendredi: 0
         samedi: null
         dimanche: null
-    annee:
+    annees:
       0: [[1,37]]
     conges_payes:
   garde:

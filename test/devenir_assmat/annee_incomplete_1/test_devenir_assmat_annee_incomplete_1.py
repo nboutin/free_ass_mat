@@ -45,7 +45,7 @@ class TestDevenirAssmatAnneeIncomplete1(unittest.TestCase):
         Salaire net mensualisé 620€
         """
         self.assertFalse(self.planning.is_annee_complete())
-        self.assertEqual(self.planning.get_semaines_travaillees_annee(), 6+36)
+        self.assertEqual(self.planning.annees.get_semaines_travaillees_count(), 6+36)
         self.assertEqual(self.planning.semaines.get_jours_travailles(0), 4)
         self.assertEqual(self.planning.semaines.get_jours_travailles(1), 5)
         self.assertEqual(self.planning.semaines.get_heures_travaillees(0), 40)
