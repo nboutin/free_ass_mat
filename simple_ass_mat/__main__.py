@@ -7,7 +7,7 @@
 import logging
 # import yaml
 
-# from controller import factory
+# from simple_ass_mat.controller import factory
 
 __NAME = "Free AssMat"
 
