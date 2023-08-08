@@ -1,6 +1,6 @@
 """
 :author Nicolas Boutin
-:date 2023-07-05
+:date 2023-07
 """
 # pylint: disable=logging-fstring-interpolation
 # pylint: disable=no-else-return
@@ -10,16 +10,13 @@ import datetime
 import calendar
 
 from . import helper
+from .planning_jour import PlanningJour, JourIdError
 
 logger = logging.getLogger(__name__)
 
 
 class PlanningError (ValueError):
     """Planning error"""
-
-
-class DayIdError(ValueError):
-    """Day id error"""
 
 
 class WeekIdError(ValueError):
@@ -33,21 +30,17 @@ class Planning:
     _COMPLETE_YEAR_WORKING_WEEK_COUNT = 47
     _COMPLETE_YEAR_PAID_VACATION_WEEK_COUNT = 5
 
-    day_id_t = int
-    hour_range_t = dict[str, str]
-    days_t = dict[day_id_t, hour_range_t]
-
     week_id_t = int
     week_day_t = str  # lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche
-    weeks_t = dict[week_id_t, dict[week_day_t, day_id_t]]
+    weeks_t = dict[week_id_t, dict[week_day_t, PlanningJour.jour_id_t]]
 
     week_range_t = list[dict[str, int]]
     year_t = dict[week_id_t, week_range_t]
 
-    def __init__(self, annee: year_t, semaines: weeks_t, jours: days_t, conges_payes: week_range_t):
+    def __init__(self, jours: PlanningJour, annee: year_t, semaines: weeks_t, conges_payes: week_range_t):
+        self._jours = jours
         self._year = annee
         self._weeks = semaines
-        self._days = jours
         self._conges_payes = conges_payes
 
         self._check_input_data()
@@ -97,43 +90,31 @@ class Planning:
         except WeekIdError:
             return 0.0
 
-    def get_heures_travaillees_semaine_par_id(self, week_id: int = 0) -> float:
+    def get_heures_travaillees_semaine_par_id(self, semaine_id: int = 0) -> float:
         """Calculate working hour per week"""
-        hour_count = 0
+        heures_travaillees = 0
 
-        for day in calendar.day_name:
+        for jour_nom in calendar.day_name:
             try:
-                day_id = self._weeks[week_id][day]
-                hour_count += self.get_heures_travaillees_jour_par_id(day_id)
+                jour_id = self._weeks[semaine_id][jour_nom]
+                heures_travaillees += self._jours.get_heures_travaillees_par_jour_id(jour_id)
             except KeyError as key_error:
-                raise WeekIdError(f"week_id {week_id} not found") from key_error
-            except DayIdError:
+                raise WeekIdError(f"semaines_id {semaine_id} not found") from key_error
+            except JourIdError:
                 pass
 
-        return hour_count
+        return heures_travaillees
 
     def get_heures_travaillees_jour_par_date(self, date: datetime.date) -> float:
         """Calculate working hour per day"""
         heures_travaillees = 0.0
-        day_id = self.get_jour_id_par_date(date)
+        jour_id = self.get_jour_id_par_date(date)
         try:
-            heures_travaillees = self.get_heures_travaillees_jour_par_id(day_id)
-        except DayIdError:
+            heures_travaillees = self._jours.get_heures_travaillees_par_jour_id(jour_id)
+        except JourIdError:
             pass
         logger.debug(f"heures_travaillees_jour_par_date: {date} = {heures_travaillees}")
         return heures_travaillees
-
-    def get_heures_travaillees_jour_par_id(self, day_id: int) -> float:
-        """Calculate working hour per day"""
-        try:
-            time_ranges = self._days[day_id]['horaires']
-        except KeyError as key_error:
-            raise DayIdError(f"day_id {day_id} not found") from key_error
-
-        duration: datetime.timedelta = helper.convert_time_ranges_to_duration(time_ranges)
-        hour_count: float = duration.seconds / 3600.0
-
-        return hour_count
 
     def get_heures_travaillees_mois_mensualisees(self) -> float:
         """Calculate working hour per month"""
@@ -213,26 +194,20 @@ class Planning:
         dates = helper.get_dates_in_month(date)
 
         for i_date in dates:
-            day_id = self.get_jour_id_par_date(i_date)
-            if day_id is not None:
-                hour_count += self.get_heures_travaillees_jour_par_id(day_id)
+            jour_id = self.get_jour_id_par_date(i_date)
+            if jour_id is not None:
+                hour_count += self._jours.get_heures_travaillees_par_jour_id(jour_id)
         return hour_count
 
     def avec_frais_repas_dejeuner_jour_par_date(self, date: datetime.date) -> bool:
         """Check lunch cost for a given day"""
         day_id = self.get_jour_id_par_date(date)
-        try:
-            return self._days[day_id]['dejeuner']
-        except KeyError:
-            return False
+        return self._jours.avec_frais_repas_dejeuner_jour_par_date(day_id)
 
     def avec_frais_repas_gouter_jour_par_date(self, date: datetime.date) -> bool:
         """Check snack cost for a given day"""
         day_id = self.get_jour_id_par_date(date)
-        try:
-            return self._days[day_id]['gouter']
-        except KeyError:
-            return False
+        return self._jours.avec_frais_repas_gouter_jour_par_date(day_id)
 
     def _check_input_data(self) -> None:
         """

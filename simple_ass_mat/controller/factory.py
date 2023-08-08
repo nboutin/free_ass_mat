@@ -4,6 +4,7 @@
 """
 
 from .planning import Planning
+from .planning_jour import PlanningJour
 from .contrat import Contrat, IndemniteRepas
 from .garde import Garde
 
@@ -12,8 +13,8 @@ def make_planning(planning_data):
     """
     :brief Construct planning instance from planning data read from file
     """
-    return Planning(planning_data['annee'], planning_data['semaines'], planning_data['jours'],
-                    planning_data['conges_payes'])
+    planning_jour = PlanningJour(planning_data['jours'])
+    return Planning(planning_jour, planning_data['annee'], planning_data['semaines'],planning_data['conges_payes'])
 
 
 def make_garde_info(garde_info_data, planning):
