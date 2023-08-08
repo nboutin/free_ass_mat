@@ -30,17 +30,17 @@ class PlanningJour:
     horaires_t = dict[str, str]
     jours_t = dict[jour_id_t, horaires_t]
 
-    def __init__(self, jours_data: jours_t):
+    def __init__(self, jours_data: jours_t) -> None:
         self._jours = jours_data
 
-    def get_heures_travaillees_par_jour_id(self, jour_id: jour_id_t) -> float:
+    def get_heures_travaillees(self, jour_id: jour_id_t) -> float:
         """Calcul le nombre d'heures travaillées pour un jour donné par jour_id"""
-        horaires = self._get_horaires_par_jour_id(jour_id)
+        horaires = self._get_horaires(jour_id)
         duree: datetime.timedelta = helper.convert_time_ranges_to_duration(horaires)
         heures_travaillees: float = duree.seconds / 3600.0
         return heures_travaillees
 
-    def avec_frais_repas_dejeuner_jour_par_date(self, jour_id: jour_id_t) -> bool:
+    def avec_frais_repas_dejeuner(self, jour_id: jour_id_t) -> bool:
         """Verifie si le dejeuner est compris pour un jour donné par jour_id"""
         try:
             jour = self._get_jour(jour_id)
@@ -52,7 +52,7 @@ class PlanningJour:
         except KeyError:
             return False
 
-    def avec_frais_repas_gouter_jour_par_date(self, jour_id: jour_id_t) -> bool:
+    def avec_frais_repas_gouter(self, jour_id: jour_id_t) -> bool:
         """Verifie si le gouter est compris pour un jour donné par jour_id"""
         try:
             jour = self._get_jour(jour_id)
@@ -65,7 +65,7 @@ class PlanningJour:
             return False
 
     def _get_jour(self, jour_id: jour_id_t) -> dict:
-        """Retourne un jour par id"""
+        """Return un jour par id"""
         try:
             jour = self._jours[jour_id]
         except KeyError as key_error:
@@ -73,8 +73,8 @@ class PlanningJour:
 
         return jour
 
-    def _get_horaires_par_jour_id(self, day_id: jour_id_t) -> horaires_t:
-        """Retourne les horaires pour un jour donné par jour_id"""
+    def _get_horaires(self, day_id: jour_id_t) -> horaires_t:
+        """Return les horaires pour un jour donné par jour_id"""
         jour = self._get_jour(day_id)
         try:
             horaires = jour['horaires']

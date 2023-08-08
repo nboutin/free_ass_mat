@@ -18,6 +18,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../../.."))  # OK
 
 from simple_ass_mat.controller.planning import Planning  # nopep8 # noqa: E402
 from simple_ass_mat.controller.planning_jour import PlanningJour  # nopep8 # noqa: E402
+from simple_ass_mat.controller.planning_semaine import PlanningSemaine  # nopep8 # noqa: E402
 
 
 class TestGetJourIdParDate(unittest.TestCase):
@@ -41,7 +42,9 @@ class TestGetJourIdParDate(unittest.TestCase):
                         "vendredi": 0,
                         "samedi": None,
                         "dimanche": None}}
-        planning = Planning(PlanningJour({}), annee, semaines, [[1, 5]])
+        planning_jour = PlanningJour({})
+        planning_semaine = PlanningSemaine(semaines, planning_jour)
+        planning = Planning(planning_jour, planning_semaine, annee, [[1, 5]])
 
         self.assertEqual(planning.get_jour_id_par_date(date(2023, 1, 30)), None)
         self.assertEqual(planning.get_jour_id_par_date(date(2023, 1, 31)), None)
