@@ -33,5 +33,5 @@ contrat:
     annees:
       # week_id
       0: [[1, 47]]
-    conges_payes: [[48, 52]]
+    enfant_absent: [[48, 52]]
   garde:

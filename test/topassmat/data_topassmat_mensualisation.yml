@@ -32,7 +32,7 @@ contrat:
         dimanche: null
     annees:
       0: [[1,37]]
-    conges_payes:
+    enfant_absent:
   garde:
     "2023-02-06":
       heures: [["07:00","19:30"]]

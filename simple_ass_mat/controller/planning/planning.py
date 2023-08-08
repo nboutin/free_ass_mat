@@ -27,14 +27,14 @@ class Planning:
     _ANNEE_COMPLETE_SEMAINES_TRAVAILLEES_COUNT = 47
     _ANNEE_COMPLETE_SEMAINES_CONGES_PAYES_COUNT = 5
 
-    week_range_t = list[dict[str, int]]
+    semaine_interval_t = list[dict[str, int]]
 
     def __init__(self, jours: PlanningJour, semaines: PlanningSemaine, annees: PlanningAnnee,
-                 conges_payes: week_range_t):
+                 enfant_absent: semaine_interval_t):
         self._jours = jours
         self._semaines = semaines
         self._annees = annees
-        self._conges_payes = conges_payes
+        self._enfant_absent = enfant_absent
 
         self._check_input_data()
 
@@ -51,19 +51,19 @@ class Planning:
     def is_annee_complete(self) -> bool:
         """Evaluate if contrat is for a complete year (47 week) or an incomplete year"""
         return (self._annees.get_semaines_travaillees_count() == Planning._ANNEE_COMPLETE_SEMAINES_TRAVAILLEES_COUNT) \
-            and (self.get_semaines_conges_payes_annee() == Planning._ANNEE_COMPLETE_SEMAINES_CONGES_PAYES_COUNT)
+            and (self.get_enfant_absent_semaine_count() == Planning._ANNEE_COMPLETE_SEMAINES_CONGES_PAYES_COUNT)
 
-    def get_semaines_conges_payes_annee(self) -> int:
+    def get_enfant_absent_semaine_count(self) -> int:
         """Count week of paid vacation"""
-        week_count = 0
-        for week_ranges in self._conges_payes:
-            if len(week_ranges) == 1:
-                week_count += 1
-            elif len(week_ranges) == 2:
-                week_count += week_ranges[1] - week_ranges[0] + 1
+        semaine_count = 0
+        for semaine_interval in self._enfant_absent:
+            if len(semaine_interval) == 1:
+                semaine_count += 1
+            elif len(semaine_interval) == 2:
+                semaine_count += semaine_interval[1] - semaine_interval[0] + 1
             else:
                 raise PlanningError("week_range length is not 1 or 2 for conges_payes")
-        return week_count
+        return semaine_count
 
     def get_heures_travaillees_jour_par_date(self, date: datetime.date) -> float:
         """Calculate working hour per day"""
@@ -171,7 +171,7 @@ class Planning:
         """
 
         working_week_count = self._annees.get_semaines_travaillees_count()
-        paid_vacation_week_count = self.get_semaines_conges_payes_annee()
+        paid_vacation_week_count = self.get_enfant_absent_semaine_count()
 
         if working_week_count + paid_vacation_week_count > 52:
             raise PlanningError(

@@ -15,7 +15,7 @@ def make_planning(planning_data):
     planning_jour = PlanningJour(planning_data['jours'])
     planning_semaine = PlanningSemaine(planning_data['semaines'], planning_jour)
     planning_annee = PlanningAnnee(planning_data['annees'])
-    return Planning(planning_jour, planning_semaine, planning_annee, planning_data['conges_payes'])
+    return Planning(planning_jour, planning_semaine, planning_annee, planning_data['enfant_absent'])
 
 
 def make_garde_info(garde_info_data, planning):

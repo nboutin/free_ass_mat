@@ -32,7 +32,7 @@ contrat:
         dimanche: null
     annees:
       0: [[1,37]]
-    conges_payes: [[38,52]]
+    enfant_absent: [[38,52]]
   garde:
     "2023":
       "02":
