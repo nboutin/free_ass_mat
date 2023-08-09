@@ -60,35 +60,15 @@ contrat:
   garde:
     "2022":
       "12":
-        "08":
-          absence_non_remuneree: true
-        "09":
-          absence_non_remuneree: true
-        "13":
+        "07":
           absence_non_remuneree: true
         "14":
           heures: [["08:30","11:30"]]
-        "15":
-          absence_non_remuneree: true
-        "16":
-          absence_non_remuneree: true
         "19":
           heures: [["08:30","13:00"]]
         "20":
           heures: [["08:30","13:00"]]
         "21":
-          absence_non_remuneree: true
-        "22":
-          absence_non_remuneree: true
-        "23":
-          absence_non_remuneree: true
-        "27":
-          absence_non_remuneree: true
-        "28":
-          absence_non_remuneree: true
-        "29":
-          absence_non_remuneree: true
-        "30":
           absence_non_remuneree: true
     "2023":
       "01":

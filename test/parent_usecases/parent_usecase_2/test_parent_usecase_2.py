@@ -198,7 +198,7 @@ class TestParentUsecase2(unittest.TestCase):
         heures_majorees_ou_complementaires = declaration.heures_majorees_ou_complementaires
         indemnites_complementaires = declaration.indemnites_complementaires
 
-        self.assertEqual(travail_effectue.nombre_heures_normales, 39)
+        self.assertEqual(travail_effectue.nombre_heures_normales, 24)
         self.assertEqual(travail_effectue.nombre_jours_activite, 6)
         self.assertEqual(travail_effectue.nombre_jours_conges_payes, 0)
         self.assertFalse(travail_effectue.avec_heures_complementaires_ou_majorees)
