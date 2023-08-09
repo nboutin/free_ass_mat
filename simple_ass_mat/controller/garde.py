@@ -77,7 +77,7 @@ class Garde:
         for date_ in dates:
             h_comp_semaine += self.get_heures_complementaires_jour_par_date(date_)
 
-        h_trav_prevu_semaine = self._planning. get_heure_travaillees_semaine_par_date(annee, numero_semaine)
+        h_trav_prevu_semaine = self._planning. get_heures_travaillees_semaine_par_date(annee, numero_semaine)
 
         return max(
             min(h_trav_prevu_semaine + h_comp_semaine, Garde._HEURE_COMPLEMENTAIRE_SEUIL) - h_trav_prevu_semaine,

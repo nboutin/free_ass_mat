@@ -3,7 +3,7 @@
 :date 2023-07-05
 """
 
-from .planning import Planning
+from .planning import Planning, PlanningJour, PlanningSemaine, PlanningAnnee
 from .contrat import Contrat, IndemniteRepas
 from .garde import Garde
 
@@ -12,8 +12,10 @@ def make_planning(planning_data):
     """
     :brief Construct planning instance from planning data read from file
     """
-    return Planning(planning_data['annee'], planning_data['semaines'], planning_data['jours'],
-                    planning_data['conges_payes'])
+    planning_jour = PlanningJour(planning_data['jours'])
+    planning_semaine = PlanningSemaine(planning_data['semaines'], planning_jour)
+    planning_annee = PlanningAnnee(planning_data['annees'])
+    return Planning(planning_jour, planning_semaine, planning_annee, planning_data['enfant_absent'])
 
 
 def make_garde_info(garde_info_data, planning):

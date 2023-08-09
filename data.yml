@@ -36,9 +36,9 @@ contrat:
         vendredi: 0
         samedi: null
         dimanche: null
-    annee:
+    annees:
       0: [[1,5],[7,14],[16,28],[34,42],[44,51]]
-    conges_payes: [[6],[15],[29,33],[43],[52]]
+    enfant_absent: [[6],[15],[29,33],[43],[52]]
   garde:
     "2022":
       "12":

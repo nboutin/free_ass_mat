@@ -53,42 +53,22 @@ contrat:
         vendredi: 0
         samedi: null
         dimanche: null
-    annee:
+    annees:
       0: [[1,5],[8,14],[17,27],[36,42],[45,51]]
       1: [[7],[16],[28],[34,35],[44]]
-    conges_payes: [[6],[15],[29,33],[43],[52]]
+    enfant_absent: [[6],[15],[29,33],[43],[52]]
   garde:
     "2022":
       "12":
-        "08":
-          absence_non_remuneree: true
-        "09":
-          absence_non_remuneree: true
-        "13":
+        "07":
           absence_non_remuneree: true
         "14":
           heures: [["08:30","11:30"]]
-        "15":
-          absence_non_remuneree: true
-        "16":
-          absence_non_remuneree: true
         "19":
           heures: [["08:30","13:00"]]
         "20":
           heures: [["08:30","13:00"]]
         "21":
-          absence_non_remuneree: true
-        "22":
-          absence_non_remuneree: true
-        "23":
-          absence_non_remuneree: true
-        "27":
-          absence_non_remuneree: true
-        "28":
-          absence_non_remuneree: true
-        "29":
-          absence_non_remuneree: true
-        "30":
           absence_non_remuneree: true
     "2023":
       "01":

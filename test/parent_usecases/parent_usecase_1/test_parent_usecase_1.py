@@ -51,8 +51,8 @@ class TestParentUsecase1(unittest.TestCase):
         - Nombre de jours d'activités = 15
         """
         self.assertFalse(self.planning.is_annee_complete())
-        self.assertEqual(self.planning.get_semaines_travaillees_annee(), 43)
-        self.assertEqual(self.planning.get_heures_travaillees_semaine_par_id(), 37.75)
+        self.assertEqual(self.planning.annees.get_semaines_travaillees_count(), 43)
+        self.assertEqual(self.planning.semaines.get_heures_travaillees(0), 37.75)
         self.assertAlmostEqual(self.planning.get_heures_travaillees_mois_mensualisees(), 135.27, delta=0.01)
         self.assertAlmostEqual(self.contrat.get_salaire_net_mensualise(), 433.26, delta=0.01)
         self.assertAlmostEqual(self.planning.get_jours_travailles_mois_mensualise(), 14.33, delta=0.01)
