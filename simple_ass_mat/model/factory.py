@@ -5,14 +5,14 @@ Description:
 """
 
 from copy import deepcopy
-from .contrat import Contrat
+# from .contrat import Contrat
 from .remuneration import Remuneration
 from .planning import Planning, SemaineAcceuil
 
 
-def make_contrat(contrat_data) -> Contrat:
-    """Make Contrat"""
-    return Contrat(remuneration=make_remuneration(contrat_data["remuneration"]))
+# def make_contrat(contrat_data) -> Contrat:
+#     """Make Contrat"""
+#     return Contrat(remuneration=make_remuneration(contrat_data["remuneration"]))
 
 
 def make_remuneration(remuneration_data) -> Remuneration:
