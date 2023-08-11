@@ -15,3 +15,9 @@ format donnée yaml
 
 ## Remuneration
 - tarif horaire brut
+
+## Salaire
+acceuil hebdomadaire moyen (heures)
+menusalisation des heures (heures/mois)
+salaire brut mensualisé
+salaire net mensualisé

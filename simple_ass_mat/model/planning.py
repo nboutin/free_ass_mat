@@ -31,6 +31,10 @@ class JourAcceuil:
     def __init__(self, creneau_horaire: CreneauHoraire | None = None) -> None:
         self._creneau_horaire = creneau_horaire
 
+    def get_nombre_heure_acceuil(self) -> float:
+        """Return le nombre d'heure d'acceuil dans une journée"""
+        return self._creneau_horaire.duree.seconds / 3600
+
 
 class SemaineAcceuil:
     """Semaine acceuil"""
@@ -41,6 +45,14 @@ class SemaineAcceuil:
                  jeudi: jour_t = None, vendredi: jour_t = None, samedi: jour_t = None, dimanche: jour_t = None) -> None:
         self._jours = {"lundi": lundi, "mardi": mardi, "mercredi": mercredi,
                        "jeudi": jeudi, "vendredi": vendredi, "samedi": samedi, "dimanche": dimanche}
+
+    def get_nombre_heure_acceuil(self) -> float:
+        """Return nombre d'heure d'acceuil dans une semaine"""
+        n_heure_acceuil = 0.0
+        for jour in self._jours.values():
+            if jour:
+                n_heure_acceuil += jour.get_nombre_heure_acceuil()
+        return n_heure_acceuil
 
 
 class Planning:
@@ -61,6 +73,14 @@ class Planning:
         self._check_inputs(semaines_acceuil, semaines_conges_payes)
         self._semaines_acceuil = semaines_acceuil
         self._semaines_conges_payes = semaines_conges_payes
+
+    def get_nombre_semaine_acceuil(self):
+        """Return le nombre de semaine d'acceuil dans une année"""
+        return len(self._semaines_acceuil)
+
+    def get_nombre_heure_semaine(self):
+        """Return le nombre d'heure par semaine"""
+        return self._semaines_acceuil[1].get_nombre_heure_acceuil()
 
     @staticmethod
     def _check_inputs(semaines_acceuil, semaines_conges_payes):

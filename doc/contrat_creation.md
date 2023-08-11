@@ -131,5 +131,6 @@ g. fin de l'acceuil
 9. Ass Mat
 a. Coordonnes
 10. Document et finalisation
+d. date debut de gestion avec logiciel
 
 
