@@ -72,10 +72,11 @@ class TestGetNombreHeureAcceuil(unittest.TestCase):
 
 if __name__ == '__main__':
     import logging
-    from pathlib import Path
+    # from pathlib import Path
 
     logging.basicConfig(level=logging.DEBUG, handlers=[
         logging.StreamHandler(sys.stdout),
-        logging.FileHandler(Path(__file__).parent / Path(__file__ + '.log'), mode='w')])
+        # logging.FileHandler(Path(__file__).parent / Path(__file__ + '.log'), mode='w')
+        ])
 
     unittest.main()
