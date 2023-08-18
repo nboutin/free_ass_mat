@@ -28,3 +28,9 @@ class Contrat:
 
         = nombre heure par semaine * 52 / 12"""
         return self._planning.get_nombre_heure_semaine() * 52 / 12
+
+    def get_remuneration_brut_mensualisee(self) -> float:
+        """Return la remuneration brut mensualisee
+
+        = remuneration horaire brut * nombre heure mensualisee"""
+        return self._remuneration.tarif_horaire_brut * self.get_duree_acceuil_mensualisee()
