@@ -17,8 +17,14 @@ class Contrat:
         self._remuneration = remuneration
 
     def get_duree_acceuil_hebdomadaire_moyen(self) -> float:
-        """Return la durée hebdomadaire d'acceuil moyen
+        """Return la durée d'acceuil hebdomadaire moyen
 
         = nombre heure semaine * nombre semaine acceuil / 52
         """
         return self._planning.get_nombre_heure_semaine() * self._planning.get_nombre_semaine_acceuil() / 52
+
+    def get_duree_acceuil_mensualisee(self) -> float:
+        """Return la durée d'acceuil mensualisée
+
+        = nombre heure par semaine * 52 / 12"""
+        return self._planning.get_nombre_heure_semaine() * 52 / 12
