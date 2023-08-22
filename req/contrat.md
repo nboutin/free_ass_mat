@@ -1,23 +1,31 @@
-# Contrat
+# Simple AssMat
 
-1 contrat
-format donnée yaml
+## Contrat
 
-## Organisation horaire
+### Organisation horaire
+
 - type de planning
-    - 1 semaine type d'acceuil
+  - 1 semaine type d'acceuil
 - 1 jour type
-    - 1 créneau horaire
+  - 1 créneau horaire
 
-## Planning
+### Planning
+
 - ass_mat conges payes = 5
 - annee complete
 
-## Remuneration
+### Remuneration
+
 - tarif horaire brut
 
-## Salaire
-acceuil hebdomadaire moyen (heures)
-menusalisation des heures (heures/mois)
-salaire brut mensualisé
-salaire net mensualisé
+### Salaire
+
+- calcul acceuil hebdomadaire moyen (heures)
+- calcul menusalisation des heures (heures/mois)
+- calcul salaire brut mensualisé
+- calcul salaire net mensualisé
+
+## Sauvegarde & chargement de données
+
+- format de données YAML
+- chargement de données depuis un fichier
