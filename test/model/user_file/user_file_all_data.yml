@@ -1,0 +1,19 @@
+contrat:
+  description: "User file with all supported data"
+  planning:
+    jours_type:
+      0:
+        [["08:00", "18:00"]]
+    semaines_type:
+      0:
+        lundi: 0
+        mardi: null
+        mercredi: 0
+        jeudi: 0
+        vendredi: 0
+        samedi: null
+        dimanche: null
+    semaines_presence: [[1,5],[7,14],[16,30],[33,50],[52]]
+    conges_payes: [[6],[15],[31,32],[51]]
+  remuneration:
+    salaire_horaire_brut: 4.10

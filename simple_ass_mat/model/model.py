@@ -4,18 +4,18 @@ Date: 2023-08
 Description: Module to handle all data
 """
 
-# import yaml
+from pathlib import Path
 
-# from .contrat import Contrat
+import yaml
 
 
-# class Model:
-#     """"Handle read and write to/from data"""
+class Model:
+    """"Handle read and write to/from data"""
 
-#     def __init__(self):
-#         pass
+    def __init__(self):
+        pass
 
-#     # def load_contrat(self) -> Contrat:
-#     #     """load contrat"""
-#     #     with open("contrat.yml", "r", encoding="utf-8") as file:
-#     #         contrat_data = yaml.safe_load(file)
+    def load_user_file(self, filepath: Path):
+        """Load user file"""
+        with open(filepath, "r", encoding="utf-8") as file:
+            user_data = yaml.safe_load(file)
