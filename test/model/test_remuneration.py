@@ -10,7 +10,6 @@
 import unittest
 import sys
 import os
-from datetime import time
 
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))
@@ -35,6 +34,6 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG, handlers=[
         logging.StreamHandler(sys.stdout),
         # logging.FileHandler(Path(__file__).parent / Path(__file__ + '.log'), mode='w')
-        ])
+    ])
 
     unittest.main()
