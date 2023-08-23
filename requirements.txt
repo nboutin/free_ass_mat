@@ -2,3 +2,4 @@ pyyaml
 flake8
 pylint >= 2.17.0
 pytest
+cerberus

@@ -1,6 +1,7 @@
 # Simple AssMat
 
 ## Contrat
+1 contrat a la fois
 
 ### Organisation horaire
 
