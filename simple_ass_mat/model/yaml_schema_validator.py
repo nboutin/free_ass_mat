@@ -47,6 +47,25 @@ class YamlSchemaValidator:
                                             'type': 'string',
                                         }
                                     }
+                                },
+                                'semaines_type': {
+                                    'type': 'dict',
+                                    'keysrules': {'type': 'integer'},
+                                    'valuesrules': {
+                                        'type': 'dict',
+                                        # 'keysrules': {'type': 'string', 'contains': ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche']},
+                                        'keysrules': {'type': 'string'},
+                                        # 'valuesrules': {'type': 'integer', 'nullable': True},
+                                        'schema': {
+                                            'lundi': {'type': 'integer', 'nullable': True},
+                                            'mardi': {'type': 'integer', 'nullable': True},
+                                            'mercredi': {'type': 'integer', 'nullable': True},
+                                            'jeudi': {'type': 'integer', 'nullable': True},
+                                            'vendredi': {'type': 'integer', 'nullable': True},
+                                            'samedi': {'type': 'integer', 'nullable': True},
+                                            'dimanche': {'type': 'integer', 'nullable': True},
+                                        }
+                                    }
                                 }
                             }
                         }

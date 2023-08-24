@@ -30,6 +30,17 @@ class TestValidateContrat(unittest.TestCase):
                     'jours_type': {
                         0: ["08:00", "17:00"]
                     },
+                    'semaines_type': {
+                        0: {
+                            'lundi': 0,
+                            'mardi': None,
+                            'mercredi': 0,
+                            'jeudi': 0,
+                            'vendredi': 0,
+                            'samedi': None,
+                            'dimanche': None,
+                        }
+                    }
                 },
             },
         }
