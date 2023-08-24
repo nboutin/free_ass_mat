@@ -8,12 +8,14 @@ from pathlib import Path
 
 import yaml
 
+from .data_loader import IDataLoader, RemunerationDataType
+
 
 class FileFormatError(Exception):
     """File format error"""
 
 
-class YamlFileLoader:
+class YamlFileLoader(IDataLoader):
     """YAML File loader"""
 
     def __init__(self, validator) -> None:
@@ -28,7 +30,6 @@ class YamlFileLoader:
         if not self._validator.validate(self._data):
             raise FileFormatError(self._validator.errors)
 
-    @property
-    def remuneration_data(self):
+    def get_remuneration_data(self) -> RemunerationDataType:
         """Return remuneration data"""
         return self._data["contrat"]["remuneration"]
