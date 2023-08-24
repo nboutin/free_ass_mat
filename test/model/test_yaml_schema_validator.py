@@ -24,9 +24,14 @@ class TestValidateContrat(unittest.TestCase):
             "contrat": {
                 'description': 'some description',
                 'remuneration': {
-                    'salaire_horaire_brut': 0.0
-                }
-            }
+                    'salaire_horaire_brut': 0.0,
+                },
+                'planning': {
+                    'jours_type': {
+                        0: ["08:00", "17:00"]
+                    },
+                },
+            },
         }
 
         yaml_validator = YamlSchemaValidator()

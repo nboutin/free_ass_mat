@@ -16,10 +16,11 @@ class YamlSchemaValidator:
     """YAML Schema validator"""
 
     # nest schema into document key to apply rules onto root item
+    # \todo try with schema keyword for root key
     schema = {
         'document': {
             'type': 'dict',
-            'keysrules': {'type': 'string'},  # 'contains': 'contrat'
+            'keysrules': {'type': 'string'},
             'schema': {
                 'contrat': {
                     'type': 'dict',
@@ -31,6 +32,22 @@ class YamlSchemaValidator:
                             'keysrules': {'type': 'string'},
                             'schema': {
                                 'salaire_horaire_brut': {'type': 'float'}
+                            }
+                        },
+                        'planning': {
+                            'type': 'dict',
+                            'keysrules': {'type': 'string'},
+                            'schema': {
+                                'jours_type': {
+                                    'type': 'dict',
+                                    'keysrules': {'type': 'integer'},
+                                    'valuesrules': {
+                                        'type': 'list',
+                                        'schema': {
+                                            'type': 'string',
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
