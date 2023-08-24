@@ -14,10 +14,7 @@ from pathlib import Path
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))
 
-# from simple_ass_mat.model.planning import CreneauHoraire, JourAcceuil, SemaineAcceuil    # nopep8 # noqa: E402
 # from simple_ass_mat.model.factory import make_planning_with_range  # nopep8 # noqa: E402
-# from simple_ass_mat.model.contrat import Contrat  # nopep8 # noqa: E402
-# from simple_ass_mat.model.remuneration import Remuneration  # nopep8 # noqa: E402
 from simple_ass_mat.model.yaml_file_loader import YamlFileLoader  # nopep8 # noqa: E402
 
 
