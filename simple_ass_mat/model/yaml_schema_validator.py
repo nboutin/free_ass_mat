@@ -53,9 +53,7 @@ class YamlSchemaValidator:
                                     'keysrules': {'type': 'integer'},
                                     'valuesrules': {
                                         'type': 'dict',
-                                        # 'keysrules': {'type': 'string', 'contains': ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche']},
                                         'keysrules': {'type': 'string'},
-                                        # 'valuesrules': {'type': 'integer', 'nullable': True},
                                         'schema': {
                                             'lundi': {'type': 'integer', 'nullable': True},
                                             'mardi': {'type': 'integer', 'nullable': True},
@@ -65,6 +63,18 @@ class YamlSchemaValidator:
                                             'samedi': {'type': 'integer', 'nullable': True},
                                             'dimanche': {'type': 'integer', 'nullable': True},
                                         }
+                                    }
+                                },
+                                'semaines_presences': {
+                                    'type': 'list',
+                                    'schema': {
+                                        'type': 'integer',
+                                    }
+                                },
+                                'conges_payes': {
+                                    'type': 'list',
+                                    'schema': {
+                                        'type': 'integer',
                                     }
                                 }
                             }

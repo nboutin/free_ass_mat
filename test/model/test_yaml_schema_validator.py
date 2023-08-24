@@ -16,9 +16,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))
 from simple_ass_mat.model.yaml_schema_validator import YamlSchemaValidator  # nopep8 # noqa: E402
 
 
-class TestValidateContrat(unittest.TestCase):
+class TestFullYamlSchema(unittest.TestCase):
 
-    def test_001(self):
+    def test_all_fields_are_present(self):
         """001"""
         data = {
             "contrat": {
@@ -40,7 +40,9 @@ class TestValidateContrat(unittest.TestCase):
                             'samedi': None,
                             'dimanche': None,
                         }
-                    }
+                    },
+                    'semaines_presences': [1],
+                    'conges_payes': [2],
                 },
             },
         }
