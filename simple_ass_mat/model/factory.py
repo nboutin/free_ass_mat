@@ -5,10 +5,22 @@ Description:
 """
 
 from copy import deepcopy
-# from .contrat import Contrat
+
+from .yaml_file_loader import YamlFileLoader
+from .yaml_schema_validator import YamlSchemaValidator
 from .remuneration import Remuneration
 from .planning import Planning, SemaineAcceuil
 
+
+class DataLoaderFactory:
+    """Data Loader Factory"""
+
+    def make_data_loader(self, data_loader_type: str):
+        """Make data loader"""
+        if data_loader_type == "yaml":
+            validator = YamlSchemaValidator()
+            return YamlFileLoader(validator)
+        raise ValueError(f"Unknown data loader type: {data_loader_type}")
 
 # def make_contrat(contrat_data) -> Contrat:
 #     """Make Contrat"""
