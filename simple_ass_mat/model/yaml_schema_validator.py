@@ -15,12 +15,26 @@ logger = logging.getLogger(__name__)
 class YamlSchemaValidator:
     """YAML Schema validator"""
 
+    # nest schema into document key to apply rules onto root item
     schema = {
-        'contrat': {
+        'document': {
             'type': 'dict',
-            'keysrules': {'type': 'string', 'contains': 'contrat'},
+            'keysrules': {'type': 'string'},  # 'contains': 'contrat'
             'schema': {
-                'description': {'type': 'string'}
+                'contrat': {
+                    'type': 'dict',
+                    'keysrules': {'type': 'string'},
+                    'schema': {
+                        'description': {'type': 'string'},
+                        'remuneration': {
+                            'type': 'dict',
+                            'keysrules': {'type': 'string'},
+                            'schema': {
+                                'salaire_horaire_brut': {'type': 'float'}
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -31,5 +45,7 @@ class YamlSchemaValidator:
     def validate(self, yaml_data):
         """Validate YAML data"""
         validator = Validator(self.schema, require_all=True)
-        if not validator.validate(yaml_data):
+        if not validator.validate({'document': yaml_data}):
             logger.error(validator.errors)
+            return False
+        return True

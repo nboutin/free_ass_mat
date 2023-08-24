@@ -20,12 +20,17 @@ class TestValidateContrat(unittest.TestCase):
 
     def test_001(self):
         """001"""
-        data = {"contrat": {
-            'description': 'some description'
-        }}
+        data = {
+            "contrat": {
+                'description': 'some description',
+                'remuneration': {
+                    'salaire_horaire_brut': 0.0
+                }
+            }
+        }
 
         yaml_validator = YamlSchemaValidator()
-        yaml_validator.validate(data)
+        self.assertTrue(yaml_validator.validate(data))
 
 
 if __name__ == '__main__':
