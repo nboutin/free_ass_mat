@@ -10,15 +10,15 @@ class Remuneration:
 
     _RATIO_BRUT_NET = 0.7812
 
-    def __init__(self, tarif_horaire_brut: float) -> None:
-        self._tarif_horaire_brut = tarif_horaire_brut
+    def __init__(self, salaire_horaire_brut: float) -> None:
+        self._salaire_horaire_brut = salaire_horaire_brut
 
     @property
-    def tarif_horaire_brut(self):
+    def salaire_horaire_brut(self):
         """Retourne le tarif horaire brut"""
-        return self._tarif_horaire_brut
+        return self._salaire_horaire_brut
 
     @property
-    def tarif_horaire_net(self):
-        """Retourne le tarif horaire net"""
-        return self._tarif_horaire_brut * Remuneration._RATIO_BRUT_NET
+    def salaire_horaire_net(self):
+        """Retourne le salaire horaire net"""
+        return self._salaire_horaire_brut * Remuneration._RATIO_BRUT_NET

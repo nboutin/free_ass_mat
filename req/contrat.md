@@ -1,13 +1,15 @@
 # Simple AssMat
 
 ## Contrat
+1 contrat a la fois
 
 ### Organisation horaire
 
 - type de planning
   - 1 semaine type d'acceuil
-- 1 jour type
+- jour type
   - 1 créneau horaire
+  - absence de l'enfant
 
 ### Planning
 

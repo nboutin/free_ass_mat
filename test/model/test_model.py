@@ -10,21 +10,25 @@
 import unittest
 import sys
 import os
-
+from pathlib import Path
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))
 
-from simple_ass_mat.model.remuneration import Remuneration  # nopep8 # noqa: E402
+from simple_ass_mat.model.model import Model  # nopep8 # noqa: E402
+from simple_ass_mat.model.factory import DataLoaderFactory, ModelFactory  # nopep8 # noqa: E402
 
 
-class TestTarifHoraireNet(unittest.TestCase):
+class TestAddContrat(unittest.TestCase):
 
-    def test_brut_4_10(self):
-        """
-        tarif horaire brut = 4.10€
-        """
-        remuneration = Remuneration(4.10)
-        self.assertAlmostEqual(remuneration.salaire_horaire_net, 3.2029, delta=0.0001)
+    def test_add_contrat(self):
+
+        data_loader = DataLoaderFactory.make_data_loader("yaml")
+        data_loader.load(Path(__file__).parent / "user_file" / "user_file_all_data.yml")
+        model_factory = ModelFactory(data_loader)
+        contrat = model_factory.make_contrat()
+
+        model = Model()
+        model.add_contrat(contrat)
 
 
 if __name__ == '__main__':

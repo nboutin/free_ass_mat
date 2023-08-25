@@ -4,18 +4,15 @@ Date: 2023-08
 Description: Module to handle all data
 """
 
-# import yaml
-
-# from .contrat import Contrat
+from .contrat import Contrat
 
 
-# class Model:
-#     """"Handle read and write to/from data"""
+class Model:
+    """"Handle contrat"""
 
-#     def __init__(self):
-#         pass
+    def __init__(self):
+        self._contrat: Contrat = None
 
-#     # def load_contrat(self) -> Contrat:
-#     #     """load contrat"""
-#     #     with open("contrat.yml", "r", encoding="utf-8") as file:
-#     #         contrat_data = yaml.safe_load(file)
+    def add_contrat(self, contrat: Contrat) -> None:
+        """Add a contrat to the model"""
+        self._contrat = contrat

@@ -18,7 +18,6 @@ class CreneauHoraire:
         self._horaire_debut = horaire_debut
         self._horaire_fin = horaire_fin
 
-    @property
     def duree(self) -> timedelta:
         """Return duree"""
         return timedelta(hours=self._horaire_fin.hour, minutes=self._horaire_fin.minute,) \
@@ -33,7 +32,7 @@ class JourAcceuil:
 
     def get_nombre_heure_acceuil(self) -> float:
         """Return le nombre d'heure d'acceuil dans une journée"""
-        return self._creneau_horaire.duree.seconds / 3600
+        return self._creneau_horaire.duree().seconds / 3600
 
 
 class SemaineAcceuil:
