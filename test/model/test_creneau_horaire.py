@@ -24,25 +24,25 @@ class TestDuree(unittest.TestCase):
         debut = time.fromisoformat('08:00:00')
         fin = time.fromisoformat('17:00:00')
         creneau = CreneauHoraire(debut, fin)
-        self.assertEqual(creneau.duree.total_seconds()/3600, 9)
+        self.assertEqual(creneau.duree().total_seconds()/3600, 9)
 
     def test_0000_2359(self):
         debut = time.fromisoformat('00:00:00')
         fin = time.fromisoformat('23:59:00')
         creneau = CreneauHoraire(debut, fin)
-        self.assertEqual(creneau.duree.total_seconds()/60, 24*60-1)
+        self.assertEqual(creneau.duree().total_seconds()/60, 24*60-1)
 
     def test_0000_0001(self):
         debut = time.fromisoformat('00:00:00')
         fin = time.fromisoformat('00:01:00')
         creneau = CreneauHoraire(debut, fin)
-        self.assertEqual(creneau.duree.total_seconds()/60, 1)
+        self.assertEqual(creneau.duree().total_seconds()/60, 1)
 
     def test_seconds_not_supported(self):
         debut = time.fromisoformat('08:00:10')
         fin = time.fromisoformat('18:00:40')
         creneau = CreneauHoraire(debut, fin)
-        self.assertEqual(creneau.duree.total_seconds()/3600, 10)
+        self.assertEqual(creneau.duree().total_seconds()/3600, 10)
 
 
 if __name__ == '__main__':
