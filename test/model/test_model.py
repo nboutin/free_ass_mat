@@ -14,15 +14,18 @@ from pathlib import Path
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))
 
-# # from simple_ass_mat.model.factory import make_planning_with_range  # nopep8 # noqa: E402
 from simple_ass_mat.model.model import Model  # nopep8 # noqa: E402
+from simple_ass_mat.model.factory import DataLoaderFactory, ModelFactory  # nopep8 # noqa: E402
 
 
 class TestAddContrat(unittest.TestCase):
 
     def test_add_contrat(self):
 
-        contrat = 
+        data_loader = DataLoaderFactory.make_data_loader("yaml")
+        data_loader.load(Path(__file__).parent / "user_file" / "user_file_all_data.yml")
+        model_factory = ModelFactory(data_loader)
+        contrat = model_factory.make_contrat()
 
         model = Model()
         model.add_contrat(contrat)

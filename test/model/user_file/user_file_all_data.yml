@@ -13,7 +13,9 @@ contrat:
         vendredi: 0
         samedi: null
         dimanche: null
-    semaines_presences: [[1,5],[7,14],[16,30],[33,50],[52]]
+    semaines_presences:
+      0:
+        [[1,5],[7,14],[16,30],[33,50],[52]]
     conges_payes: [[6],[15],[31,32],[51]]
   remuneration:
     salaire_horaire_brut: 4.10

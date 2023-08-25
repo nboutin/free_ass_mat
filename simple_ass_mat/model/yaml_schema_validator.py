@@ -43,9 +43,6 @@ class YamlSchemaValidator:
                                     'keysrules': {'type': 'integer'},
                                     'valuesrules': {
                                         'type': 'list',
-                                        'schema': {
-                                            'type': 'string',
-                                        }
                                     }
                                 },
                                 'semaines_type': {
@@ -66,16 +63,14 @@ class YamlSchemaValidator:
                                     }
                                 },
                                 'semaines_presences': {
-                                    'type': 'list',
-                                    'schema': {
-                                        'type': 'integer',
+                                    'type': 'dict',
+                                    'keysrules': {'type': 'integer'},
+                                    'valuesrules': {
+                                        'type': 'list',
                                     }
                                 },
                                 'conges_payes': {
                                     'type': 'list',
-                                    'schema': {
-                                        'type': 'integer',
-                                    }
                                 }
                             }
                         }
@@ -86,12 +81,16 @@ class YamlSchemaValidator:
     }
 
     def __init__(self) -> None:
-        pass
+        self._validator = Validator(self.schema, require_all=True)
+
+    @property
+    def errors(self):
+        """Return errors"""
+        return self._validator.errors
 
     def validate(self, yaml_data):
         """Validate YAML data"""
-        validator = Validator(self.schema, require_all=True)
-        if not validator.validate({'document': yaml_data}):
-            logger.error(validator.errors)
+        if not self._validator.validate({'document': yaml_data}):
+            logger.error(self._validator.errors)
             return False
         return True

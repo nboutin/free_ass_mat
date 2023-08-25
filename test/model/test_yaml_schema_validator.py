@@ -41,7 +41,7 @@ class TestFullYamlSchema(unittest.TestCase):
                             'dimanche': None,
                         }
                     },
-                    'semaines_presences': [1],
+                    'semaines_presences': {0: [1]},
                     'conges_payes': [2],
                 },
             },
