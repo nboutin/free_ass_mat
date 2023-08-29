@@ -7,25 +7,10 @@ Description:
 from copy import deepcopy
 from datetime import time
 
-from .data_loader.data_loader import IDataLoader
-from .data_loader.yaml_file_loader import YamlFileLoader
-from .data_loader.yaml_schema_validator import YamlSchemaValidator
-
+from .data_loader import IDataLoader
 from .contrat import Contrat
 from .remuneration import Remuneration
 from .planning import Planning, SemaineAcceuil, JourAcceuil, CreneauHoraire
-
-
-class DataLoaderFactory:
-    """Data Loader Factory"""
-
-    @staticmethod
-    def make_data_loader(data_loader_type: str) -> IDataLoader:
-        """Make data loader"""
-        if data_loader_type == "yaml":
-            validator = YamlSchemaValidator()
-            return YamlFileLoader(validator)
-        raise ValueError(f"Unknown data loader type: {data_loader_type}")
 
 
 class ModelFactory:

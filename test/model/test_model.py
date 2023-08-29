@@ -15,7 +15,8 @@ from pathlib import Path
 sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))
 
 from simple_ass_mat.model.model import Model  # nopep8 # noqa: E402
-from simple_ass_mat.model.factory import DataLoaderFactory, ModelFactory  # nopep8 # noqa: E402
+from simple_ass_mat.model.model_factory import ModelFactory  # nopep8 # noqa: E402
+from simple_ass_mat.model.data_loader.data_loader_factory import DataLoaderFactory  # nopep8 # noqa: E402
 
 
 class TestAddContrat(unittest.TestCase):
