@@ -13,7 +13,7 @@ import os
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))
 
-from simple_ass_mat.model.yaml_schema_validator import YamlSchemaValidator  # nopep8 # noqa: E402
+from simple_ass_mat.model.data_loader.yaml_schema_validator import YamlSchemaValidator  # nopep8 # noqa: E402
 
 
 class TestFullYamlSchema(unittest.TestCase):

@@ -15,7 +15,7 @@ from pathlib import Path
 sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))
 
 # from simple_ass_mat.model.factory import make_planning_with_range  # nopep8 # noqa: E402
-from simple_ass_mat.model.yaml_file_loader import YamlFileLoader  # nopep8 # noqa: E402
+from simple_ass_mat.model.data_loader.yaml_file_loader import YamlFileLoader  # nopep8 # noqa: E402
 
 
 class ValidatorMock:
