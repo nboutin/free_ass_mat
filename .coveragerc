@@ -1,0 +1,11 @@
+[run]
+branch = True
+source = simple_ass_mat
+
+[report]
+precision = 2
+
+[html]
+directory = coverage_html_report
+
+[xml]
