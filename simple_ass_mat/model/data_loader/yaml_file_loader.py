@@ -8,7 +8,7 @@ from pathlib import Path
 
 import yaml
 
-from .data_loader import IDataLoader, RemunerationDataType, SemainesPresenceType, JourType, SemaineType
+from .i_data_loader import IDataLoader, RemunerationDataType, SemainesPresenceType, JourType, SemaineType
 
 
 class FileFormatError(Exception):

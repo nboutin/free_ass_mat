@@ -4,7 +4,7 @@ Date: 2023-08
 Description:
 """
 
-from .data_loader import IDataLoader
+from .i_data_loader import IDataLoader
 from .yaml_file_loader import YamlFileLoader
 from .yaml_schema_validator import YamlSchemaValidator
 
