@@ -33,4 +33,4 @@ class Contrat:
         """Return la remuneration brut mensualisee
 
         = remuneration horaire brut * nombre heure mensualisee"""
-        return self._remuneration.salaire_horaire_brut * self.get_duree_acceuil_mensualisee()
+        return self._remuneration.get_salaire_horaire_brut() * self.get_duree_acceuil_mensualisee()

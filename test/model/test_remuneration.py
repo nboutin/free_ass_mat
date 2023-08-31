@@ -24,7 +24,7 @@ class TestTarifHoraireNet(unittest.TestCase):
         tarif horaire brut = 4.10€
         """
         remuneration = Remuneration(4.10)
-        self.assertAlmostEqual(remuneration.salaire_horaire_net, 3.2029, delta=0.0001)
+        self.assertAlmostEqual(remuneration.get_salaire_horaire_net(), 3.2029, delta=0.0001)
 
 
 if __name__ == '__main__':
